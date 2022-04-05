@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">Toaru IF Damage Calculator</string>
+
+    <string name="small">Small</string>
+    <string name="medium">Medium</string>
+    <string name="large">Large</string>
+    <string name="massive">Massive</string>
+
+    <string name="AtkType">Attack type</string>
+    <string name="Auto">Normal attack</string>
+    <string name="Sp">SP</string>
+    <string name="Skill">Skill</string>
+
+    <string name="Breakpoint">Breakpoint</string>
+    <string name="Critical">Critical</string>
+    <string name="Color">Color</string>
+    <string name="Normal">Normal</string>
+    <string name="Weak">Weak</string>
+    <string name="Resist">Resist</string>
+    <string name="GwBonus">GW Bonus</string>
+    <string name="NoBonus">None</string>
+    <string name="OneTwelve">1+/12</string>
+    <string name="SixTwelve">6+/12</string>
+    <string name="ElevenTwelve">11+/12</string>
+    <string name="ExpectedDamage">Expected Damage</string>
+
+
+
+    <string name="MentalAtkStat">Mental attack stat</string>
+    <string name="PhysicalAtkStat">Physical attack stat</string>
+    <string name="SpLvl">SP level</string>
+    <string name="SkillLvl">Skill level</string>
+    <string name="Passive1Lvl">Passive 1 level</string>
+    <string name="Passive2Lvl">Passive 2 level</string>
+
+    <string name="MentalAtkUp">Mental attack up</string>
+    <string name="PhysicalAtkUp">Physical attack up</string>
+
+    <string name="CritDmgUp">Critical damage up</string>
+
+    <string name="MentalDefDown">Mental defense down</string>
+    <string name="PhysicalDefDown">Physical defense down</string>
+
+    <string name="ResDown">Color resistance down</string>
+    <string name="RedResDown">Red resistance down</string>
+    <string name="BlueResDown">Blue resistance down</string>
+    <string name="GreenResDown">Green resistance down</string>
+    <string name="YellowResDown">Yellow resistance down</string>
+    <string name="PurpleResDown">Purple resistance down</string>
+
+</resources>
