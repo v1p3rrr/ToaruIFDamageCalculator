@@ -30,8 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.Breakpoint.setOnCheckedChangeListener { compoundButton, isChecked ->
             //binding.ResultDamage.text = mainViewModel.fetchAllUnits()[0].toString()
-            mainViewModel.fetchAllUnits(
-                unitApi = (application as ToaruApp).unitApi,
+            mainViewModel.fetchAllUnits( (application as ToaruApp).unitApi,
                 onSuccess = {
                     binding.ResultDamage.text = it?.get(0).toString()
                 },
@@ -39,6 +38,7 @@ class MainActivity : AppCompatActivity() {
                     binding.ResultDamage.text = it
                 }
             )
+            mainViewModel.fetchAllUnitsRx((application as ToaruApp).unitApi)
         }
     }
 }
