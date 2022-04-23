@@ -1,7 +1,9 @@
 package com.example.toaruifdamagecalculator.ui.view
 
+import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.example.toaruifdamagecalculator.ToaruApp
 import com.example.toaruifdamagecalculator.databinding.ActivityMainBinding
@@ -15,10 +17,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         val vmProvider = ViewModelProvider(this)
         mainViewModel = vmProvider.get(MainViewModel::class.java)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+//        mainViewModel.units.observe(this) {
+//            Log.e(TAG, "onCreate: ${it.joinToString()}")
+//        }
         //mainViewModel.provideApi((application as ToaruApp).unitApi)
 
 
@@ -33,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 //                }
 //            )
 //            mainViewModel.fetchAllUnitsRx((application as ToaruApp).unitApi)
-            binding.ResultDamage.text = mainViewModel.getAllUnits().[0].toString()
+            //binding.ResultDamage.text = mainViewModel.getAllUnits().[0].toString()
         }
     }
 }

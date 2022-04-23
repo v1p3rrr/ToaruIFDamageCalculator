@@ -1,5 +1,7 @@
 package com.example.toaruifdamagecalculator.ui.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.data.api.UnitApiService
@@ -13,11 +15,13 @@ class MainViewModel(private val unitRepository: UnitRepository) : ViewModel() {
     private val job : Job? = null
     private val scope = CoroutineScope(Dispatchers.IO)
 
+    val units = MutableLiveData<List<BattleUnit>>()
+
     fun getAllUnits() = scope.launch {
         val unitsList : Deferred<List<BattleUnit>> = scope.async {
             unitRepository.getAllUnits()
         }
-        return unitsList.await()
+        units.postValue(unitsList.await())
     }
 
     fun fetchAllUnits(
