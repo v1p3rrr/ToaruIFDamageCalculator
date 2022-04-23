@@ -2,7 +2,7 @@ package com.example.toaruifdamagecalculator
 
 import android.app.Application
 import android.util.Log
-import com.example.toaruifdamagecalculator.domain.api.UnitApi
+import com.example.toaruifdamagecalculator.data.api.UnitApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ToaruApp : Application() {
 
-    lateinit var unitApi: UnitApi
+    lateinit var unitApi: UnitApiService
 
     override fun onCreate() {
         super.onCreate()
@@ -32,7 +32,7 @@ class ToaruApp : Application() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        unitApi = retrofit.create(UnitApi::class.java)
+        unitApi = retrofit.create(UnitApiService::class.java)
     }
 
 }

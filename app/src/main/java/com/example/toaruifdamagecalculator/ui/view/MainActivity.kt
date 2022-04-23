@@ -1,17 +1,11 @@
-package com.example.toaruifdamagecalculator.presentation.view
+package com.example.toaruifdamagecalculator.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
-import com.example.toaruifdamagecalculator.R
 import com.example.toaruifdamagecalculator.ToaruApp
-import com.example.toaruifdamagecalculator.data.BattleUnit
 import com.example.toaruifdamagecalculator.databinding.ActivityMainBinding
-import com.example.toaruifdamagecalculator.presentation.viewmodel.MainViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.toaruifdamagecalculator.ui.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,15 +24,16 @@ class MainActivity : AppCompatActivity() {
 
         binding.Breakpoint.setOnCheckedChangeListener { compoundButton, isChecked ->
             //binding.ResultDamage.text = mainViewModel.fetchAllUnits()[0].toString()
-            mainViewModel.fetchAllUnits( (application as ToaruApp).unitApi,
-                onSuccess = {
-                    binding.ResultDamage.text = it?.get(0).toString()
-                },
-                onError = {
-                    binding.ResultDamage.text = it
-                }
-            )
-            mainViewModel.fetchAllUnitsRx((application as ToaruApp).unitApi)
+//            mainViewModel.fetchAllUnits( (application as ToaruApp).unitApi,
+//                onSuccess = {
+//                    binding.ResultDamage.text = it?.get(0).toString()
+//                },
+//                onError = {
+//                    binding.ResultDamage.text = it
+//                }
+//            )
+//            mainViewModel.fetchAllUnitsRx((application as ToaruApp).unitApi)
+            binding.ResultDamage.text = mainViewModel.getAllUnits().[0].toString()
         }
     }
 }

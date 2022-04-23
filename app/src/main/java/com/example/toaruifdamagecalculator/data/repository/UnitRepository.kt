@@ -1,23 +1,22 @@
-package com.example.toaruifdamagecalculator.domain.repository
+package com.example.toaruifdamagecalculator.data.repository
 
 import android.util.Log
-import com.example.toaruifdamagecalculator.data.BattleUnit
-import com.example.toaruifdamagecalculator.domain.api.UnitApi
-import io.reactivex.Scheduler
+import com.example.toaruifdamagecalculator.data.api.UnitApiHelper
+import com.example.toaruifdamagecalculator.data.model.BattleUnit
+import com.example.toaruifdamagecalculator.data.api.UnitApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.concurrent.thread
 
-class UnitRepository {
+class UnitRepository(private val unitApiHelper: UnitApiHelper) {
 
     //lateinit var unitApi: UnitApi
 
     fun getAllUnitsCallback(
-        unitApi: UnitApi,
+        unitApi: UnitApiService,
         onSuccess: (List<BattleUnit>?) -> Unit,
         onError: (String) -> Unit
     ) : List<BattleUnit>?{
@@ -43,9 +42,10 @@ class UnitRepository {
         return responseBody
     }
 
-    var compositeDisposable = CompositeDisposable()
+    suspend fun getAllUnits() = unitApiHelper.getAllUnits()
 
-    fun getAllUnitsRx(unitApi: UnitApi){
+    fun getAllUnitsRx(unitApi: UnitApiService){
+        val compositeDisposable = CompositeDisposable()
         compositeDisposable.add(unitApi.getAllUnitsRx()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
