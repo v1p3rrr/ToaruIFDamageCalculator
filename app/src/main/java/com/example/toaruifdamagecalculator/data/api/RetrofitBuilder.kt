@@ -6,7 +6,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitBuilder {
-    private const val BASE_URL = "http://192.168.1.68:8080";
+    private const val BASE_URL_PC = "http://192.168.1.68:8080"
+    private const val BASE_URL_LAPTOP = "http://192.168.1.70:8080"
 
     private fun getRetrofit(): Retrofit{
         val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -17,7 +18,7 @@ object RetrofitBuilder {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BASE_URL_LAPTOP)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
