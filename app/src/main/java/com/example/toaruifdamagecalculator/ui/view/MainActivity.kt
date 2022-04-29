@@ -1,20 +1,17 @@
 package com.example.toaruifdamagecalculator.ui.view
 
-import android.content.ContentValues.TAG
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.toaruifdamagecalculator.ToaruApp
 import com.example.toaruifdamagecalculator.data.api.RetrofitBuilder
 import com.example.toaruifdamagecalculator.data.api.UnitApiHelper
-import com.example.toaruifdamagecalculator.data.repository.UnitRepository
 import com.example.toaruifdamagecalculator.databinding.ActivityMainBinding
 import com.example.toaruifdamagecalculator.ui.viewmodel.MainViewModel
 import com.example.toaruifdamagecalculator.ui.viewmodel.MainViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 
 class MainActivity : AppCompatActivity() {
@@ -40,6 +37,19 @@ class MainActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 mainViewModel.unitsStateFlow.collectLatest {
                     binding.ResultDamage.text = it.joinToString()
+                }
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                mainViewModel.errorSharedFlow.collectLatest {
+                    binding.ResultDamage.text = it
+                    Snackbar.make(
+                        binding.root,
+                        it,
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
             }
         }
