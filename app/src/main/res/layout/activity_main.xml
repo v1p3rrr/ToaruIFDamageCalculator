@@ -25,12 +25,12 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/mikoto_daihaseisai"
                 app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="@+id/charSelector"
-                app:layout_constraintTop_toBottomOf="@id/charSelector"
+                app:layout_constraintEnd_toEndOf="@+id/charSelectorSpinner"
+                app:layout_constraintTop_toBottomOf="@id/charSelectorSpinner"
                 app:layout_constraintWidth_percent="0.5" />
 
             <Spinner
-                android:id="@+id/charSelector"
+                android:id="@+id/charSelectorSpinner"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="18dp"
@@ -47,7 +47,7 @@
                 style="@style/InputField"
                 android:layout_marginEnd="18dp"
                 app:layout_constraintEnd_toStartOf="@+id/charImg"
-                app:layout_constraintStart_toStartOf="@+id/charSelector"
+                app:layout_constraintStart_toStartOf="@+id/charSelectorSpinner"
                 app:layout_constraintTop_toTopOf="@id/charImg" />
 
             <CheckBox
@@ -223,7 +223,7 @@
                 android:layout_width="64dp"
                 style="@style/InputField"
                 app:layout_constraintBottom_toBottomOf="@id/atkStat"
-                app:layout_constraintEnd_toEndOf="@id/charSelector"
+                app:layout_constraintEnd_toEndOf="@id/charSelectorSpinner"
                 app:layout_constraintTop_toTopOf="@id/atkStat" />
 
             <TextView
@@ -297,7 +297,7 @@
                 android:layout_width="64dp"
                 style="@style/InputField"
                 app:layout_constraintTop_toTopOf="@id/atkTypeBuff"
-                app:layout_constraintEnd_toEndOf="@id/charSelector"
+                app:layout_constraintEnd_toEndOf="@id/charSelectorSpinner"
                 android:layout_marginStart="12dp"
                 />
 
@@ -372,7 +372,7 @@
                 android:layout_width="64dp"
                 style="@style/InputField"
                 app:layout_constraintTop_toTopOf="@id/critDmgBuff"
-                app:layout_constraintEnd_toEndOf="@id/charSelector"
+                app:layout_constraintEnd_toEndOf="@id/charSelectorSpinner"
                 android:layout_marginStart="12dp"
                 />
 
@@ -447,7 +447,7 @@
                 android:layout_width="64dp"
                 style="@style/InputField"
                 app:layout_constraintTop_toTopOf="@id/DefenceDebuff"
-                app:layout_constraintEnd_toEndOf="@id/charSelector"
+                app:layout_constraintEnd_toEndOf="@id/charSelectorSpinner"
                 android:layout_marginStart="12dp"
                 />
 
@@ -524,7 +524,7 @@
                 android:layout_width="64dp"
                 style="@style/InputField"
                 app:layout_constraintTop_toTopOf="@id/ColorDebuff"
-                app:layout_constraintEnd_toEndOf="@id/charSelector"
+                app:layout_constraintEnd_toEndOf="@id/charSelectorSpinner"
                 android:layout_marginStart="12dp"
                 />
 

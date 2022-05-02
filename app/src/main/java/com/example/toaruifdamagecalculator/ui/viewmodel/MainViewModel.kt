@@ -29,5 +29,4 @@ class MainViewModel(private val unitRepository: UnitRepository) : ViewModel() {
             _errorSharedFlow.emit("Server error")
         }
     }
-
 }

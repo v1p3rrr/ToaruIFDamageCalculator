@@ -14,5 +14,5 @@ interface UnitApiService {
     fun getAllUnitsRx() : Single<List<BattleUnit>>
 
     @GET("./battleunits/getallunits")
-    suspend fun getAllUnits() : List<BattleUnit>
+    suspend fun getAllUnits() : ArrayList<BattleUnit>
 }
