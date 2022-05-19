@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background"
-    tools:context=".ui.view.MainActivity">
+    tools:context=".ui.fragment.UnitCalcFragment">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/charImg"
@@ -25,12 +30,12 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/mikoto_daihaseisai"
                 app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="@+id/charSelectorSpinner"
-                app:layout_constraintTop_toBottomOf="@id/charSelectorSpinner"
+                app:layout_constraintEnd_toEndOf="@+id/charNameTv"
+                app:layout_constraintTop_toBottomOf="@id/charNameTv"
                 app:layout_constraintWidth_percent="0.5" />
 
-            <Spinner
-                android:id="@+id/charSelectorSpinner"
+            <TextView
+                android:id="@+id/charNameTv"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="18dp"
@@ -47,7 +52,7 @@
                 style="@style/InputField"
                 android:layout_marginEnd="18dp"
                 app:layout_constraintEnd_toStartOf="@+id/charImg"
-                app:layout_constraintStart_toStartOf="@+id/charSelectorSpinner"
+                app:layout_constraintStart_toStartOf="@+id/charNameTv"
                 app:layout_constraintTop_toTopOf="@id/charImg" />
 
             <CheckBox
@@ -223,7 +228,7 @@
                 android:layout_width="64dp"
                 style="@style/InputField"
                 app:layout_constraintBottom_toBottomOf="@id/atkStat"
-                app:layout_constraintEnd_toEndOf="@id/charSelectorSpinner"
+                app:layout_constraintEnd_toEndOf="@id/charNameTv"
                 app:layout_constraintTop_toTopOf="@id/atkStat" />
 
             <TextView
@@ -297,7 +302,7 @@
                 android:layout_width="64dp"
                 style="@style/InputField"
                 app:layout_constraintTop_toTopOf="@id/atkTypeBuff"
-                app:layout_constraintEnd_toEndOf="@id/charSelectorSpinner"
+                app:layout_constraintEnd_toEndOf="@id/charNameTv"
                 android:layout_marginStart="12dp"
                 />
 
@@ -372,7 +377,7 @@
                 android:layout_width="64dp"
                 style="@style/InputField"
                 app:layout_constraintTop_toTopOf="@id/critDmgBuff"
-                app:layout_constraintEnd_toEndOf="@id/charSelectorSpinner"
+                app:layout_constraintEnd_toEndOf="@id/charNameTv"
                 android:layout_marginStart="12dp"
                 />
 
@@ -447,7 +452,7 @@
                 android:layout_width="64dp"
                 style="@style/InputField"
                 app:layout_constraintTop_toTopOf="@id/DefenceDebuff"
-                app:layout_constraintEnd_toEndOf="@id/charSelectorSpinner"
+                app:layout_constraintEnd_toEndOf="@id/charNameTv"
                 android:layout_marginStart="12dp"
                 />
 
@@ -524,7 +529,7 @@
                 android:layout_width="64dp"
                 style="@style/InputField"
                 app:layout_constraintTop_toTopOf="@id/ColorDebuff"
-                app:layout_constraintEnd_toEndOf="@id/charSelectorSpinner"
+                app:layout_constraintEnd_toEndOf="@id/charNameTv"
                 android:layout_marginStart="12dp"
                 />
 

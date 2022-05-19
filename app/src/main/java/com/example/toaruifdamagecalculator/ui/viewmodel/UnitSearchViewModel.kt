@@ -4,15 +4,16 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.data.repository.UnitRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
-class MainViewModel(private val unitRepository: UnitRepository) : ViewModel() {
+class UnitSearchViewModel(private val unitRepository: UnitRepository) : ViewModel() {
 
-    private val job: Job? = null
     private val scope = CoroutineScope(Dispatchers.IO)
 
     private val _unitsStateFlow = MutableStateFlow<List<BattleUnit>>(ArrayList())
@@ -29,4 +30,5 @@ class MainViewModel(private val unitRepository: UnitRepository) : ViewModel() {
             _errorSharedFlow.emit("Server error")
         }
     }
+
 }
