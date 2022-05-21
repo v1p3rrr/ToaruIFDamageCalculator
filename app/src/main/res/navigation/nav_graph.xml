@@ -25,10 +25,9 @@
             app:destination="@id/unitSearchFragment" />
 
         <argument
-            android:name="unit"
-            app:argType="com.example.toaruifdamagecalculator.data.model.BattleUnit"
-            app:nullable="true"
-            android:defaultValue="@null"/>
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="-1L"/>
     </fragment>
 
 </navigation>

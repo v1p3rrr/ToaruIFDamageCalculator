@@ -10,10 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.toaruifdamagecalculator.R
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.ui.fragment.OnRecyclerViewItemClick
-import okhttp3.internal.filterList
-import java.util.*
 
-class UnitsAdapter(val clickListener: OnRecyclerViewItemClick<BattleUnit>) :
+class UnitsAdapter(private val clickListener: OnRecyclerViewItemClick<Long>) :
     ListAdapter<BattleUnit, UnitsAdapter.MyViewHolder>(DiffCallback()) {
 
     private var unfilteredList = listOf<BattleUnit>()
@@ -31,7 +29,7 @@ class UnitsAdapter(val clickListener: OnRecyclerViewItemClick<BattleUnit>) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.unitNameTv.text = "${getItem(position).charName} | ${getItem(position).cardName}"
         holder.unitNameTv.setOnClickListener {
-            clickListener.onItemClick(it, getItem(position))
+            clickListener.onItemClick(it, getItem(position).id)
         }
     }
 

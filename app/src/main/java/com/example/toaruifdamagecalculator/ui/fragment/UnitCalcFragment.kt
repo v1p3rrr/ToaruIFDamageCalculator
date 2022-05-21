@@ -26,9 +26,6 @@ class UnitCalcFragment : Fragment() {
 
     private lateinit var binding: FragmentUnitCalcBinding
 
-    private var unitsList = ArrayList<BattleUnit>()
-    //todo насколько правильно держать на этом экране весь список из апи?
-
     private val safeArgs: UnitCalcFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -48,22 +45,21 @@ class UnitCalcFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        unitCalcViewModel.getAllUnits()
         binding.charNameTv.setOnClickListener { onUnitSearch() }
     }
 
     private fun collectFlows() {
-        collectUnitsFlow()
         collectErrorFlow()
+        collectUnitFlow()
     }
 
-    private fun collectUnitsFlow(){
+    private fun collectUnitFlow(){
+        unitCalcViewModel.getUnitById(safeArgs.id)
+
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                unitCalcViewModel.unitsStateFlow.collectLatest {
-                    unitsList.clear()
-                    unitsList.addAll(it)
-                    chooseAndSetUnit(it)
+                unitCalcViewModel.unitStateFlow.collectLatest {
+                    setUnitViews(it)
                 }
             }
         }
@@ -87,23 +83,6 @@ class UnitCalcFragment : Fragment() {
     private fun onUnitSearch() {
         val directions = UnitCalcFragmentDirections.actionUnitCalcFragmentToUnitSearchFragment()
         findNavController().navigate(directions)
-    }
-
-    // Picks either unit gotten from another screen by safeargs,
-    // first unit from fetched list from api, or creates placeholder unit
-    private fun chooseAndSetUnit(units: List<BattleUnit>){
-        var newUnit : BattleUnit? = null
-        if (!units.isEmpty()) newUnit = units[0]
-        safeArgs.unit?.let { newUnit = it }
-        if (newUnit==null){
-            newUnit = BattleUnit(
-                id = 1,
-                charName = "DefaultName",
-                cardName = "DefaultCard",
-                imageUrl = "DefaultUrl"
-            )
-        }
-        setUnitViews(newUnit as BattleUnit)
     }
 
     private fun setUnitViews(unit: BattleUnit) {

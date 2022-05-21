@@ -14,18 +14,26 @@ class UnitCalcViewModel(private val unitRepository: UnitRepository) : ViewModel(
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
-    private val _unitsStateFlow = MutableStateFlow<List<BattleUnit>>(ArrayList())
-    val unitsStateFlow = _unitsStateFlow.asStateFlow()
+    private val _unitStateFlow = MutableStateFlow(
+        BattleUnit(
+            -1,
+            "Default Character",
+            "Default Card",
+            null
+        )
+    )
+    val unitStateFlow = _unitStateFlow.asStateFlow()
 
     private val _errorSharedFlow = MutableSharedFlow<String>()
     val errorSharedFlow = _errorSharedFlow.asSharedFlow()
 
-    fun getAllUnits() = scope.launch {
+    fun getUnitById(id: Long) = scope.launch {
         try {
-            _unitsStateFlow.value = unitRepository.getAllUnits()
+            _unitStateFlow.value = unitRepository.getUnitById(id)
         } catch (e: Exception) {
-            Log.e("http error", "exception caught")
+            Log.e("http error", e.printStackTrace().toString())
             _errorSharedFlow.emit("Server error")
         }
     }
+
 }

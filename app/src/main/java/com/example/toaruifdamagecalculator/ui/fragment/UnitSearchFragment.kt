@@ -1,7 +1,6 @@
 package com.example.toaruifdamagecalculator.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.toaruifdamagecalculator.R
 import com.example.toaruifdamagecalculator.data.api.RetrofitBuilder
 import com.example.toaruifdamagecalculator.data.api.UnitApiHelper
-import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.databinding.FragmentUnitSearchBinding
 import com.example.toaruifdamagecalculator.ui.adapter.UnitsAdapter
 import com.example.toaruifdamagecalculator.ui.viewmodel.UnitSearchViewModel
@@ -24,7 +22,7 @@ import com.example.toaruifdamagecalculator.ui.viewmodel.UnitSearchViewModelFacto
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 
-class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<BattleUnit> {
+class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
 
     private lateinit var binding: FragmentUnitSearchBinding
 
@@ -106,7 +104,7 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<BattleUnit> {
         }
     }
 
-    override fun onItemClick(view: View?, arg: BattleUnit) {
+    override fun onItemClick(view: View?, arg: Long) {
         when (view?.id) {
             R.id.unitName -> {
                 onUnitSelect(arg)
@@ -114,9 +112,9 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<BattleUnit> {
         }
     }
 
-    private fun onUnitSelect(unit: BattleUnit) {
+    private fun onUnitSelect(id: Long) {
         val directions = UnitSearchFragmentDirections.actionUnitSearchFragmentToUnitCalcFragment(
-            unit = unit
+            id = id
         )
         findNavController().navigate(directions)
     }
