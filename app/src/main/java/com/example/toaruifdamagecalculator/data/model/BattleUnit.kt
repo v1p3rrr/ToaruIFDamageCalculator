@@ -13,7 +13,7 @@ data class BattleUnit (
     var charName: String,
 
     @SerializedName("cardName")
-    var cardName: String?,
+    var cardName: String,
 
     @SerializedName("imageUrl")
     var imageUrl: String?

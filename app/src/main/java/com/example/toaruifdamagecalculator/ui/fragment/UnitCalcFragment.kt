@@ -26,8 +26,8 @@ class UnitCalcFragment : Fragment() {
 
     private lateinit var binding: FragmentUnitCalcBinding
 
-    private var unitsList =
-        ArrayList<BattleUnit>()  // насколько правильно держать на этом экране весь список из апи?
+    private var unitsList = ArrayList<BattleUnit>()
+    //todo насколько правильно держать на этом экране весь список из апи?
 
     private val safeArgs: UnitCalcFragmentArgs by navArgs()
 
@@ -40,11 +40,9 @@ class UnitCalcFragment : Fragment() {
         unitCalcViewModel = ViewModelProvider(
             this,
             UnitCalcViewModelFactory(UnitApiHelper(RetrofitBuilder.unitApiService))
-        ).get(
-            UnitCalcViewModel::class.java
-        )
-        collectFlows()
+        ).get(UnitCalcViewModel::class.java)
 
+        collectFlows()
         return binding.root
     }
 
@@ -55,16 +53,23 @@ class UnitCalcFragment : Fragment() {
     }
 
     private fun collectFlows() {
+        collectUnitsFlow()
+        collectErrorFlow()
+    }
+
+    private fun collectUnitsFlow(){
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 unitCalcViewModel.unitsStateFlow.collectLatest {
                     unitsList.clear()
                     unitsList.addAll(it)
-                    pickUnit(it)
+                    chooseAndSetUnit(it)
                 }
             }
         }
+    }
 
+    private fun collectErrorFlow(){
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 unitCalcViewModel.errorSharedFlow.collectLatest {
@@ -86,7 +91,7 @@ class UnitCalcFragment : Fragment() {
 
     // Picks either unit gotten from another screen by safeargs,
     // first unit from fetched list from api, or creates placeholder unit
-    private fun pickUnit(units: List<BattleUnit>){
+    private fun chooseAndSetUnit(units: List<BattleUnit>){
         var newUnit : BattleUnit? = null
         if (!units.isEmpty()) newUnit = units[0]
         safeArgs.unit?.let { newUnit = it }
@@ -102,7 +107,6 @@ class UnitCalcFragment : Fragment() {
     }
 
     private fun setUnitViews(unit: BattleUnit) {
-
         binding.apply {
             charNameTv.text = "${unit.charName} | ${unit.cardName}"
             atkStat.setText(unit.imageUrl)

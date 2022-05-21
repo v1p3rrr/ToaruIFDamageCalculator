@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -62,17 +63,36 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<BattleUnit> {
             adapter = unitsAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+
+        binding.unitSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                (binding.searchRecyclerView.adapter as UnitsAdapter).filter(newText)
+                return true
+            }
+
+        })
     }
 
     private fun collectFlows() {
+        collectUnitsFlow()
+        collectErrorFlow()
+    }
+
+    private fun collectUnitsFlow(){
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 unitSearchViewModel.unitsStateFlow.collectLatest {
-                    unitsAdapter.submitList(it)
+                    unitsAdapter.modifyList(it)
                 }
             }
         }
+    }
 
+    private fun collectErrorFlow(){
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 unitSearchViewModel.errorSharedFlow.collectLatest {
@@ -100,8 +120,4 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<BattleUnit> {
         )
         findNavController().navigate(directions)
     }
-}
-
-interface OnRecyclerViewItemClick<T> {
-    fun onItemClick(view: View?, arg: T)
 }

@@ -8,8 +8,8 @@
     tools:context=".ui.fragment.UnitSearchFragment">
 
 
-    <EditText
-        android:id="@+id/editText"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/unitSearchView"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="12dp"
@@ -24,7 +24,7 @@
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/unitSearchView"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintTop_toBottomOf="@+id/unitRecyclerSearchView" />
     </ScrollView>
 
 
