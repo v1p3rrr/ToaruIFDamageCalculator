@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_unit_search">
         <action
             android:id="@+id/action_unitSearchFragment_to_unitCalcFragment"
-            app:destination="@id/unitCalcFragment" />
+            app:destination="@id/unitCalcFragment"
+            app:popUpTo="@id/unitCalcFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment

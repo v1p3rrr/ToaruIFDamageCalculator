@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.toaruifdamagecalculator.R
 import com.example.toaruifdamagecalculator.data.api.RetrofitBuilder
 import com.example.toaruifdamagecalculator.data.api.UnitApiHelper
+import com.example.toaruifdamagecalculator.data.database.AppRoomDatabase
 import com.example.toaruifdamagecalculator.databinding.FragmentUnitSearchBinding
 import com.example.toaruifdamagecalculator.ui.adapter.UnitsAdapter
 import com.example.toaruifdamagecalculator.ui.viewmodel.UnitSearchViewModel
@@ -40,7 +41,8 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
             this, UnitSearchViewModelFactory(
                 UnitApiHelper(
                     RetrofitBuilder.unitApiService
-                )
+                ),
+                AppRoomDatabase.getDatabase(requireContext()).battleUnitDao()
             )
         ).get(
             UnitSearchViewModel::class.java

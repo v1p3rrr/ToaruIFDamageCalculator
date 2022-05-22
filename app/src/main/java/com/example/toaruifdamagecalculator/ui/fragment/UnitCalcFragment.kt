@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.toaruifdamagecalculator.data.api.RetrofitBuilder
 import com.example.toaruifdamagecalculator.data.api.UnitApiHelper
+import com.example.toaruifdamagecalculator.data.database.AppRoomDatabase
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.databinding.FragmentUnitCalcBinding
 import com.example.toaruifdamagecalculator.ui.viewmodel.UnitCalcViewModel
@@ -36,7 +37,10 @@ class UnitCalcFragment : Fragment() {
         binding = FragmentUnitCalcBinding.inflate(inflater, container, false)
         unitCalcViewModel = ViewModelProvider(
             this,
-            UnitCalcViewModelFactory(UnitApiHelper(RetrofitBuilder.unitApiService))
+            UnitCalcViewModelFactory(
+                UnitApiHelper(RetrofitBuilder.unitApiService),
+                AppRoomDatabase.getDatabase(requireContext()).battleUnitDao()
+            )
         ).get(UnitCalcViewModel::class.java)
 
         collectFlows()
@@ -53,7 +57,7 @@ class UnitCalcFragment : Fragment() {
         collectUnitFlow()
     }
 
-    private fun collectUnitFlow(){
+    private fun collectUnitFlow() {
         unitCalcViewModel.getUnitById(safeArgs.id)
 
         lifecycleScope.launchWhenStarted {
@@ -65,7 +69,7 @@ class UnitCalcFragment : Fragment() {
         }
     }
 
-    private fun collectErrorFlow(){
+    private fun collectErrorFlow() {
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 unitCalcViewModel.errorSharedFlow.collectLatest {
@@ -85,10 +89,12 @@ class UnitCalcFragment : Fragment() {
         findNavController().navigate(directions)
     }
 
-    private fun setUnitViews(unit: BattleUnit) {
+    private fun setUnitViews(unit: BattleUnit?) {
         binding.apply {
-            charNameTv.text = "${unit.charName} | ${unit.cardName}"
-            atkStat.setText(unit.imageUrl)
+            unit?.let {
+                charNameTv.text = "${it.charName} | ${it.cardName}"
+                atkStat.setText(it.imageUrl)
+            }
         }
     }
 }

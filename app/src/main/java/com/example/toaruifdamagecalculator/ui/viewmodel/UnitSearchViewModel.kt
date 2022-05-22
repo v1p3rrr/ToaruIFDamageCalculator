@@ -25,6 +25,7 @@ class UnitSearchViewModel(private val unitRepository: UnitRepository) : ViewMode
     fun getAllUnits() = scope.launch {
         try {
             _unitsStateFlow.value = unitRepository.getAllUnits()
+            _unitsStateFlow.value = unitRepository.updateUnitsFromApiToLocal() //todo
         } catch (e: Exception) {
             Log.e("http error", "exception caught")
             _errorSharedFlow.emit("Server error")

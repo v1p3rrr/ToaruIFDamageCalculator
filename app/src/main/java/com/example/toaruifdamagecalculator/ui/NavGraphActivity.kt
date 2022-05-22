@@ -1,4 +1,4 @@
-package com.example.toaruifdamagecalculator.ui.view
+package com.example.toaruifdamagecalculator.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
