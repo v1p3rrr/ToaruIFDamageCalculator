@@ -3,6 +3,7 @@ package com.example.toaruifdamagecalculator.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.data.repository.UnitRepository
 import kotlinx.coroutines.CoroutineScope
@@ -26,10 +27,26 @@ class UnitSearchViewModel(private val unitRepository: UnitRepository) : ViewMode
         withContext(Dispatchers.IO){
             try {
                 unitRepository.updateUnitsFromApiOnceInFewDays(1)
-                _unitsStateFlow.value = unitRepository.getAllUnits() //todo
+                _unitsStateFlow.value = unitRepository.getAllUnits()
             } catch (e: Exception) {
-                Log.e("http error", "exception caught")
+                Log.e("http error", e.printStackTrace().toString())
                 _errorSharedFlow.emit("Server error")
+            }
+        }
+    }
+
+    //todo obviously fix passing layout as argument
+    // how to not let coroutine job be cancelled after navigating to another screen
+    // so all files could be downloaded successfully?
+    fun onRefreshUpdateUnitsFromApiToDb(refreshLayout: SwipeRefreshLayout) = viewModelScope.launch {
+        withContext(Dispatchers.IO){
+            try {
+                unitRepository.updateUnitsFromApiToLocal()
+            } catch (e: Exception) {
+                Log.e("http error", e.printStackTrace().toString())
+                _errorSharedFlow.emit("Server error")
+            } finally {
+                refreshLayout.isRefreshing = false
             }
         }
     }

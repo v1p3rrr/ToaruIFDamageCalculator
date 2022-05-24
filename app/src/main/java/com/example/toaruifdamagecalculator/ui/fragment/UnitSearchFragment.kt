@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.toaruifdamagecalculator.R
 import com.example.toaruifdamagecalculator.data.api.RetrofitBuilder
 import com.example.toaruifdamagecalculator.data.api.UnitApiHelper
@@ -28,7 +29,7 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
 
     private lateinit var binding: FragmentUnitSearchBinding
 
-    private lateinit var unitSearchViewModel: UnitSearchViewModel
+    private lateinit var vm: UnitSearchViewModel
 
     private lateinit var unitsAdapter: UnitsAdapter
 
@@ -40,7 +41,7 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentUnitSearchBinding.inflate(inflater, container, false)
-        unitSearchViewModel = ViewModelProvider(
+        vm = ViewModelProvider(
             this, UnitSearchViewModelFactory(
                 UnitApiHelper(
                     RetrofitBuilder.unitApiService
@@ -61,7 +62,7 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
 
     private fun init() {
         unitsAdapter = UnitsAdapter(this@UnitSearchFragment)
-        unitSearchViewModel.getAllUnits()
+        vm.getAllUnits()
         binding.searchRecyclerView.apply {
             adapter = unitsAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -78,6 +79,10 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
             }
 
         })
+
+        binding.searchSwipeRefreshLayout.setOnRefreshListener {
+            vm.onRefreshUpdateUnitsFromApiToDb(binding.searchSwipeRefreshLayout)
+        }
     }
 
     private fun collectFlows() {
@@ -85,11 +90,32 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
         collectErrorFlow()
     }
 
+    override fun onItemClick(view: View?, arg: Long) {
+        when (view?.id) {
+            R.id.unitName -> {
+                onUnitSelect(arg)
+            }
+        }
+    }
+
+    private fun onUnitSelect(id: Long) {
+        val directions = UnitSearchFragmentDirections.actionUnitSearchFragmentToUnitCalcFragment(
+            id = id
+        )
+        findNavController().navigate(directions)
+    }
+
+
     private fun collectUnitsFlow(){
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                unitSearchViewModel.unitsStateFlow.collectLatest {
-                    unfilteredList = it
+                vm.unitsStateFlow.collectLatest {
+                    unfilteredList = arrayListOf()
+                    (unfilteredList as ArrayList<BattleUnit>).addAll(it)
+                    (unfilteredList as ArrayList<BattleUnit>).addAll(it)
+                    (unfilteredList as ArrayList<BattleUnit>).addAll(it)
+                    (unfilteredList as ArrayList<BattleUnit>).addAll(it)
+
                     unitsAdapter.submitList(unfilteredList)
                 }
             }
@@ -99,7 +125,7 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
     private fun collectErrorFlow(){
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                unitSearchViewModel.errorSharedFlow.collectLatest {
+                vm.errorSharedFlow.collectLatest {
                     Snackbar.make(
                         binding.root,
                         it,
@@ -138,18 +164,5 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
         return false
     }
 
-    override fun onItemClick(view: View?, arg: Long) {
-        when (view?.id) {
-            R.id.unitName -> {
-                onUnitSelect(arg)
-            }
-        }
-    }
 
-    private fun onUnitSelect(id: Long) {
-        val directions = UnitSearchFragmentDirections.actionUnitSearchFragmentToUnitCalcFragment(
-            id = id
-        )
-        findNavController().navigate(directions)
-    }
 }

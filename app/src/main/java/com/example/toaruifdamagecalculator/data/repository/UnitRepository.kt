@@ -1,6 +1,5 @@
 package com.example.toaruifdamagecalculator.data.repository
 
-import android.util.Log
 import com.example.toaruifdamagecalculator.data.api.UnitApiHelper
 import com.example.toaruifdamagecalculator.data.database.Dao
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
