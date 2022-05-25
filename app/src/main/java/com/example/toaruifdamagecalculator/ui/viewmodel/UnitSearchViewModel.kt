@@ -4,9 +4,11 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.toaruifdamagecalculator.data.di.annotations.IoDispatcher
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.data.repository.UnitRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +19,9 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class UnitSearchViewModel @Inject constructor(private val unitRepositoryImpl: UnitRepositoryImpl) : ViewModel() {
+class UnitSearchViewModel @Inject constructor(
+    private val unitRepositoryImpl: UnitRepositoryImpl,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher) : ViewModel() {
 
     private val _unitsStateFlow = MutableStateFlow<List<BattleUnit>>(ArrayList())
     val unitsStateFlow = _unitsStateFlow.asStateFlow()
@@ -26,7 +30,7 @@ class UnitSearchViewModel @Inject constructor(private val unitRepositoryImpl: Un
     val errorSharedFlow = _errorSharedFlow.asSharedFlow()
 
     fun getAllUnits() = viewModelScope.launch {
-        withContext(Dispatchers.IO){
+        withContext(ioDispatcher){
             try {
                 _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()
                 unitRepositoryImpl.updateUnitsFromApiOnceInFewDays(0)
