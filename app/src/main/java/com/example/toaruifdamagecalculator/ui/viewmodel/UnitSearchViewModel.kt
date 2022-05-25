@@ -36,7 +36,7 @@ class UnitSearchViewModel @Inject constructor(
                 unitRepositoryImpl.updateUnitsFromApiOnceInFewDays(0)
             } catch (e: Exception) {
                 Log.e("http error", e.stackTraceToString())
-                _errorSharedFlow.emit("Server error")
+                _errorSharedFlow.emit("Connection error")
             } finally {
                 _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()
             }
@@ -50,9 +50,10 @@ class UnitSearchViewModel @Inject constructor(
         withContext(Dispatchers.IO){
             try {
                 unitRepositoryImpl.updateUnitsFromApiToLocal()
+                _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()
             } catch (e: Exception) {
                 Log.e("http error", e.stackTraceToString())
-                _errorSharedFlow.emit("Server error")
+                _errorSharedFlow.emit("Connection error")
             } finally {
                 refreshLayout.isRefreshing = false
             }

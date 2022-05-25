@@ -11,21 +11,28 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.toaruifdamagecalculator.R
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.databinding.FragmentUnitCalcBinding
 import com.example.toaruifdamagecalculator.ui.viewmodel.UnitCalcViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class UnitCalcFragment : Fragment() {
-//todo SharedPreferences? Save last chosen unit (and maybe inputs)
+    //todo SharedPreferences? Save last chosen unit (and maybe inputs)
     private val vm: UnitCalcViewModel by viewModels()
 
     private lateinit var binding: FragmentUnitCalcBinding
 
     private val safeArgs: UnitCalcFragmentArgs by navArgs()
+
+    @Inject
+    lateinit var picasso: Picasso
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,6 +91,23 @@ class UnitCalcFragment : Fragment() {
             unit?.let {
                 charNameTv.text = "${it.charName} | ${it.cardName}"
                 atkStat.setText(it.imageUrl)
+                picasso.load(it.imageUrl)
+                    .apply { if (it.imageUrl.isNullOrEmpty()) placeholder(R.drawable.questionmark_placeholder) }
+                    .error(R.drawable.image_error_placeholder).fit()
+                    .centerCrop().into(this.charImg, object : Callback {
+                        override fun onSuccess() {
+
+                        }
+
+                        override fun onError(e: Exception?) {
+                            Snackbar.make(
+                                binding.root,
+                                "Unable to load image",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
             }
         }
     }

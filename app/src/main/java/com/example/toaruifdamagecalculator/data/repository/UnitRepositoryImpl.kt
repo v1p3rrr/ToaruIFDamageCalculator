@@ -31,9 +31,10 @@ class UnitRepositoryImpl @Inject constructor(
         if (dao.getDate().isEmpty()) {
             dao.setDate(DateBackup(currentTime.time))
         }
-
+        //todo fix connection exception
+        // how to learn http response and/or exception types?
         val diffInMillis = abs(currentTime.time - dao.getDate()[0].timeInMillis)
-        if (TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS) >= days) {//todo fix connection exception
+        if (TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS) >= days) {
             updateUnitsFromApiToLocal()
             dao.updateDate(dao.getDate()[0].also { it.timeInMillis = currentTime.time })
         }

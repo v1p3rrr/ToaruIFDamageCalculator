@@ -11,10 +11,10 @@ interface Dao {
     @Query("SELECT * FROM battleunit WHERE id = :id")
     suspend fun getUnitById(id: String) : BattleUnit
 
-    @Query("SELECT * FROM battleunit WHERE id=(SELECT MAX(id) FROM battleunit)")
+    @Query("SELECT * FROM battleunit WHERE id=(SELECT MIN(id) FROM battleunit)")
     suspend fun getFirstUnit() : BattleUnit
 
-    @Query("SELECT * FROM battleunit WHERE id=(SELECT MIN(id) FROM battleunit)")
+    @Query("SELECT * FROM battleunit WHERE id=(SELECT MAX(id) FROM battleunit)")
     suspend fun getLastUnit() : BattleUnit
 
     @Query("SELECT * FROM battleunit")
