@@ -4,14 +4,17 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
-import com.example.toaruifdamagecalculator.data.repository.UnitRepository
+import com.example.toaruifdamagecalculator.data.repository.UnitRepositoryImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
-class UnitCalcViewModel(private val unitRepository: UnitRepository) : ViewModel() {
+@HiltViewModel
+class UnitCalcViewModel @Inject constructor(private val unitRepositoryImpl: UnitRepositoryImpl) : ViewModel() {
 
     private val _unitStateFlow = MutableStateFlow(
         BattleUnit(
@@ -29,7 +32,7 @@ class UnitCalcViewModel(private val unitRepository: UnitRepository) : ViewModel(
     fun getUnitById(id: Long) = viewModelScope.launch {
         withContext(Dispatchers.IO){
             try {
-                _unitStateFlow.value = unitRepository.getUnitById(id)
+                _unitStateFlow.value = unitRepositoryImpl.getUnitById(id)
             } catch (e: Exception) {
                 Log.e("http error", e.printStackTrace().toString())
                 _errorSharedFlow.emit("Server error")

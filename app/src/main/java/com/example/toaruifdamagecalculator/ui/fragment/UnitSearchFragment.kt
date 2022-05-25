@@ -6,32 +6,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.toaruifdamagecalculator.R
-import com.example.toaruifdamagecalculator.data.api.RetrofitBuilder
-import com.example.toaruifdamagecalculator.data.api.UnitApiHelper
-import com.example.toaruifdamagecalculator.data.database.AppRoomDatabase
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.databinding.FragmentUnitSearchBinding
 import com.example.toaruifdamagecalculator.ui.adapter.UnitsAdapter
 import com.example.toaruifdamagecalculator.ui.viewmodel.UnitSearchViewModel
-import com.example.toaruifdamagecalculator.ui.viewmodel.UnitSearchViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
+@AndroidEntryPoint
 class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
+
+    private val vm: UnitSearchViewModel by viewModels()
 
     private lateinit var binding: FragmentUnitSearchBinding
 
-    private lateinit var vm: UnitSearchViewModel
-
-    private lateinit var unitsAdapter: UnitsAdapter
+    private lateinit var unitsAdapter: UnitsAdapter //todo надо ли инжектить?
 
     private var unfilteredList = listOf<BattleUnit>()
 
@@ -41,16 +38,6 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentUnitSearchBinding.inflate(inflater, container, false)
-        vm = ViewModelProvider(
-            this, UnitSearchViewModelFactory(
-                UnitApiHelper(
-                    RetrofitBuilder.unitApiService
-                ),
-                AppRoomDatabase.getDatabase(requireContext()).battleUnitDao()
-            )
-        ).get(
-            UnitSearchViewModel::class.java
-        )
         return binding.root
     }
 

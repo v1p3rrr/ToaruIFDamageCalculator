@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
-import com.example.toaruifdamagecalculator.data.repository.UnitRepository
-import kotlinx.coroutines.CoroutineScope
+import com.example.toaruifdamagecalculator.data.repository.UnitRepositoryImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,8 +14,10 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class UnitSearchViewModel(private val unitRepository: UnitRepository) : ViewModel() {
+@HiltViewModel
+class UnitSearchViewModel @Inject constructor(private val unitRepositoryImpl: UnitRepositoryImpl) : ViewModel() {
 
     private val _unitsStateFlow = MutableStateFlow<List<BattleUnit>>(ArrayList())
     val unitsStateFlow = _unitsStateFlow.asStateFlow()
@@ -26,11 +28,13 @@ class UnitSearchViewModel(private val unitRepository: UnitRepository) : ViewMode
     fun getAllUnits() = viewModelScope.launch {
         withContext(Dispatchers.IO){
             try {
-                unitRepository.updateUnitsFromApiOnceInFewDays(1)
-                _unitsStateFlow.value = unitRepository.getAllUnits()
+                _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()
+                unitRepositoryImpl.updateUnitsFromApiOnceInFewDays(0)
             } catch (e: Exception) {
-                Log.e("http error", e.printStackTrace().toString())
+                Log.e("http error", e.stackTraceToString())
                 _errorSharedFlow.emit("Server error")
+            } finally {
+                _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()
             }
         }
     }
@@ -41,9 +45,9 @@ class UnitSearchViewModel(private val unitRepository: UnitRepository) : ViewMode
     fun onRefreshUpdateUnitsFromApiToDb(refreshLayout: SwipeRefreshLayout) = viewModelScope.launch {
         withContext(Dispatchers.IO){
             try {
-                unitRepository.updateUnitsFromApiToLocal()
+                unitRepositoryImpl.updateUnitsFromApiToLocal()
             } catch (e: Exception) {
-                Log.e("http error", e.printStackTrace().toString())
+                Log.e("http error", e.stackTraceToString())
                 _errorSharedFlow.emit("Server error")
             } finally {
                 refreshLayout.isRefreshing = false

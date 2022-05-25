@@ -5,25 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.toaruifdamagecalculator.data.api.RetrofitBuilder
-import com.example.toaruifdamagecalculator.data.api.UnitApiHelper
-import com.example.toaruifdamagecalculator.data.database.AppRoomDatabase
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.databinding.FragmentUnitCalcBinding
 import com.example.toaruifdamagecalculator.ui.viewmodel.UnitCalcViewModel
-import com.example.toaruifdamagecalculator.ui.viewmodel.UnitCalcViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
+@AndroidEntryPoint
 class UnitCalcFragment : Fragment() {
-
-    private lateinit var unitCalcViewModel: UnitCalcViewModel
+//todo SharedPreferences? Save last chosen unit (and maybe inputs)
+    private val vm: UnitCalcViewModel by viewModels()
 
     private lateinit var binding: FragmentUnitCalcBinding
 
@@ -35,14 +33,6 @@ class UnitCalcFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentUnitCalcBinding.inflate(inflater, container, false)
-        unitCalcViewModel = ViewModelProvider(
-            this,
-            UnitCalcViewModelFactory(
-                UnitApiHelper(RetrofitBuilder.unitApiService),
-                AppRoomDatabase.getDatabase(requireContext()).battleUnitDao()
-            )
-        ).get(UnitCalcViewModel::class.java)
-
         collectFlows()
         return binding.root
     }
@@ -58,11 +48,11 @@ class UnitCalcFragment : Fragment() {
     }
 
     private fun collectUnitFlow() {
-        unitCalcViewModel.getUnitById(safeArgs.id)
+        vm.getUnitById(safeArgs.id)
 
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                unitCalcViewModel.unitStateFlow.collectLatest {
+                vm.unitStateFlow.collectLatest {
                     setUnitViews(it)
                 }
             }
@@ -72,7 +62,7 @@ class UnitCalcFragment : Fragment() {
     private fun collectErrorFlow() {
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                unitCalcViewModel.errorSharedFlow.collectLatest {
+                vm.errorSharedFlow.collectLatest {
                     binding.ResultDamage.text = it
                     Snackbar.make(
                         binding.root,

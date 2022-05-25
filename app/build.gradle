@@ -1,12 +1,12 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 
     id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
     id "org.jetbrains.kotlin.plugin.parcelize"
-//    id 'kotlin-android-extensions'
 }
-apply plugin: 'kotlin-kapt'
 
 android {
     compileSdk 32
@@ -95,6 +95,10 @@ dependencies {
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
     implementation "androidx.navigation:navigation-compose:$nav_version"
     implementation "androidx.navigation:navigation-compose:$nav_version"
+
+    //Dagger Hilt
+    implementation "com.google.dagger:hilt-android:2.38.1"
+    kapt "com.google.dagger:hilt-compiler:2.38.1"
 
 }
 

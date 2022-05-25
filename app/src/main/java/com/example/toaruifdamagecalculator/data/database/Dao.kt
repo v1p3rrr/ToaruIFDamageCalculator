@@ -34,7 +34,6 @@ interface Dao {
 
 
 
-
     @Query("SELECT * FROM date WHERE id=(SELECT MIN(id) FROM date)")
     suspend fun getDate() : List<DateBackup>
 
