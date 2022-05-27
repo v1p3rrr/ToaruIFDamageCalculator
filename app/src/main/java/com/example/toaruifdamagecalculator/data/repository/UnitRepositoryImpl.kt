@@ -5,6 +5,7 @@ import com.example.toaruifdamagecalculator.data.database.AppRoomDatabase
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.data.model.DateBackup
 import com.example.toaruifdamagecalculator.domain.repository.UnitRepository
+import java.lang.Exception
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -22,7 +23,13 @@ class UnitRepositoryImpl @Inject constructor(
 
     override suspend fun updateUnitsFromApiToLocal() {
         val unitsFromApi: List<BattleUnit> = api.getAllUnits()
-        dao.addMultipleUnits(unitsFromApi)
+        try {
+            dao.clearDb()
+            dao.addMultipleUnits(unitsFromApi)
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+
     }
 
     override suspend fun updateUnitsFromApiOnceInFewDays(days: Int) {

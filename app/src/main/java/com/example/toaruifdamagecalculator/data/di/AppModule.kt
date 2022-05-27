@@ -2,6 +2,8 @@ package com.example.toaruifdamagecalculator.data.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.toaruifdamagecalculator.data.api.UnitApiService
 import com.example.toaruifdamagecalculator.data.database.AppRoomDatabase
 import com.example.toaruifdamagecalculator.data.repository.UnitRepositoryImpl

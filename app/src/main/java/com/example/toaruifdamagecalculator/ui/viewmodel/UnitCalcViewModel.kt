@@ -6,9 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.toaruifdamagecalculator.data.di.annotations.IoDispatcher
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.data.repository.UnitRepositoryImpl
+import com.example.toaruifdamagecalculator.domain.use_cases.Calculate
+import com.example.toaruifdamagecalculator.ui.model.CalcParams
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -20,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class UnitCalcViewModel @Inject constructor(
     private val unitRepositoryImpl: UnitRepositoryImpl,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    private val calculate: Calculate
 ) : ViewModel() {
 
     private val _unitStateFlow = MutableStateFlow(
@@ -28,13 +30,15 @@ class UnitCalcViewModel @Inject constructor(
             -1,
             "Default Character",
             "Default Card",
-            null
+            null,
         )
     )
     val unitStateFlow = _unitStateFlow.asStateFlow()
 
     private val _errorSharedFlow = MutableSharedFlow<String>()
     val errorSharedFlow = _errorSharedFlow.asSharedFlow()
+
+    private lateinit var calcParams: CalcParams
 
     fun getUnitById(id: Long) = viewModelScope.launch {
         withContext(ioDispatcher) {
@@ -46,5 +50,41 @@ class UnitCalcViewModel @Inject constructor(
             }
         }
     }
+
+    fun onCalculate(
+        unit: BattleUnit,
+        atkType: String,
+        breakpoint: Boolean,
+        critical: Boolean,
+        color: String,
+        gwBonus: String,
+        atkStat: Int,
+        skillLvl: Int,
+        passive1: Int,
+        passive2: Int,
+        atkUp: Int,
+        critUp: Int,
+        defDown: Int,
+        colorResDown: Int
+    ) : Int {
+        calcParams = CalcParams(
+            unit,
+            atkType,
+            breakpoint,
+            critical,
+            color,
+            gwBonus,
+            atkStat,
+            skillLvl,
+            passive1,
+            passive2,
+            atkUp,
+            critUp,
+            defDown,
+            colorResDown
+        )
+        return calculate(calcParams)
+    }
+
 
 }

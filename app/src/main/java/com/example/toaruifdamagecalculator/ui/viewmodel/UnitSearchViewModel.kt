@@ -33,7 +33,7 @@ class UnitSearchViewModel @Inject constructor(
         withContext(ioDispatcher){
             try {
                 _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()
-                unitRepositoryImpl.updateUnitsFromApiOnceInFewDays(0)
+                unitRepositoryImpl.updateUnitsFromApiOnceInFewDays(0) //todo change on release
             } catch (e: Exception) {
                 Log.e("http error", e.stackTraceToString())
                 _errorSharedFlow.emit("Connection error")

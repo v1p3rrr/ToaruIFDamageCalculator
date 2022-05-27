@@ -31,6 +31,8 @@ class UnitCalcFragment : Fragment() {
 
     private val safeArgs: UnitCalcFragmentArgs by navArgs()
 
+    lateinit var currentUnit: BattleUnit
+
     @Inject
     lateinit var picasso: Picasso
 
@@ -47,6 +49,26 @@ class UnitCalcFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.charNameTv.setOnClickListener { onUnitSearch() }
+        binding.calcButton.setOnClickListener( { onCalcButtonPressed() })
+    }
+
+    private fun onCalcButtonPressed() {
+        binding.ResultDamage.text = vm.onCalculate(
+            unit = currentUnit,
+            atkType = binding.atkType.selectedItem.toString(),
+            breakpoint = binding.Breakpoint.isChecked,
+            critical = binding.Critical.isChecked,
+            color = binding.ColorType.selectedItem.toString(),
+            gwBonus = binding.GwBonusType.selectedItem.toString(),
+            atkStat = binding.atkStat.text.toString().toInt(),
+            skillLvl = binding.atkLvl.text.toString().toInt(),
+            passive1 = binding.passive1.text.toString().toInt(),
+            passive2 = binding.passive2.text.toString().toInt(),
+            atkUp = binding.atkTypePercent.text.toString().toInt(),
+            critUp = binding.critAtkPercent.text.toString().toInt(),
+            defDown = binding.defDebuffPercent.text.toString().toInt(),
+            colorResDown =  binding.colorDebuffPercent.text.toString().toInt()
+        ).toString()
     }
 
     private fun collectFlows() {
@@ -60,6 +82,7 @@ class UnitCalcFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 vm.unitStateFlow.collectLatest {
+                    currentUnit = it
                     setUnitViews(it)
                 }
             }

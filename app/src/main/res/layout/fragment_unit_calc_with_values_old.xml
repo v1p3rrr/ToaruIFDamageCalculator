@@ -29,7 +29,7 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="18dp"
-                android:src="@drawable/questionmark_placeholder"
+                android:src="@drawable/mikoto_daihaseisai"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="@+id/charNameTv"
                 app:layout_constraintTop_toBottomOf="@id/charNameTv"
@@ -136,29 +136,17 @@
                 app:layout_constraintStart_toEndOf="@id/GwBonus"
                 app:layout_constraintTop_toTopOf="@+id/GwBonus" />
 
-            <Button
-                android:id="@+id/calcButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/light"
-                android:gravity="fill_vertical"
-                android:text="Calculate!"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="@id/GwBonus"
-                app:layout_constraintTop_toBottomOf="@+id/charImg" />
-
             <TextView
                 android:id="@+id/ExpectedDamage"
-                android:layout_width="140dp"
+                android:layout_width="100dp"
                 android:layout_height="36dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="4dp"
                 android:gravity="fill_vertical"
                 android:text="@string/ExpectedDamage"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                android:layout_marginStart="8dp"
-                app:layout_constraintStart_toEndOf="@id/calcButton"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/GwBonus"
                 app:layout_constraintTop_toBottomOf="@+id/charImg" />
 
             <TextView
@@ -248,8 +236,6 @@
                 app:layout_constraintEnd_toEndOf="@id/charNameTv"
                 app:layout_constraintTop_toTopOf="@id/atkStat" />
 
-            <!--   ATK BUFF LAYER    -->
-
             <TextView
                 android:id="@+id/passive2Title"
                 style="@style/InputTitle"
@@ -258,10 +244,10 @@
                 android:text="@string/Passive2Lvl"
                 app:layout_constraintBottom_toTopOf="@id/passive2"
                 app:layout_constraintEnd_toEndOf="@id/passive2"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/passive2"
-                app:layout_constraintTop_toBottomOf="@+id/ResultDamage"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toBottomOf="@+id/ResultDamage" />
+
+            <!--   ATK BUFF LAYER    -->
 
             <TextView
                 android:id="@+id/atkTypeBuff"
@@ -272,66 +258,144 @@
                 android:text="@string/MentalAtkUp"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/atkTypePercent"
+                app:layout_constraintEnd_toStartOf="@id/atkBuffSmall"
                 app:layout_constraintStart_toStartOf="@id/atkStat"
                 app:layout_constraintTop_toBottomOf="@id/atkStat" />
 
             <EditText
-                android:id="@+id/atkTypePercent"
+                android:id="@+id/atkBuffSmall"
+                android:layout_width="64dp"
                 style="@style/InputField"
-                android:layout_width="150dp"
-                app:layout_constraintBottom_toBottomOf="@+id/atkTypeBuff"
-                app:layout_constraintEnd_toStartOf="@+id/AtkTypePercentTitle"
-                app:layout_constraintStart_toEndOf="@+id/atkType"
-                app:layout_constraintTop_toTopOf="@id/atkTypeBuff" />
-
+                app:layout_constraintTop_toTopOf="@id/atkTypeBuff"
+                app:layout_constraintEnd_toStartOf="@id/atkBuffMed"
+                android:layout_marginEnd="12dp"
+                />
 
             <TextView
-                android:id="@+id/AtkTypePercentTitle"
+                android:id="@+id/atkSmallTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/small"
                 style="@style/InputTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="33dp"
-                android:text="@string/percent"
-                android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="@+id/atkTypePercent"
-                app:layout_constraintEnd_toEndOf="@+id/charNameTv"
-                app:layout_constraintTop_toTopOf="@+id/atkTypePercent" />
+                app:layout_constraintBottom_toTopOf="@id/atkBuffSmall"
+                app:layout_constraintEnd_toEndOf="@id/atkBuffSmall"
+                app:layout_constraintStart_toStartOf="@id/atkBuffSmall"
+                app:layout_constraintTop_toBottomOf="@id/atkStat" />
+
+            <EditText
+                android:id="@+id/atkBuffMed"
+                android:layout_width="64dp"
+                style="@style/InputField"
+                app:layout_constraintTop_toTopOf="@id/atkTypeBuff"
+                app:layout_constraintEnd_toStartOf="@id/atkBuffLarge"
+                android:layout_marginEnd="12dp"
+                />
+
+            <TextView
+                android:id="@+id/atkMedTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/medium"
+                style="@style/InputTitle"
+                app:layout_constraintBottom_toTopOf="@id/atkTypeBuff"
+                app:layout_constraintEnd_toEndOf="@id/atkBuffMed"
+                app:layout_constraintStart_toStartOf="@id/atkBuffMed"
+                app:layout_constraintTop_toBottomOf="@id/atkStat" />
+
+            <EditText
+                android:id="@+id/atkBuffLarge"
+                android:layout_width="64dp"
+                style="@style/InputField"
+                app:layout_constraintTop_toTopOf="@id/atkTypeBuff"
+                app:layout_constraintEnd_toEndOf="@id/charNameTv"
+                android:layout_marginStart="12dp"
+                />
+
+            <TextView
+                android:id="@+id/atkLargeTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/large"
+                style="@style/InputTitle"
+                app:layout_constraintBottom_toTopOf="@id/atkTypeBuff"
+                app:layout_constraintEnd_toEndOf="@id/atkBuffLarge"
+                app:layout_constraintStart_toStartOf="@id/atkBuffLarge"
+                app:layout_constraintTop_toBottomOf="@id/atkStat" />
 
             <!--   CRIT DMG LAYER   -->
 
             <TextView
                 android:id="@+id/critDmgBuff"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="32dp"
                 android:layout_marginTop="32dp"
                 android:gravity="fill_vertical"
                 android:text="@string/CritDmgUp"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/critAtkPercent"
+                app:layout_constraintEnd_toStartOf="@id/atkBuffSmall"
                 app:layout_constraintStart_toStartOf="@id/atkStat"
                 app:layout_constraintTop_toBottomOf="@id/atkTypeBuff" />
 
-
             <EditText
-                android:id="@+id/critAtkPercent"
+                android:id="@+id/critBuffSmall"
+                android:layout_width="64dp"
                 style="@style/InputField"
-                android:layout_width="150dp"
-                app:layout_constraintBottom_toBottomOf="@+id/critDmgBuff"
-                app:layout_constraintEnd_toStartOf="@+id/critAtkPercentTitle"
-                app:layout_constraintStart_toEndOf="@+id/atkType"
-                app:layout_constraintTop_toTopOf="@id/critDmgBuff" />
+                app:layout_constraintTop_toTopOf="@id/critDmgBuff"
+                app:layout_constraintEnd_toStartOf="@id/atkBuffMed"
+                android:layout_marginEnd="12dp"
+                />
 
             <TextView
-                android:id="@+id/critAtkPercentTitle"
+                android:id="@+id/critSmallTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/small"
                 style="@style/InputTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="33dp"
-                android:text="@string/percent"
-                android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="@+id/critAtkPercent"
-                app:layout_constraintEnd_toEndOf="@+id/charNameTv"
-                app:layout_constraintTop_toTopOf="@+id/critAtkPercent" />
+                app:layout_constraintBottom_toTopOf="@id/critBuffSmall"
+                app:layout_constraintEnd_toEndOf="@id/critBuffSmall"
+                app:layout_constraintStart_toStartOf="@id/critBuffSmall"
+                app:layout_constraintTop_toBottomOf="@id/atkTypeBuff" />
+
+            <EditText
+                android:id="@+id/critBuffMed"
+                android:layout_width="64dp"
+                style="@style/InputField"
+                app:layout_constraintTop_toTopOf="@id/critDmgBuff"
+                app:layout_constraintEnd_toStartOf="@id/atkBuffLarge"
+                android:layout_marginEnd="12dp"
+                />
+
+            <TextView
+                android:id="@+id/critMedTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/medium"
+                style="@style/InputTitle"
+                app:layout_constraintBottom_toTopOf="@id/critBuffMed"
+                app:layout_constraintEnd_toEndOf="@id/critBuffMed"
+                app:layout_constraintStart_toStartOf="@id/critBuffMed"
+                app:layout_constraintTop_toBottomOf="@id/atkTypeBuff" />
+
+            <EditText
+                android:id="@+id/critBuffLarge"
+                android:layout_width="64dp"
+                style="@style/InputField"
+                app:layout_constraintTop_toTopOf="@id/critDmgBuff"
+                app:layout_constraintEnd_toEndOf="@id/charNameTv"
+                android:layout_marginStart="12dp"
+                />
+
+            <TextView
+                android:id="@+id/critLargeTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/large"
+                style="@style/InputTitle"
+                app:layout_constraintBottom_toTopOf="@id/critBuffLarge"
+                app:layout_constraintEnd_toEndOf="@id/critBuffLarge"
+                app:layout_constraintStart_toStartOf="@id/critBuffLarge"
+                app:layout_constraintTop_toBottomOf="@id/atkTypeBuff" />
 
             <!--   DEF DOWN LAYER   -->
 
@@ -344,31 +408,69 @@
                 android:text="@string/PhysicalDefDown"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@id/defDebuffPercent"
+                app:layout_constraintEnd_toStartOf="@id/atkBuffSmall"
                 app:layout_constraintStart_toStartOf="@id/atkStat"
                 app:layout_constraintTop_toBottomOf="@id/critDmgBuff" />
 
             <EditText
-                android:id="@+id/defDebuffPercent"
+                android:id="@+id/defDebuffSmall"
+                android:layout_width="64dp"
                 style="@style/InputField"
-                android:layout_width="150dp"
-                app:layout_constraintBottom_toBottomOf="@+id/DefenceDebuff"
-                app:layout_constraintEnd_toStartOf="@+id/defDebuffPercentTitle"
-                app:layout_constraintStart_toEndOf="@+id/atkType"
-                app:layout_constraintTop_toTopOf="@id/DefenceDebuff" />
+                app:layout_constraintTop_toTopOf="@id/DefenceDebuff"
+                app:layout_constraintEnd_toStartOf="@id/defDebuffMed"
+                android:layout_marginEnd="12dp"
+                />
 
             <TextView
-                android:id="@+id/defDebuffPercentTitle"
+                android:id="@+id/defSmallTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/small"
                 style="@style/InputTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="33dp"
-                android:text="@string/percent"
-                android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="@+id/defDebuffPercent"
-                app:layout_constraintEnd_toEndOf="@+id/charNameTv"
-                app:layout_constraintTop_toTopOf="@+id/defDebuffPercent" />
+                app:layout_constraintBottom_toTopOf="@id/defDebuffSmall"
+                app:layout_constraintEnd_toEndOf="@id/defDebuffSmall"
+                app:layout_constraintStart_toStartOf="@id/defDebuffSmall"
+                app:layout_constraintTop_toBottomOf="@id/critDmgBuff" />
 
+            <EditText
+                android:id="@+id/defDebuffMed"
+                android:layout_width="64dp"
+                style="@style/InputField"
+                app:layout_constraintTop_toTopOf="@id/DefenceDebuff"
+                app:layout_constraintEnd_toStartOf="@id/defDebuffLarge"
+                android:layout_marginEnd="12dp"
+                />
 
+            <TextView
+                android:id="@+id/defMedTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/medium"
+                style="@style/InputTitle"
+                app:layout_constraintBottom_toTopOf="@id/defDebuffMed"
+                app:layout_constraintEnd_toEndOf="@id/defDebuffMed"
+                app:layout_constraintStart_toStartOf="@id/defDebuffMed"
+                app:layout_constraintTop_toBottomOf="@id/critDmgBuff" />
+
+            <EditText
+                android:id="@+id/defDebuffLarge"
+                android:layout_width="64dp"
+                style="@style/InputField"
+                app:layout_constraintTop_toTopOf="@id/DefenceDebuff"
+                app:layout_constraintEnd_toEndOf="@id/charNameTv"
+                android:layout_marginStart="12dp"
+                />
+
+            <TextView
+                android:id="@+id/defLargeTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/large"
+                style="@style/InputTitle"
+                app:layout_constraintBottom_toTopOf="@id/defDebuffLarge"
+                app:layout_constraintEnd_toEndOf="@id/defDebuffLarge"
+                app:layout_constraintStart_toStartOf="@id/defDebuffLarge"
+                app:layout_constraintTop_toBottomOf="@id/critDmgBuff" />
 
             <!--  COLOR RESISTANCE DOWN LAYER   -->
 
@@ -383,29 +485,69 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/colorDebuffPercent"
+                app:layout_constraintEnd_toStartOf="@id/atkBuffSmall"
                 app:layout_constraintStart_toStartOf="@id/atkStat"
                 app:layout_constraintTop_toBottomOf="@id/DefenceDebuff" />
 
             <EditText
-                android:id="@+id/colorDebuffPercent"
+                android:id="@+id/colorDebuffSmall"
+                android:layout_width="64dp"
                 style="@style/InputField"
-                android:layout_width="150dp"
-                app:layout_constraintBottom_toBottomOf="@+id/ColorDebuff"
-                app:layout_constraintEnd_toStartOf="@+id/colorDebuffPercentTitle"
-                app:layout_constraintStart_toEndOf="@+id/atkType"
-                app:layout_constraintTop_toTopOf="@id/ColorDebuff" />
+                app:layout_constraintTop_toTopOf="@id/ColorDebuff"
+                app:layout_constraintEnd_toStartOf="@id/colorDebuffMed"
+                android:layout_marginEnd="12dp"
+                />
 
             <TextView
-                android:id="@+id/colorDebuffPercentTitle"
+                android:id="@+id/colorSmallTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/small"
                 style="@style/InputTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="33dp"
-                android:text="@string/percent"
-                android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="@+id/colorDebuffPercent"
-                app:layout_constraintEnd_toEndOf="@+id/charNameTv"
-                app:layout_constraintTop_toTopOf="@+id/colorDebuffPercent" />
+                app:layout_constraintBottom_toTopOf="@id/colorDebuffSmall"
+                app:layout_constraintEnd_toEndOf="@id/colorDebuffSmall"
+                app:layout_constraintStart_toStartOf="@id/colorDebuffSmall"
+                app:layout_constraintTop_toBottomOf="@id/DefenceDebuff" />
+
+            <EditText
+                android:id="@+id/colorDebuffMed"
+                android:layout_width="64dp"
+                style="@style/InputField"
+                app:layout_constraintTop_toTopOf="@id/ColorDebuff"
+                app:layout_constraintEnd_toStartOf="@id/colorDebuffLarge"
+                android:layout_marginEnd="12dp"
+                />
+
+            <TextView
+                android:id="@+id/colorMedTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/medium"
+                style="@style/InputTitle"
+                app:layout_constraintBottom_toTopOf="@id/colorDebuffMed"
+                app:layout_constraintEnd_toEndOf="@id/colorDebuffMed"
+                app:layout_constraintStart_toStartOf="@id/colorDebuffMed"
+                app:layout_constraintTop_toBottomOf="@id/DefenceDebuff" />
+
+            <EditText
+                android:id="@+id/colorDebuffLarge"
+                android:layout_width="64dp"
+                style="@style/InputField"
+                app:layout_constraintTop_toTopOf="@id/ColorDebuff"
+                app:layout_constraintEnd_toEndOf="@id/charNameTv"
+                android:layout_marginStart="12dp"
+                />
+
+            <TextView
+                android:id="@+id/colorLargeTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/large"
+                style="@style/InputTitle"
+                app:layout_constraintBottom_toTopOf="@id/colorDebuffLarge"
+                app:layout_constraintEnd_toEndOf="@id/colorDebuffLarge"
+                app:layout_constraintStart_toStartOf="@id/colorDebuffLarge"
+                app:layout_constraintTop_toBottomOf="@id/DefenceDebuff" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

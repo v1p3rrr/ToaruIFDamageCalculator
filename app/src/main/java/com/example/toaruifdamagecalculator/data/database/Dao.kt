@@ -29,6 +29,9 @@ interface Dao {
     @Delete
     suspend fun deleteUnit(unit: BattleUnit)
 
+    @Query("DELETE FROM battleunit")
+    suspend fun clearDb()
+
     @Update
     suspend fun updateUnit(unit: BattleUnit)
 

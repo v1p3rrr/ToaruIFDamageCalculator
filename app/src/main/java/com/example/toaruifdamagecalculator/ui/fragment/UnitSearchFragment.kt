@@ -70,6 +70,7 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
         binding.searchSwipeRefreshLayout.setOnRefreshListener {
             vm.onRefreshUpdateUnitsFromApiToDb(binding.searchSwipeRefreshLayout)
         }
+
     }
 
     private fun collectFlows() {
@@ -99,10 +100,6 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
                 vm.unitsStateFlow.collectLatest {
                     unfilteredList = arrayListOf()
                     (unfilteredList as ArrayList<BattleUnit>).addAll(it)
-                    (unfilteredList as ArrayList<BattleUnit>).addAll(it)
-                    (unfilteredList as ArrayList<BattleUnit>).addAll(it)
-                    (unfilteredList as ArrayList<BattleUnit>).addAll(it)
-
                     unitsAdapter.submitList(unfilteredList)
                 }
             }

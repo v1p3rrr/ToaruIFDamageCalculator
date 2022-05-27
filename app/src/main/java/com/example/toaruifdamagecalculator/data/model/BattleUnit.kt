@@ -24,6 +24,68 @@ data class BattleUnit (
 
     @ColumnInfo
     @SerializedName("imageUrl")
-    var imageUrl: String?
+    var imageUrl: String?,
+
+    @ColumnInfo
+    @SerializedName("imageBias")
+    var imageBias: String? = null,
+
+    @ColumnInfo
+    @SerializedName("color")
+    var color: String? = null,
+
+    @ColumnInfo
+    @SerializedName("primaryAttack")
+    var primaryAttack: String? = null,
+
+
+    @ColumnInfo
+    @SerializedName("skillAtkMultiplier")
+    var skillAtkMultiplier: Int? = 1,
+
+    @ColumnInfo
+    @SerializedName("skillBonusMagic")
+    var skillBonusMagic: Int? = 1,
+
+    @ColumnInfo
+    @SerializedName("skillBonusScience")
+    var skillBonusScience: Int? = 1,
+
+    @ColumnInfo
+    @SerializedName("spAtkMultiplier")
+    var spAtkMultiplier: Int? = 1,
+
+    @ColumnInfo
+    @SerializedName("spBonusType")
+    var spBonusType: String? = null,
+
+    @ColumnInfo
+    @SerializedName("spBonusMultiplier")
+    var spBonusMultiplier: Int? = 1,
+
+
+    @ColumnInfo
+    @SerializedName("passive1Type")
+    var passive1Type: String? = null,
+
+    @ColumnInfo
+    @SerializedName("passive1Activation")
+    var passive1Activation: String? = null,
+
+    @ColumnInfo
+    @SerializedName("passive1Flat")
+    var passive1Flat: String? = null,
+
+    @ColumnInfo
+    @SerializedName("passive2Type")
+    var passive2Type: String? = null,
+
+    @ColumnInfo
+    @SerializedName("passive2Activation")
+    var passive2Activation: String? = null,
+
+    @ColumnInfo
+    @SerializedName("passive2Flat")
+    var passive2Flat: String? = null
 
 ) : Parcelable

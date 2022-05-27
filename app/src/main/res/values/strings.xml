@@ -5,6 +5,7 @@
     <string name="medium">Medium</string>
     <string name="large">Large</string>
     <string name="massive">Massive</string>
+    <string name="percent">%</string>
 
     <string name="AtkType">Attack type</string>
     <string name="Auto">Normal attack</string>
