@@ -9,12 +9,12 @@ data class CalcParams(
     val critical: Boolean,
     val color: String,
     val gwBonus: String,
-    val atkStat: Int,
-    val skillLvl: Int,
-    val passive1: Int,
-    val passive2: Int,
-    val atkUp: Int,
-    val critUp: Int,
-    val defDown: Int,
-    val colorResDown: Int
+    val atkStat: Int?,
+    val skillLvl: Int?,
+    val passive1: Int?,
+    val passive2: Int?,
+    val atkUp: Int?,
+    val critUp: Int?,
+    val defDown: Int?,
+    val colorResDown: Int?
 )

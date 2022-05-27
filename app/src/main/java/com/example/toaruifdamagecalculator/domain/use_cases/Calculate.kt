@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
 class Calculate @Inject constructor(
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    //@IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
     //todo suspend??
     operator fun invoke(calcParams: CalcParams): Int {
@@ -22,37 +22,56 @@ class Calculate @Inject constructor(
         calcParams.unit.passive2Type
 
         when (calcParams.atkType) {
-            "Normal attack" -> result = calcNormalHit(calcParams)
-            "SP" -> result = calcSp(calcParams)
-            "Skill" -> result = calcSkill(calcParams)
+            "Normal attack" -> result = calcNormalHit(calcParams).toInt()
+            "SP" -> result = calcSp(calcParams).toInt()
+            "Skill" -> result = calcSkill(calcParams).toInt()
         }
 
         return result
 
     }
 
-    private fun calcSp(calcParams: CalcParams): Int {
-        var result: Int = 0
-        calcParams.unit.spAtkMultiplier
-        calcParams.unit.spBonusMultiplier
-        calcParams.unit.spBonusType
-
+    private fun calcSp(calcParams: CalcParams): Double {
+        var result: Double = calcNormalHit(calcParams)
+        when (calcParams.unit.spAtkMultiplier) {
+            1 -> result = (result + (calcParams.skillLvl?:1)*2) * 1.25.toInt()
+            2 -> result = (result + (calcParams.skillLvl?:1)*4) * 1.5.toInt()
+            3 -> result = (result + (calcParams.skillLvl?:1)*6) * 1.75.toInt()
+            4 -> result = (result + (calcParams.skillLvl?:1)*8) * 2
+        }
+        // if calcParams.unit.spBonusType true
+        result *= (calcParams.unit.spBonusMultiplier ?: 1)
         return result
     }
 
-    private fun calcSkill(calcParams: CalcParams): Int {
-        var result: Int = 0
-        calcParams.unit.skillAtkMultiplier
-        calcParams.unit.skillBonusMagic
-        calcParams.unit.skillBonusScience
-
+    private fun calcSkill(calcParams: CalcParams): Double {
+        var result: Double = calcNormalHit(calcParams)
+        when (calcParams.unit.skillAtkMultiplier) {
+            1 -> result = (result + (calcParams.skillLvl?:1)*2) * 1.25
+            2 -> result = (result + (calcParams.skillLvl?:1)*4) * 1.5
+            3 -> result = (result + (calcParams.skillLvl?:1)*6) * 1.75
+            4 -> result = (result + (calcParams.skillLvl?:1)*8) * 2
+        }
+        // if calcParams.unit.spBonusType true
+        result *= (calcParams.unit.spBonusMultiplier ?: 1)
         return result
     }
 
-    private fun calcNormalHit(calcParams: CalcParams): Int {
-        return calcParams.atkStat * (if (calcParams.breakpoint) 2 else 1) *
-                (1 + calcParams.atkUp / 100) *
-                (if (calcParams.critical) (1 / calcParams.critUp / 100) * 1.5 else 1).toInt()
+    private fun calcNormalHit(calcParams: CalcParams): Double {
+        var result: Double = calcParams.atkStat?.toDouble()?:0.0
+        //battle + assist stats
+        //matching color bonus
+        //aura+passives
+        result *= (1 + (calcParams.atkUp?:0).toDouble() / 100)
+
+        if (calcParams.critical)
+            result *= (1 + ((calcParams.critUp?:0).toDouble() / 100)) * 1.5
+        result *= if (calcParams.breakpoint) 2 else 1
+        //buff level (gl hf)
+        //passive multiplier (bonus)
+        //def down
+        //res down
+        return result
     }
 
 

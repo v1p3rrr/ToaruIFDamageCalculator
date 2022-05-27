@@ -58,14 +58,14 @@ class UnitCalcViewModel @Inject constructor(
         critical: Boolean,
         color: String,
         gwBonus: String,
-        atkStat: Int,
-        skillLvl: Int,
-        passive1: Int,
-        passive2: Int,
-        atkUp: Int,
-        critUp: Int,
-        defDown: Int,
-        colorResDown: Int
+        atkStat: Int?,
+        skillLvl: Int?,
+        passive1: Int?,
+        passive2: Int?,
+        atkUp: Int?,
+        critUp: Int?,
+        defDown: Int?,
+        colorResDown: Int?
     ) : Int {
         calcParams = CalcParams(
             unit,

@@ -12,20 +12,54 @@
     <string name="Sp">SP</string>
     <string name="Skill">Skill</string>
 
+    <string-array name="attack_type">
+        <item>Normal attack</item>
+        <item>SP</item>
+        <item>Skill</item>
+    </string-array>
+
+    <string name="Red">Red</string>
+    <string name="Blue">Blue</string>
+    <string name="Green">Green</string>
+    <string name="Purple">Purple</string>
+    <string name="Yellow">Yellow</string>
+
+    <string-array name="unit_colors">
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Purple</item>
+        <item>Yellow</item>
+    </string-array>
+
     <string name="Breakpoint">Breakpoint</string>
     <string name="Critical">Critical</string>
+
     <string name="Color">Color</string>
     <string name="Normal">Normal</string>
     <string name="Weak">Weak</string>
     <string name="Resist">Resist</string>
+
+    <string-array name="color_status">
+        <item>Weak</item>
+        <item>Normal</item>
+        <item>Resist</item>
+    </string-array>
+
     <string name="GwBonus">GW Bonus</string>
     <string name="NoBonus">None</string>
     <string name="OneTwelve">1+/12</string>
     <string name="SixTwelve">6+/12</string>
     <string name="ElevenTwelve">11+/12</string>
-    <string name="ExpectedDamage">Expected Damage</string>
 
+    <string-array name="gw_bonus">
+        <item>11+/12</item>
+        <item>6+/12</item>
+        <item>1+/12</item>
+        <item>None</item>
+    </string-array>
 
+    <string name="ExpectedDamage">Expected Damage:</string>
 
     <string name="MentalAtkStat">Mental attack stat</string>
     <string name="PhysicalAtkStat">Physical attack stat</string>
