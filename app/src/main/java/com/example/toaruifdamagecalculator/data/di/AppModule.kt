@@ -26,7 +26,7 @@ import javax.inject.Singleton
 object AppModule {
 
     private const val BASE_URL_PC = "http://192.168.1.73:8080"
-    private const val BASE_URL_LAPTOP = "http://192.168.1.70:8080"
+    private const val BASE_URL_LAPTOP = "http://192.168.137.1:8080"
 
     @Singleton
     @Provides

@@ -7,6 +7,7 @@ import com.example.toaruifdamagecalculator.data.di.annotations.IoDispatcher
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.data.repository.UnitRepositoryImpl
 import com.example.toaruifdamagecalculator.domain.use_cases.Calculate
+import com.example.toaruifdamagecalculator.ui.fragment.CalcState
 import com.example.toaruifdamagecalculator.ui.model.CalcParams
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -34,6 +35,12 @@ class UnitCalcViewModel @Inject constructor(
         )
     )
     val unitStateFlow = _unitStateFlow.asStateFlow()
+    private val _state = MutableStateFlow(
+        CalcState()
+    )
+    val state = _state.asStateFlow()
+
+
 
     private val _errorSharedFlow = MutableSharedFlow<String>()
     val errorSharedFlow = _errorSharedFlow.asSharedFlow()
@@ -43,7 +50,7 @@ class UnitCalcViewModel @Inject constructor(
     fun getUnitById(id: Long) = viewModelScope.launch {
         withContext(ioDispatcher) {
             try {
-                if(unitRepositoryImpl.getUnitById(id)!=null) //todo don't not let return null
+                if(unitRepositoryImpl.getUnitById(id)!=null)
                     _unitStateFlow.value = unitRepositoryImpl.getUnitById(id)!!
             } catch (e: NullPointerException) {
                 Log.e("db error", e.stackTraceToString())

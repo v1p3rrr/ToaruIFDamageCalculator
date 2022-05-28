@@ -1,6 +1,7 @@
 package com.example.toaruifdamagecalculator.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,11 +25,15 @@ import kotlinx.coroutines.flow.collectLatest
 @AndroidEntryPoint
 class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
 
-    private val vm: UnitSearchViewModel by viewModels()
+    private val vm: UnitSearchViewModel by viewModels(
+        ownerProducer = {
+            requireActivity()
+        }
+    )
 
     private lateinit var binding: FragmentUnitSearchBinding
 
-    private lateinit var unitsAdapter: UnitsAdapter //todo надо ли инжектить?
+    private lateinit var unitsAdapter: UnitsAdapter
 
     private var unfilteredList = listOf<BattleUnit>()
 
@@ -44,6 +49,7 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        Log.v("UnitSearch", vm.toString())
         collectFlows()
     }
 

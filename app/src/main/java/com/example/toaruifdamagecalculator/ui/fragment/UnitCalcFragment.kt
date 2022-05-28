@@ -17,6 +17,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.toaruifdamagecalculator.R
+import com.example.toaruifdamagecalculator.data.model.AttackType
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.databinding.FragmentUnitCalcBinding
 import com.example.toaruifdamagecalculator.ui.viewmodel.UnitCalcViewModel
@@ -31,7 +32,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
     //todo SharedPreferences? Save last chosen unit (and maybe inputs)
-    private val vm: UnitCalcViewModel by viewModels()
+    private val vm: UnitCalcViewModel by viewModels(
+        ownerProducer = {requireActivity()}
+    )
 
     private lateinit var binding: FragmentUnitCalcBinding
 
@@ -170,6 +173,11 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     "yellow" -> this.ColorDebuffTv.text = resources.getString(R.string.YellowResDown)
                 }
                 // Remove attack type from spinner if skill/sp doesn't do damage
+
+                val listOfTypes = listOf<AttackType>()
+
+
+
                 if (currentUnit.spAtkMultiplier==null || currentUnit.spAtkMultiplier==0 ||
                     currentUnit.skillAtkMultiplier==null || currentUnit.skillAtkMultiplier==0 ){
                     val changedList = resources.getStringArray(R.array.attack_type).toMutableList()
@@ -205,6 +213,12 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
+    fun setListeners(){
+        binding.apply {
+
+        }
+    }
+
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (parent?.getItemAtPosition(position).toString() == "Normal attack" ) {
             binding.atkLvlTitleTv.visibility = View.INVISIBLE
@@ -213,6 +227,7 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
             binding.atkLvlTitleTv.visibility = View.VISIBLE
             binding.atkLvlEdit.visibility = View.VISIBLE
             binding.atkLvlTitleTv.text = "${parent?.getItemAtPosition(position).toString()} level"
+            binding.atkTypeSpinner
         }
     }
 

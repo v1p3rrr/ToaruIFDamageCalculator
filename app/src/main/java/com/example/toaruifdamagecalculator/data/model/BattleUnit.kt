@@ -86,6 +86,7 @@ data class BattleUnit (
 
     @ColumnInfo
     @SerializedName("passive2Flat")
-    var passive2Flat: String? = null
+    var passive2Flat: String? = null,
 
+//    val attackTypeIds: List<Long>
 ) : Parcelable
