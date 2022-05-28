@@ -35,19 +35,20 @@ class UnitRepositoryImpl @Inject constructor(
     override suspend fun updateUnitsFromApiOnceInFewDays(days: Int) {
         val currentTime = Calendar.getInstance().time
 
-        if (dao.getDate().isEmpty()) {
+        if (dao.getDate().isNullOrEmpty()) {
             dao.setDate(DateBackup(currentTime.time))
         }
         //todo fix connection exception
         // how to learn http response and/or exception types?
-        val diffInMillis = abs(currentTime.time - dao.getDate()[0].timeInMillis)
+        val diffInMillis = abs(currentTime.time - (dao.getDate()?.get(0)?.timeInMillis ?: 0))
         if (TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS) >= days) {
             updateUnitsFromApiToLocal()
-            dao.updateDate(dao.getDate()[0].also { it.timeInMillis = currentTime.time })
+            dao.getDate()?.get(0)?.also { it?.timeInMillis = currentTime.time }
+                ?.let { dao.updateDate(it) }
         }
     }
 
-    override suspend fun getUnitById(id: Long): BattleUnit {
+    override suspend fun getUnitById(id: Long): BattleUnit? {
         return if (id != -1L) dao.getUnitById(id.toString()) else dao.getFirstUnit()
     }
 

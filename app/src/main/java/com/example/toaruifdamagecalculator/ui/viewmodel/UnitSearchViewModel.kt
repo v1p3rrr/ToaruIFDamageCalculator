@@ -32,13 +32,13 @@ class UnitSearchViewModel @Inject constructor(
     fun getAllUnits() = viewModelScope.launch {
         withContext(ioDispatcher){
             try {
-                _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()
+                _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()?: arrayListOf()
                 unitRepositoryImpl.updateUnitsFromApiOnceInFewDays(0) //todo change on release
             } catch (e: Exception) {
                 Log.e("http error", e.stackTraceToString())
                 _errorSharedFlow.emit("Connection error")
             } finally {
-                _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()
+                _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()?: arrayListOf()
             }
         }
     }
@@ -50,7 +50,7 @@ class UnitSearchViewModel @Inject constructor(
         withContext(Dispatchers.IO){
             try {
                 unitRepositoryImpl.updateUnitsFromApiToLocal()
-                _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()
+                _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()?: arrayListOf()
             } catch (e: Exception) {
                 Log.e("http error", e.stackTraceToString())
                 _errorSharedFlow.emit("Connection error")

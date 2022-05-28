@@ -43,9 +43,13 @@ class UnitCalcViewModel @Inject constructor(
     fun getUnitById(id: Long) = viewModelScope.launch {
         withContext(ioDispatcher) {
             try {
-                _unitStateFlow.value = unitRepositoryImpl.getUnitById(id)
-            } catch (e: Exception) {
-                Log.e("http error", e.printStackTrace().toString())
+                if(unitRepositoryImpl.getUnitById(id)!=null) //todo don't not let return null
+                    _unitStateFlow.value = unitRepositoryImpl.getUnitById(id)!!
+            } catch (e: NullPointerException) {
+                Log.e("db error", e.stackTraceToString())
+            }
+            catch (e: Exception) {
+                Log.e("http error", e.stackTraceToString())
                 _errorSharedFlow.emit("Server error")
             }
         }

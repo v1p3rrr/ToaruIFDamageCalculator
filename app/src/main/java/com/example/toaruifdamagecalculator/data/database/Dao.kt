@@ -9,16 +9,16 @@ import com.example.toaruifdamagecalculator.data.model.DateBackup
 interface Dao {
 
     @Query("SELECT * FROM battleunit WHERE id = :id")
-    suspend fun getUnitById(id: String) : BattleUnit
+    suspend fun getUnitById(id: String) : BattleUnit?
 
     @Query("SELECT * FROM battleunit WHERE id=(SELECT MIN(id) FROM battleunit)")
-    suspend fun getFirstUnit() : BattleUnit
+    suspend fun getFirstUnit() : BattleUnit?
 
     @Query("SELECT * FROM battleunit WHERE id=(SELECT MAX(id) FROM battleunit)")
-    suspend fun getLastUnit() : BattleUnit
+    suspend fun getLastUnit() : BattleUnit?
 
     @Query("SELECT * FROM battleunit")
-    suspend fun getAllUnits() : List<BattleUnit>
+    suspend fun getAllUnits() : List<BattleUnit>?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addUnit(unit: BattleUnit)
@@ -38,7 +38,7 @@ interface Dao {
 
 
     @Query("SELECT * FROM date WHERE id=(SELECT MIN(id) FROM date)")
-    suspend fun getDate() : List<DateBackup>
+    suspend fun getDate() : List<DateBackup>?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun setDate(date: DateBackup)
