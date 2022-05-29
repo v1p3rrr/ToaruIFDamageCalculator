@@ -43,7 +43,7 @@ class UnitRepositoryImpl @Inject constructor(
         val diffInMillis = abs(currentTime.time - (dao.getDate()?.get(0)?.timeInMillis ?: 0))
         if (TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS) >= days) {
             updateUnitsFromApiToLocal()
-            dao.getDate()?.get(0)?.also { it?.timeInMillis = currentTime.time }
+            dao.getDate()?.get(0)?.also { it.timeInMillis = currentTime.time }
                 ?.let { dao.updateDate(it) }
         }
     }

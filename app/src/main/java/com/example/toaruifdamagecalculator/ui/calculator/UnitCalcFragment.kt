@@ -2,14 +2,14 @@ package com.example.toaruifdamagecalculator.ui.calculator
 
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputFilter
-import android.text.Spanned
 import android.text.TextWatcher
+import android.view.DragEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.SeekBar
 import android.widget.Spinner
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -44,7 +44,7 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private val safeArgs: UnitCalcFragmentArgs by navArgs()
 
-    lateinit var currentUnit: BattleUnit
+    private lateinit var currentUnit: BattleUnit
 
     @Inject
     lateinit var picasso: Picasso
@@ -86,32 +86,6 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
-//    private fun onCalcButtonPressed() {
-//        if (binding.atkStatEdit.text.toString().isNotEmpty()) {
-//            binding.ResultDamageValueTv.text = vm.onCalculate(
-//                unit = currentUnit,
-//                atkType = binding.atkTypeSpinner.selectedItem.toString(),
-//                breakpoint = binding.breakpointCb.isChecked,
-//                critical = binding.criticalCb.isChecked,
-//                color = binding.colorTypeSpinner.selectedItem.toString(),
-//                gwBonus = binding.gwBonusTypeSpinner.selectedItem.toString(),
-//                atkStat = binding.atkStatEdit.text.toString().toIntOrNull(),
-//                skillLvl = binding.skillLvlEdit.text.toString().toIntOrNull(),
-//                passive1 = binding.passive1Edit.text.toString().toIntOrNull(),
-//                passive2 = binding.passive2Edit.text.toString().toIntOrNull(),
-//                atkUp = binding.atkUpEdit.text.toString().toIntOrNull(),
-//                critUp = binding.critUpEdit.text.toString().toIntOrNull(),
-//                defDown = binding.defDebuffEdit.text.toString().toIntOrNull(),
-//                colorResDown = binding.colorDebuffEdit.text.toString().toIntOrNull()
-//            ).toString()
-//        } else {
-//            Snackbar.make(
-//                binding.root,
-//                "Please enter your attack stat",
-//                Snackbar.LENGTH_LONG
-//            ).show()
-//        }
-//    }
 
     private fun collectFlows() {
         collectErrorFlow()
@@ -161,17 +135,17 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
                             skillLvlEdit.setSelection(skillLvlEdit.length())
                         }
 
-                        critUpEdit.setText((it.critUp ?: "").toString())
-                        critUpEdit.setSelection(critUpEdit.length())
+                        //critUpEdit.setText((it.critUp ?: "").toString())
+                        //critUpEdit.setSelection(critUpEdit.length())
 
-                        atkUpEdit.setText((it.atkUp ?: "").toString())
-                        atkUpEdit.setSelection(atkUpEdit.length())
+                        //atkUpEdit.setText((it.atkUp ?: "").toString())
+                        //atkUpEdit.setSelection(atkUpEdit.length())
 
-                        defDebuffEdit.setText((it.defDown ?: "").toString())
-                        defDebuffEdit.setSelection(defDebuffEdit.length())
+                        //defDebuffEdit.setText((it.defDown ?: "").toString())
+                        //defDebuffEdit.setSelection(defDebuffEdit.length())
 
-                        colorDebuffEdit.setText((it.colorResDown ?: "").toString())
-                        colorDebuffEdit.setSelection(colorDebuffEdit.length())
+                        //colorDebuffEdit.setText((it.colorResDown ?: "").toString())
+                        //colorDebuffEdit.setSelection(colorDebuffEdit.length())
 
                         passive1Edit.setText((it.passive1Level ?: "").toString())
                         passive1Edit.setSelection(passive1Edit.length())
@@ -184,7 +158,7 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         resultDamageValueTv.text = it.expectedDamage.toString()
 
 
-                        var spinnerAdapter = binding.atkTypeSpinner.adapter as ArrayAdapter<String>
+                        var spinnerAdapter = binding.atkTypeSpinner.adapter as ArrayAdapter<String> //todo
                         var itemPos = spinnerAdapter.getPosition(it.atkType.toString())
                         binding.atkTypeSpinner.setSelection(itemPos)
 
@@ -274,7 +248,7 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     //Spinners listeners implementations are onItemSelected/onNothingSelected
-    fun setListeners() {
+    private fun setListeners() {
 
         class MyTextWatcher(val view: View) : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -287,10 +261,10 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         skillLvlEdit -> vm.onSkillLevelEditChangeEvent(s.toString().toIntOrNull())
                         passive1Edit -> vm.onPassive1LevelEditChangeEvent(s.toString().toIntOrNull())
                         passive2Edit -> vm.onPassive2LevelEditChangeEvent(s.toString().toIntOrNull())
-                        atkUpEdit -> vm.onAtkUpEditChangeEvent(s.toString().toIntOrNull())
-                        critUpEdit -> vm.onCritUpEditChangeEvent(s.toString().toIntOrNull())
-                        defDebuffEdit -> vm.onDefDownEditChangeEvent(s.toString().toIntOrNull())
-                        colorDebuffEdit -> vm.onColorResDownEditChangeEvent(s.toString().toIntOrNull())
+                        //atkUpEdit -> vm.onAtkUpEditChangeEvent(s.toString().toIntOrNull())
+                        //critUpEdit -> vm.onCritUpEditChangeEvent(s.toString().toIntOrNull())
+                        //defDebuffEdit -> vm.onDefDownEditChangeEvent(s.toString().toIntOrNull())
+                        //colorDebuffEdit -> vm.onColorResDownEditChangeEvent(s.toString().toIntOrNull())
                     }
 
                 }
@@ -301,15 +275,17 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
         }
 
+        binding.defDebuffSlider.addOnChangeListener {}
+
         binding.apply {
             atkStatEdit.apply { addTextChangedListener(MyTextWatcher(this)); }
             skillLvlEdit.apply { addTextChangedListener(MyTextWatcher(this)) }
             passive1Edit.apply { addTextChangedListener(MyTextWatcher(this)); }
             passive2Edit.apply { addTextChangedListener(MyTextWatcher(this)); }
-            atkUpEdit.apply { addTextChangedListener(MyTextWatcher(this)); }
-            critUpEdit.apply { addTextChangedListener(MyTextWatcher(this)); }
-            defDebuffEdit.apply { addTextChangedListener(MyTextWatcher(this)); }
-            colorDebuffEdit.apply { addTextChangedListener(MyTextWatcher(this)); }
+            //atkUpEdit.apply { addTextChangedListener(MyTextWatcher(this)); }
+            //critUpEdit.apply { addTextChangedListener(MyTextWatcher(this)); }
+            //defDebuffEdit.apply { addTextChangedListener(MyTextWatcher(this)); }
+            //colorDebuffEdit.apply { addTextChangedListener(MyTextWatcher(this)); }
             breakpointCb.setOnCheckedChangeListener { _, isChecked ->
                 vm.onBreakpointCheckBoxChangeEvent(
                     isChecked
@@ -338,7 +314,7 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         skillLvlTitleTv.visibility = View.VISIBLE
                         skillLvlEdit.visibility = View.VISIBLE
                         skillLvlTitleTv.text =
-                            "${parent.getItemAtPosition(position).toString()} level"
+                            "${parent.getItemAtPosition(position)} level"
                     }
                     AttackType.fromString(parent.getItemAtPosition(position).toString())
                         ?.let { vm.onAtkTypeSpinnerChangeEvent(it) }
@@ -360,32 +336,4 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
         binding.skillLvlTitleTv.visibility = View.INVISIBLE
     }
 
-    inner class MinMaxFilter() : InputFilter {
-        private var intMin: Int = 0
-        private var intMax: Int = 0
-
-        // Initialized
-        constructor(minValue: Int, maxValue: Int) : this() {
-            this.intMin = minValue
-            this.intMax = maxValue
-        }
-
-        override fun filter(source: CharSequence, start: Int, end: Int, dest: Spanned, dStart: Int, dEnd: Int): CharSequence? {
-            try {
-                val input = Integer.parseInt(dest.toString() + source.toString())
-                if (isInRange(intMin, intMax, input)) {
-                    return null
-                }
-            } catch (e: NumberFormatException) {
-                e.printStackTrace()
-            }
-            return ""
-        }
-
-        // Check if input c is in between min a and max b and
-        // returns corresponding boolean
-        private fun isInRange(a: Int, b: Int, c: Int): Boolean {
-            return if (b > a) c in a..b else c in b..a
-        }
-    }
 }

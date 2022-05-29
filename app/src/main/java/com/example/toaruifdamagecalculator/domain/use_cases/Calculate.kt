@@ -13,7 +13,7 @@ class Calculate @Inject constructor(
 
     operator fun invoke(calcState: CalcState): Int {
 
-        var result: Int = 0
+        var result = 0
 
         calcState.unit.passive1Activation
         calcState.unit.passive1Flat

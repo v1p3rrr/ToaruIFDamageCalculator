@@ -270,17 +270,11 @@
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
                 app:layout_constraintTop_toBottomOf="@id/atkStatEdit" />
 
-            <com.google.android.material.slider.Slider
+            <EditText
                 android:id="@+id/atkUpSlider"
-                android:background="@color/cardview_dark_background"
+                style="@style/InputField"
                 android:layout_width="150dp"
-                android:layout_height="32dp"
-                android:valueFrom="0"
-                android:valueTo="150"
-                android:stepSize="10"
-                app:thumbColor="@color/white"
-                app:trackColor="@color/light"
-                app:tickColor="@color/light"
+                android:maxLength="3"
                 app:layout_constraintBottom_toBottomOf="@+id/atkUpBuffTv"
                 app:layout_constraintEnd_toStartOf="@+id/AtkTypePercentTitleTv"
                 app:layout_constraintStart_toEndOf="@+id/atkTypeSpinner"
@@ -314,17 +308,11 @@
                 app:layout_constraintTop_toBottomOf="@id/atkUpBuffTv" />
 
 
-            <com.google.android.material.slider.Slider
+            <EditText
                 android:id="@+id/critUpSlider"
-                android:background="@color/cardview_dark_background"
+                style="@style/InputField"
                 android:layout_width="150dp"
-                android:layout_height="32dp"
-                android:valueFrom="0"
-                android:valueTo="150"
-                android:stepSize="10"
-                app:thumbColor="@color/white"
-                app:trackColor="@color/light"
-                app:tickColor="@color/light"
+                android:maxLength="3"
                 app:layout_constraintBottom_toBottomOf="@+id/critDmgBuffTv"
                 app:layout_constraintEnd_toStartOf="@+id/critAtkPercentTitleTv"
                 app:layout_constraintStart_toEndOf="@+id/atkTypeSpinner"
@@ -356,17 +344,16 @@
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
                 app:layout_constraintTop_toBottomOf="@id/critDmgBuffTv" />
 
-            <com.google.android.material.slider.Slider
+            <androidx.appcompat.widget.AppCompatSeekBar
                 android:id="@+id/defDebuffSlider"
                 android:background="@color/cardview_dark_background"
+                android:thumbTint="@color/white"
+                android:progressTint="@color/light"
+                style="@style/InputField"
                 android:layout_width="150dp"
-                android:layout_height="32dp"
-                android:valueFrom="0"
-                android:valueTo="150"
-                android:stepSize="10"
-                app:thumbColor="@color/white"
-                app:trackColor="@color/light"
-                app:tickColor="@color/light"
+                android:maxLength="3"
+                android:min="0"
+                android:max="200"
                 app:layout_constraintBottom_toBottomOf="@+id/DefenceDebuffTv"
                 app:layout_constraintEnd_toStartOf="@+id/defDebuffPercentTitleTv"
                 app:layout_constraintStart_toEndOf="@+id/atkTypeSpinner"
@@ -401,17 +388,11 @@
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
                 app:layout_constraintTop_toBottomOf="@id/DefenceDebuffTv" />
 
-            <com.google.android.material.slider.Slider
+            <EditText
                 android:id="@+id/colorDebuffSlider"
-                android:background="@color/cardview_dark_background"
+                style="@style/InputField"
                 android:layout_width="150dp"
-                android:layout_height="32dp"
-                android:valueFrom="0"
-                android:valueTo="150"
-                android:stepSize="10"
-                app:thumbColor="@color/white"
-                app:trackColor="@color/light"
-                app:tickColor="@color/light"
+                android:maxLength="3"
                 app:layout_constraintBottom_toBottomOf="@+id/ColorDebuffTv"
                 app:layout_constraintEnd_toStartOf="@+id/colorDebuffPercentTitleTv"
                 app:layout_constraintStart_toEndOf="@+id/atkTypeSpinner"
