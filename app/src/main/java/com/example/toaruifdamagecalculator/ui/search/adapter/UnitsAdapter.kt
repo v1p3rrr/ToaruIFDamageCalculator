@@ -1,4 +1,4 @@
-package com.example.toaruifdamagecalculator.ui.adapter
+package com.example.toaruifdamagecalculator.ui.search.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.toaruifdamagecalculator.R
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
-import com.example.toaruifdamagecalculator.ui.fragment.OnRecyclerViewItemClick
+import com.example.toaruifdamagecalculator.ui.search.OnRecyclerViewItemClick
 
 class UnitsAdapter(private val clickListener: OnRecyclerViewItemClick<Long>) :
     ListAdapter<BattleUnit, UnitsAdapter.MyViewHolder>(DiffCallback()) {

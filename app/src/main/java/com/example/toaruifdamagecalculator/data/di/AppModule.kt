@@ -30,21 +30,31 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideUnitApiService(): UnitApiService {
-        val httpLoggingInterceptor = HttpLoggingInterceptor() //todo надо ли разделять на несколько функций?
+    fun provideUnitApiService(retrofit: Retrofit): UnitApiService = retrofit.create()
+
+
+    @Singleton
+    @Provides
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
+        val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor)
-            .build()
-
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL_PC)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create()
+        return httpLoggingInterceptor
     }
+
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+        OkHttpClient.Builder()
+        .addInterceptor(httpLoggingInterceptor)
+        .build()
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(okHttpClient: OkHttpClient) = Retrofit.Builder()
+        .baseUrl(BASE_URL_PC)
+        .client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
     @Singleton
     @Provides
@@ -58,7 +68,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUnitRepository( //todo @Binds??
+    fun provideUnitRepository(
         unitApiService: UnitApiService,
         db: AppRoomDatabase
     ): UnitRepository {

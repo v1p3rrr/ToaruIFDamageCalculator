@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/unitSearchFragment"
-        android:name="com.example.toaruifdamagecalculator.ui.fragment.UnitSearchFragment"
+        android:name="com.example.toaruifdamagecalculator.ui.search.UnitSearchFragment"
         android:label="fragment_unit_search"
         tools:layout="@layout/fragment_unit_search">
         <action
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/unitCalcFragment"
-        android:name="com.example.toaruifdamagecalculator.ui.fragment.UnitCalcFragment"
+        android:name="com.example.toaruifdamagecalculator.ui.calculator.UnitCalcFragment"
         android:label="fragment_unit_calc"
         tools:layout="@layout/fragment_unit_calc" >
         <action

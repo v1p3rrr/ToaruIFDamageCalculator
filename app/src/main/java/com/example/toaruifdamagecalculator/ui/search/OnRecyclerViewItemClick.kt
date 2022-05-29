@@ -1,4 +1,4 @@
-package com.example.toaruifdamagecalculator.ui.fragment
+package com.example.toaruifdamagecalculator.ui.search
 
 import android.view.View
 

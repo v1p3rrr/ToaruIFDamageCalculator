@@ -1,4 +1,4 @@
-package com.example.toaruifdamagecalculator.ui.fragment
+package com.example.toaruifdamagecalculator.ui.search
 
 import android.os.Bundle
 import android.util.Log
@@ -16,8 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.toaruifdamagecalculator.R
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.databinding.FragmentUnitSearchBinding
-import com.example.toaruifdamagecalculator.ui.adapter.UnitsAdapter
-import com.example.toaruifdamagecalculator.ui.viewmodel.UnitSearchViewModel
+import com.example.toaruifdamagecalculator.ui.search.adapter.UnitsAdapter
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -96,7 +95,7 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
         val directions = UnitSearchFragmentDirections.actionUnitSearchFragmentToUnitCalcFragment(
             id = id
         )
-        findNavController().navigate(directions)
+        findNavController().navigate(directions) //todo if id==passed id, popbackstack
     }
 
 

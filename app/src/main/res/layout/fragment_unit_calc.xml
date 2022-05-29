@@ -7,16 +7,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background"
-    tools:context=".ui.fragment.UnitCalcFragment">
+    tools:context=".ui.calculator.UnitCalcFragment">
 
     <ScrollView
         android:id="@+id/calcScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/calcNestedConstraintLayout"
@@ -39,29 +41,29 @@
                 android:id="@+id/charNameTv"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="18dp"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="18dp"
                 android:layout_marginEnd="12dp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/black"
                 android:background="@color/white"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
                 android:id="@+id/atkTypeSpinner"
-                android:layout_width="0dp"
                 style="@style/InputField"
+                android:layout_width="0dp"
                 android:layout_marginEnd="18dp"
                 app:layout_constraintEnd_toStartOf="@+id/charImg"
                 app:layout_constraintStart_toStartOf="@+id/charNameTv"
                 app:layout_constraintTop_toTopOf="@id/charImg" />
 
             <CheckBox
-                android:id="@+id/BreakpointCb"
+                android:id="@+id/breakpointCb"
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="12dp"
@@ -75,7 +77,7 @@
                 app:layout_constraintTop_toBottomOf="@id/atkTypeSpinner" />
 
             <CheckBox
-                android:id="@+id/CriticalCb"
+                android:id="@+id/criticalCb"
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="12dp"
@@ -84,9 +86,9 @@
                 android:text="@string/Critical"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@id/BreakpointCb"
-                app:layout_constraintStart_toStartOf="@id/BreakpointCb"
-                app:layout_constraintTop_toBottomOf="@id/BreakpointCb" />
+                app:layout_constraintEnd_toEndOf="@id/breakpointCb"
+                app:layout_constraintStart_toStartOf="@id/breakpointCb"
+                app:layout_constraintTop_toBottomOf="@id/breakpointCb" />
 
             <TextView
                 android:id="@+id/ColorTv"
@@ -97,24 +99,24 @@
                 android:text="@string/Color"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                app:layout_goneMarginTop="8dp"
-                app:layout_constraintStart_toStartOf="@id/CriticalCb"
-                app:layout_constraintTop_toBottomOf="@id/CriticalCb" />
+                app:layout_constraintStart_toStartOf="@id/criticalCb"
+                app:layout_constraintTop_toBottomOf="@id/criticalCb"
+                app:layout_goneMarginTop="8dp" />
 
             <Spinner
-                android:id="@+id/ColorTypeSpinner"
-                android:layout_width="0dp"
+                android:id="@+id/colorTypeSpinner"
                 style="@style/InputField"
-                app:layout_goneMarginTop="8dp"
+                android:layout_width="0dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/ColorTv"
                 app:layout_constraintEnd_toStartOf="@id/charImg"
                 app:layout_constraintStart_toEndOf="@id/ColorTv"
-                app:layout_constraintTop_toTopOf="@+id/ColorTv" />
+                app:layout_constraintTop_toTopOf="@+id/ColorTv"
+                app:layout_goneMarginTop="8dp" />
 
             <TextView
-                android:id="@+id/GwBonusTv"
+                android:id="@+id/gwBonusTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
@@ -127,45 +129,34 @@
                 app:layout_constraintTop_toBottomOf="@id/ColorTv" />
 
             <Spinner
-                android:id="@+id/GwBonusTypeSpinner"
-                android:layout_width="0dp"
+                android:id="@+id/gwBonusTypeSpinner"
                 style="@style/InputField"
+                android:layout_width="0dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="18dp"
-                app:layout_constraintBottom_toBottomOf="@id/GwBonusTv"
+                app:layout_constraintBottom_toBottomOf="@id/gwBonusTv"
                 app:layout_constraintEnd_toStartOf="@id/charImg"
-                app:layout_constraintStart_toEndOf="@id/GwBonusTv"
-                app:layout_constraintTop_toTopOf="@+id/GwBonusTv" />
-
-            <Button
-                android:id="@+id/calcButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/light"
-                android:gravity="fill_vertical"
-                android:text="Calculate!"
-                app:layout_constraintStart_toStartOf="@id/GwBonusTv"
-                app:layout_constraintTop_toBottomOf="@+id/GwBonusTypeSpinner" />
+                app:layout_constraintStart_toEndOf="@id/gwBonusTv"
+                app:layout_constraintTop_toTopOf="@+id/gwBonusTv" />
 
             <TextView
                 android:id="@+id/ExpectedDamageTv"
                 android:layout_width="140dp"
                 android:layout_height="36dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
                 android:gravity="fill_vertical"
                 android:text="@string/ExpectedDamage"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/calcButton"
-                app:layout_constraintStart_toEndOf="@id/calcButton"
-                app:layout_constraintTop_toTopOf="@+id/calcButton" />
+                app:layout_constraintEnd_toEndOf="@+id/charImg"
+                app:layout_constraintStart_toStartOf="@+id/gwBonusTv"
+                app:layout_constraintTop_toBottomOf="@+id/gwBonusTypeSpinner" />
 
             <TextView
-                android:id="@+id/ResultDamageValueTv"
+                android:id="@+id/resultDamageValueTv"
                 android:layout_width="0dp"
                 android:layout_height="36dp"
                 android:gravity="fill_vertical|end"
-                android:text="0"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -183,8 +174,9 @@
                 style="@style/InputField"
                 android:layout_width="110dp"
                 android:layout_marginTop="36dp"
+                android:maxLength="5"
                 app:layout_constraintStart_toStartOf="@id/atkTypeSpinner"
-                app:layout_constraintTop_toBottomOf="@+id/ResultDamageValueTv" />
+                app:layout_constraintTop_toBottomOf="@+id/resultDamageValueTv" />
 
             <TextView
                 android:id="@+id/atkStatTitleTv"
@@ -197,33 +189,35 @@
                 app:layout_constraintBottom_toTopOf="@id/atkStatEdit"
                 app:layout_constraintEnd_toEndOf="@id/atkStatEdit"
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
-                app:layout_constraintTop_toBottomOf="@+id/ResultDamageValueTv" />
+                app:layout_constraintTop_toBottomOf="@+id/resultDamageValueTv" />
 
             <EditText
-                android:id="@+id/atkLvlEdit"
+                android:id="@+id/skillLvlEdit"
+                style="@style/InputField"
                 android:layout_width="64dp"
                 android:layout_marginEnd="12dp"
-                style="@style/InputField"
+                android:maxLength="3"
                 app:layout_constraintBottom_toBottomOf="@id/atkStatEdit"
                 app:layout_constraintEnd_toStartOf="@id/passive1Edit"
                 app:layout_constraintTop_toTopOf="@id/atkStatEdit" />
 
             <TextView
-                android:id="@+id/atkLvlTitleTv"
+                android:id="@+id/skillLvlTitleTv"
                 style="@style/InputTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/SkillLvl"
-                app:layout_constraintBottom_toTopOf="@id/atkLvlEdit"
-                app:layout_constraintEnd_toEndOf="@id/atkLvlEdit"
-                app:layout_constraintStart_toStartOf="@id/atkLvlEdit"
-                app:layout_constraintTop_toBottomOf="@+id/ResultDamageValueTv" />
+                app:layout_constraintBottom_toTopOf="@id/skillLvlEdit"
+                app:layout_constraintEnd_toEndOf="@id/skillLvlEdit"
+                app:layout_constraintStart_toStartOf="@id/skillLvlEdit"
+                app:layout_constraintTop_toBottomOf="@+id/resultDamageValueTv" />
 
             <EditText
                 android:id="@+id/passive1Edit"
+                style="@style/InputField"
                 android:layout_width="64dp"
                 android:layout_marginEnd="12dp"
-                style="@style/InputField"
+                android:maxLength="3"
                 app:layout_constraintBottom_toBottomOf="@id/atkStatEdit"
                 app:layout_constraintEnd_toStartOf="@id/passive2Edit"
                 app:layout_constraintTop_toTopOf="@id/atkStatEdit" />
@@ -237,17 +231,16 @@
                 app:layout_constraintBottom_toTopOf="@id/passive1Edit"
                 app:layout_constraintEnd_toEndOf="@id/passive1Edit"
                 app:layout_constraintStart_toStartOf="@id/passive1Edit"
-                app:layout_constraintTop_toBottomOf="@+id/ResultDamageValueTv" />
+                app:layout_constraintTop_toBottomOf="@+id/resultDamageValueTv" />
 
             <EditText
                 android:id="@+id/passive2Edit"
-                android:layout_width="64dp"
                 style="@style/InputField"
+                android:layout_width="64dp"
+                android:maxLength="3"
                 app:layout_constraintBottom_toBottomOf="@id/atkStatEdit"
                 app:layout_constraintEnd_toEndOf="@id/charNameTv"
                 app:layout_constraintTop_toTopOf="@id/atkStatEdit" />
-
-            <!--   ATK BUFF LAYER    -->
 
             <TextView
                 android:id="@+id/passive2TitleTv"
@@ -259,11 +252,13 @@
                 app:layout_constraintEnd_toEndOf="@id/passive2Edit"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/passive2Edit"
-                app:layout_constraintTop_toBottomOf="@+id/ResultDamageValueTv"
+                app:layout_constraintTop_toBottomOf="@+id/resultDamageValueTv"
                 app:layout_constraintVertical_bias="1.0" />
 
+            <!--   ATK BUFF LAYER    -->
+
             <TextView
-                android:id="@+id/atkTypeBuffTv"
+                android:id="@+id/atkUpBuffTv"
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="32dp"
@@ -271,18 +266,19 @@
                 android:text="@string/MentalAtkUp"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/atkTypePercentEdit"
+                app:layout_constraintEnd_toStartOf="@+id/atkUpEdit"
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
                 app:layout_constraintTop_toBottomOf="@id/atkStatEdit" />
 
             <EditText
-                android:id="@+id/atkTypePercentEdit"
+                android:id="@+id/atkUpEdit"
                 style="@style/InputField"
                 android:layout_width="150dp"
-                app:layout_constraintBottom_toBottomOf="@+id/atkTypeBuffTv"
+                android:maxLength="3"
+                app:layout_constraintBottom_toBottomOf="@+id/atkUpBuffTv"
                 app:layout_constraintEnd_toStartOf="@+id/AtkTypePercentTitleTv"
                 app:layout_constraintStart_toEndOf="@+id/atkTypeSpinner"
-                app:layout_constraintTop_toTopOf="@id/atkTypeBuffTv" />
+                app:layout_constraintTop_toTopOf="@id/atkUpBuffTv" />
 
 
             <TextView
@@ -292,14 +288,14 @@
                 android:layout_height="33dp"
                 android:text="@string/percent"
                 android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="@+id/atkTypePercentEdit"
+                app:layout_constraintBottom_toBottomOf="@+id/atkUpEdit"
                 app:layout_constraintEnd_toEndOf="@+id/charNameTv"
-                app:layout_constraintTop_toTopOf="@+id/atkTypePercentEdit" />
+                app:layout_constraintTop_toTopOf="@+id/atkUpEdit" />
 
             <!--   CRIT DMG LAYER   -->
 
             <TextView
-                android:id="@+id/critDmgBuffEdit"
+                android:id="@+id/critDmgBuffTv"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="32dp"
@@ -307,19 +303,20 @@
                 android:text="@string/CritDmgUp"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/critAtkPercentEdit"
+                app:layout_constraintEnd_toStartOf="@+id/critUpEdit"
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
-                app:layout_constraintTop_toBottomOf="@id/atkTypeBuffTv" />
+                app:layout_constraintTop_toBottomOf="@id/atkUpBuffTv" />
 
 
             <EditText
-                android:id="@+id/critAtkPercentEdit"
+                android:id="@+id/critUpEdit"
                 style="@style/InputField"
                 android:layout_width="150dp"
-                app:layout_constraintBottom_toBottomOf="@+id/critDmgBuffEdit"
+                android:maxLength="3"
+                app:layout_constraintBottom_toBottomOf="@+id/critDmgBuffTv"
                 app:layout_constraintEnd_toStartOf="@+id/critAtkPercentTitleTv"
                 app:layout_constraintStart_toEndOf="@+id/atkTypeSpinner"
-                app:layout_constraintTop_toTopOf="@id/critDmgBuffEdit" />
+                app:layout_constraintTop_toTopOf="@id/critDmgBuffTv" />
 
             <TextView
                 android:id="@+id/critAtkPercentTitleTv"
@@ -328,9 +325,9 @@
                 android:layout_height="33dp"
                 android:text="@string/percent"
                 android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="@+id/critAtkPercentEdit"
+                app:layout_constraintBottom_toBottomOf="@+id/critUpEdit"
                 app:layout_constraintEnd_toEndOf="@+id/charNameTv"
-                app:layout_constraintTop_toTopOf="@+id/critAtkPercentEdit" />
+                app:layout_constraintTop_toTopOf="@+id/critUpEdit" />
 
             <!--   DEF DOWN LAYER   -->
 
@@ -343,14 +340,15 @@
                 android:text="@string/PhysicalDefDown"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@id/defDebuffPercentEdit"
+                app:layout_constraintEnd_toStartOf="@id/defDebuffEdit"
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
-                app:layout_constraintTop_toBottomOf="@id/critDmgBuffEdit" />
+                app:layout_constraintTop_toBottomOf="@id/critDmgBuffTv" />
 
             <EditText
-                android:id="@+id/defDebuffPercentEdit"
+                android:id="@+id/defDebuffEdit"
                 style="@style/InputField"
                 android:layout_width="150dp"
+                android:maxLength="3"
                 app:layout_constraintBottom_toBottomOf="@+id/DefenceDebuffTv"
                 app:layout_constraintEnd_toStartOf="@+id/defDebuffPercentTitleTv"
                 app:layout_constraintStart_toEndOf="@+id/atkTypeSpinner"
@@ -363,10 +361,9 @@
                 android:layout_height="33dp"
                 android:text="@string/percent"
                 android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="@+id/defDebuffPercentEdit"
+                app:layout_constraintBottom_toBottomOf="@+id/defDebuffEdit"
                 app:layout_constraintEnd_toEndOf="@+id/charNameTv"
-                app:layout_constraintTop_toTopOf="@+id/defDebuffPercentEdit" />
-
+                app:layout_constraintTop_toTopOf="@+id/defDebuffEdit" />
 
 
             <!--  COLOR RESISTANCE DOWN LAYER   -->
@@ -382,14 +379,15 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/colorDebuffPercentEdit"
+                app:layout_constraintEnd_toStartOf="@id/colorDebuffEdit"
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
                 app:layout_constraintTop_toBottomOf="@id/DefenceDebuffTv" />
 
             <EditText
-                android:id="@+id/colorDebuffPercentEdit"
+                android:id="@+id/colorDebuffEdit"
                 style="@style/InputField"
                 android:layout_width="150dp"
+                android:maxLength="3"
                 app:layout_constraintBottom_toBottomOf="@+id/ColorDebuffTv"
                 app:layout_constraintEnd_toStartOf="@+id/colorDebuffPercentTitleTv"
                 app:layout_constraintStart_toEndOf="@+id/atkTypeSpinner"
@@ -402,15 +400,13 @@
                 android:layout_height="33dp"
                 android:text="@string/percent"
                 android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="@+id/colorDebuffPercentEdit"
+                app:layout_constraintBottom_toBottomOf="@+id/colorDebuffEdit"
                 app:layout_constraintEnd_toEndOf="@+id/charNameTv"
-                app:layout_constraintTop_toTopOf="@+id/colorDebuffPercentEdit" />
+                app:layout_constraintTop_toTopOf="@+id/colorDebuffEdit" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

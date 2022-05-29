@@ -1,4 +1,4 @@
-package com.example.toaruifdamagecalculator.ui.viewmodel
+package com.example.toaruifdamagecalculator.ui.search
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

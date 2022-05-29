@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background"
-    tools:context=".ui.fragment.UnitCalcFragment">
+    tools:context=".ui.calculator.UnitCalcFragment">
 
     <ScrollView
         android:id="@+id/calcScrollView"
@@ -61,7 +61,7 @@
                 app:layout_constraintTop_toTopOf="@id/charImg" />
 
             <CheckBox
-                android:id="@+id/BreakpointCb"
+                android:id="@+id/breakpointCb"
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="12dp"
@@ -75,7 +75,7 @@
                 app:layout_constraintTop_toBottomOf="@id/atkTypeSpinner" />
 
             <CheckBox
-                android:id="@+id/CriticalCb"
+                android:id="@+id/criticalCb"
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="12dp"
@@ -84,9 +84,9 @@
                 android:text="@string/Critical"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@id/BreakpointCb"
-                app:layout_constraintStart_toStartOf="@id/BreakpointCb"
-                app:layout_constraintTop_toBottomOf="@id/BreakpointCb" />
+                app:layout_constraintEnd_toEndOf="@id/breakpointCb"
+                app:layout_constraintStart_toStartOf="@id/breakpointCb"
+                app:layout_constraintTop_toBottomOf="@id/breakpointCb" />
 
             <TextView
                 android:id="@+id/ColorTv"
@@ -97,11 +97,11 @@
                 android:text="@string/Color"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@id/CriticalCb"
-                app:layout_constraintTop_toBottomOf="@id/CriticalCb" />
+                app:layout_constraintStart_toStartOf="@id/criticalCb"
+                app:layout_constraintTop_toBottomOf="@id/criticalCb" />
 
             <Spinner
-                android:id="@+id/ColorTypeSpinner"
+                android:id="@+id/colorTypeSpinner"
                 android:layout_width="0dp"
                 style="@style/InputField"
                 android:layout_marginStart="12dp"
@@ -112,7 +112,7 @@
                 app:layout_constraintTop_toTopOf="@+id/ColorTv" />
 
             <TextView
-                android:id="@+id/GwBonusTv"
+                android:id="@+id/gwBonusTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -126,15 +126,15 @@
                 app:layout_constraintTop_toBottomOf="@id/ColorTv" />
 
             <Spinner
-                android:id="@+id/GwBonusTypeSpinner"
+                android:id="@+id/gwBonusTypeSpinner"
                 android:layout_width="0dp"
                 style="@style/InputField"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="18dp"
-                app:layout_constraintBottom_toBottomOf="@id/GwBonusTv"
+                app:layout_constraintBottom_toBottomOf="@id/gwBonusTv"
                 app:layout_constraintEnd_toStartOf="@id/charImg"
-                app:layout_constraintStart_toEndOf="@id/GwBonusTv"
-                app:layout_constraintTop_toTopOf="@+id/GwBonusTv" />
+                app:layout_constraintStart_toEndOf="@id/gwBonusTv"
+                app:layout_constraintTop_toTopOf="@+id/gwBonusTv" />
 
             <TextView
                 android:id="@+id/ExpectedDamageTv"
@@ -146,11 +146,11 @@
                 android:text="@string/ExpectedDamage"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@id/GwBonusTv"
+                app:layout_constraintStart_toStartOf="@id/gwBonusTv"
                 app:layout_constraintTop_toBottomOf="@+id/charImg" />
 
             <TextView
-                android:id="@+id/ResultDamageValueTv"
+                android:id="@+id/resultDamageValueTv"
                 android:layout_width="0dp"
                 android:layout_height="36dp"
                 android:gravity="fill_vertical|end"
@@ -173,7 +173,7 @@
                 android:layout_width="130dp"
                 android:layout_marginTop="36dp"
                 app:layout_constraintStart_toStartOf="@id/atkTypeSpinner"
-                app:layout_constraintTop_toBottomOf="@+id/ResultDamageValueTv" />
+                app:layout_constraintTop_toBottomOf="@+id/resultDamageValueTv" />
 
             <TextView
                 android:id="@+id/atkStatTitleTv"
@@ -186,10 +186,10 @@
                 app:layout_constraintBottom_toTopOf="@id/atkStatEdit"
                 app:layout_constraintEnd_toEndOf="@id/atkStatEdit"
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
-                app:layout_constraintTop_toBottomOf="@+id/ResultDamageValueTv" />
+                app:layout_constraintTop_toBottomOf="@+id/resultDamageValueTv" />
 
             <EditText
-                android:id="@+id/atkLvlEdit"
+                android:id="@+id/skillLvlEdit"
                 android:layout_width="64dp"
                 android:layout_marginEnd="12dp"
                 style="@style/InputField"
@@ -198,15 +198,15 @@
                 app:layout_constraintTop_toTopOf="@id/atkStatEdit" />
 
             <TextView
-                android:id="@+id/atkLvlTitleTv"
+                android:id="@+id/skillLvlTitleTv"
                 style="@style/InputTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/SkillLvl"
-                app:layout_constraintBottom_toTopOf="@id/atkLvlEdit"
-                app:layout_constraintEnd_toEndOf="@id/atkLvlEdit"
-                app:layout_constraintStart_toStartOf="@id/atkLvlEdit"
-                app:layout_constraintTop_toBottomOf="@+id/ResultDamageValueTv" />
+                app:layout_constraintBottom_toTopOf="@id/skillLvlEdit"
+                app:layout_constraintEnd_toEndOf="@id/skillLvlEdit"
+                app:layout_constraintStart_toStartOf="@id/skillLvlEdit"
+                app:layout_constraintTop_toBottomOf="@+id/resultDamageValueTv" />
 
             <EditText
                 android:id="@+id/passive1Edit"
@@ -226,7 +226,7 @@
                 app:layout_constraintBottom_toTopOf="@id/passive1Edit"
                 app:layout_constraintEnd_toEndOf="@id/passive1Edit"
                 app:layout_constraintStart_toStartOf="@id/passive1Edit"
-                app:layout_constraintTop_toBottomOf="@+id/ResultDamageValueTv" />
+                app:layout_constraintTop_toBottomOf="@+id/resultDamageValueTv" />
 
             <EditText
                 android:id="@+id/passive2Edit"
@@ -245,12 +245,12 @@
                 app:layout_constraintBottom_toTopOf="@id/passive2Edit"
                 app:layout_constraintEnd_toEndOf="@id/passive2Edit"
                 app:layout_constraintStart_toStartOf="@id/passive2Edit"
-                app:layout_constraintTop_toBottomOf="@+id/ResultDamageValueTv" />
+                app:layout_constraintTop_toBottomOf="@+id/resultDamageValueTv" />
 
             <!--   ATK BUFF LAYER    -->
 
             <TextView
-                android:id="@+id/atkTypeBuffTv"
+                android:id="@+id/atkUpBuffTv"
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="32dp"
@@ -266,7 +266,7 @@
                 android:id="@+id/atkBuffSmall"
                 android:layout_width="64dp"
                 style="@style/InputField"
-                app:layout_constraintTop_toTopOf="@id/atkTypeBuffTv"
+                app:layout_constraintTop_toTopOf="@id/atkUpBuffTv"
                 app:layout_constraintEnd_toStartOf="@id/atkBuffMed"
                 android:layout_marginEnd="12dp"
                 />
@@ -286,7 +286,7 @@
                 android:id="@+id/atkBuffMed"
                 android:layout_width="64dp"
                 style="@style/InputField"
-                app:layout_constraintTop_toTopOf="@id/atkTypeBuffTv"
+                app:layout_constraintTop_toTopOf="@id/atkUpBuffTv"
                 app:layout_constraintEnd_toStartOf="@id/atkBuffLarge"
                 android:layout_marginEnd="12dp"
                 />
@@ -297,7 +297,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/medium"
                 style="@style/InputTitle"
-                app:layout_constraintBottom_toTopOf="@id/atkTypeBuffTv"
+                app:layout_constraintBottom_toTopOf="@id/atkUpBuffTv"
                 app:layout_constraintEnd_toEndOf="@id/atkBuffMed"
                 app:layout_constraintStart_toStartOf="@id/atkBuffMed"
                 app:layout_constraintTop_toBottomOf="@id/atkStatEdit" />
@@ -306,7 +306,7 @@
                 android:id="@+id/atkBuffLarge"
                 android:layout_width="64dp"
                 style="@style/InputField"
-                app:layout_constraintTop_toTopOf="@id/atkTypeBuffTv"
+                app:layout_constraintTop_toTopOf="@id/atkUpBuffTv"
                 app:layout_constraintEnd_toEndOf="@id/charNameTv"
                 android:layout_marginStart="12dp"
                 />
@@ -317,7 +317,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/large"
                 style="@style/InputTitle"
-                app:layout_constraintBottom_toTopOf="@id/atkTypeBuffTv"
+                app:layout_constraintBottom_toTopOf="@id/atkUpBuffTv"
                 app:layout_constraintEnd_toEndOf="@id/atkBuffLarge"
                 app:layout_constraintStart_toStartOf="@id/atkBuffLarge"
                 app:layout_constraintTop_toBottomOf="@id/atkStatEdit" />
@@ -325,7 +325,7 @@
             <!--   CRIT DMG LAYER   -->
 
             <TextView
-                android:id="@+id/critDmgBuffEdit"
+                android:id="@+id/critDmgBuffTv"
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="32dp"
@@ -335,13 +335,13 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@id/atkBuffSmall"
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
-                app:layout_constraintTop_toBottomOf="@id/atkTypeBuffTv" />
+                app:layout_constraintTop_toBottomOf="@id/atkUpBuffTv" />
 
             <EditText
                 android:id="@+id/critBuffSmall"
                 android:layout_width="64dp"
                 style="@style/InputField"
-                app:layout_constraintTop_toTopOf="@id/critDmgBuffEdit"
+                app:layout_constraintTop_toTopOf="@id/critDmgBuffTv"
                 app:layout_constraintEnd_toStartOf="@id/atkBuffMed"
                 android:layout_marginEnd="12dp"
                 />
@@ -355,13 +355,13 @@
                 app:layout_constraintBottom_toTopOf="@id/critBuffSmall"
                 app:layout_constraintEnd_toEndOf="@id/critBuffSmall"
                 app:layout_constraintStart_toStartOf="@id/critBuffSmall"
-                app:layout_constraintTop_toBottomOf="@id/atkTypeBuffTv" />
+                app:layout_constraintTop_toBottomOf="@id/atkUpBuffTv" />
 
             <EditText
                 android:id="@+id/critBuffMed"
                 android:layout_width="64dp"
                 style="@style/InputField"
-                app:layout_constraintTop_toTopOf="@id/critDmgBuffEdit"
+                app:layout_constraintTop_toTopOf="@id/critDmgBuffTv"
                 app:layout_constraintEnd_toStartOf="@id/atkBuffLarge"
                 android:layout_marginEnd="12dp"
                 />
@@ -375,13 +375,13 @@
                 app:layout_constraintBottom_toTopOf="@id/critBuffMed"
                 app:layout_constraintEnd_toEndOf="@id/critBuffMed"
                 app:layout_constraintStart_toStartOf="@id/critBuffMed"
-                app:layout_constraintTop_toBottomOf="@id/atkTypeBuffTv" />
+                app:layout_constraintTop_toBottomOf="@id/atkUpBuffTv" />
 
             <EditText
                 android:id="@+id/critBuffLarge"
                 android:layout_width="64dp"
                 style="@style/InputField"
-                app:layout_constraintTop_toTopOf="@id/critDmgBuffEdit"
+                app:layout_constraintTop_toTopOf="@id/critDmgBuffTv"
                 app:layout_constraintEnd_toEndOf="@id/charNameTv"
                 android:layout_marginStart="12dp"
                 />
@@ -395,7 +395,7 @@
                 app:layout_constraintBottom_toTopOf="@id/critBuffLarge"
                 app:layout_constraintEnd_toEndOf="@id/critBuffLarge"
                 app:layout_constraintStart_toStartOf="@id/critBuffLarge"
-                app:layout_constraintTop_toBottomOf="@id/atkTypeBuffTv" />
+                app:layout_constraintTop_toBottomOf="@id/atkUpBuffTv" />
 
             <!--   DEF DOWN LAYER   -->
 
@@ -410,7 +410,7 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@id/atkBuffSmall"
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
-                app:layout_constraintTop_toBottomOf="@id/critDmgBuffEdit" />
+                app:layout_constraintTop_toBottomOf="@id/critDmgBuffTv" />
 
             <EditText
                 android:id="@+id/defDebuffSmall"
@@ -430,7 +430,7 @@
                 app:layout_constraintBottom_toTopOf="@id/defDebuffSmall"
                 app:layout_constraintEnd_toEndOf="@id/defDebuffSmall"
                 app:layout_constraintStart_toStartOf="@id/defDebuffSmall"
-                app:layout_constraintTop_toBottomOf="@id/critDmgBuffEdit" />
+                app:layout_constraintTop_toBottomOf="@id/critDmgBuffTv" />
 
             <EditText
                 android:id="@+id/defDebuffMed"
@@ -450,7 +450,7 @@
                 app:layout_constraintBottom_toTopOf="@id/defDebuffMed"
                 app:layout_constraintEnd_toEndOf="@id/defDebuffMed"
                 app:layout_constraintStart_toStartOf="@id/defDebuffMed"
-                app:layout_constraintTop_toBottomOf="@id/critDmgBuffEdit" />
+                app:layout_constraintTop_toBottomOf="@id/critDmgBuffTv" />
 
             <EditText
                 android:id="@+id/defDebuffLarge"
@@ -470,7 +470,7 @@
                 app:layout_constraintBottom_toTopOf="@id/defDebuffLarge"
                 app:layout_constraintEnd_toEndOf="@id/defDebuffLarge"
                 app:layout_constraintStart_toStartOf="@id/defDebuffLarge"
-                app:layout_constraintTop_toBottomOf="@id/critDmgBuffEdit" />
+                app:layout_constraintTop_toBottomOf="@id/critDmgBuffTv" />
 
             <!--  COLOR RESISTANCE DOWN LAYER   -->
 
