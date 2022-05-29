@@ -9,7 +9,7 @@ import javax.inject.Inject
 data class CalcState(
     val unit: BattleUnit,
     val unitId: Int? = null,
-    val atkType: AttackType = AttackType.NORMAL_ATTACK, //todo like that?
+    val atkType: AttackType = AttackType.NORMAL_ATTACK,
     val colorType: ColorType = ColorType.NORMAL,
     val gwBonusType: GwBonusType = GwBonusType.NONE,
     val breakpoint: Boolean = false,

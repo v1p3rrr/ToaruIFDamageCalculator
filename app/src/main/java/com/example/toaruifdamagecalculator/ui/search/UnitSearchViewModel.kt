@@ -3,7 +3,6 @@ package com.example.toaruifdamagecalculator.ui.search
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.toaruifdamagecalculator.data.di.annotations.IoDispatcher
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.data.repository.UnitRepositoryImpl
@@ -17,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+
 
 @HiltViewModel
 class UnitSearchViewModel @Inject constructor(
@@ -43,10 +43,8 @@ class UnitSearchViewModel @Inject constructor(
         }
     }
 
-    //todo obviously fix passing layout as argument
-    // how to not let coroutine job be cancelled after navigating to another screen
-    // so all files could be downloaded successfully?
-    fun onRefreshUpdateUnitsFromApiToDb(refreshLayout: SwipeRefreshLayout) = viewModelScope.launch {
+    fun onRefreshUpdateUnitsFromApiToDb(onRefreshCompletedCallback: OnRefreshCompletedCallback) =
+        viewModelScope.launch {
         withContext(Dispatchers.IO){
             try {
                 unitRepositoryImpl.updateUnitsFromApiToLocal()
@@ -55,7 +53,7 @@ class UnitSearchViewModel @Inject constructor(
                 Log.e("http error", e.stackTraceToString())
                 _errorSharedFlow.emit("Connection error")
             } finally {
-                refreshLayout.isRefreshing = false
+                onRefreshCompletedCallback.onRefreshCompleted()
             }
         }
     }

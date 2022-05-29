@@ -73,7 +73,11 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
         })
 
         binding.searchSwipeRefreshLayout.setOnRefreshListener {
-            vm.onRefreshUpdateUnitsFromApiToDb(binding.searchSwipeRefreshLayout)
+            vm.onRefreshUpdateUnitsFromApiToDb(object : OnRefreshCompletedCallback {
+                override fun onRefreshCompleted(){
+                    binding.searchSwipeRefreshLayout.isRefreshing=false
+                }
+            })
         }
 
     }
@@ -95,7 +99,7 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
         val directions = UnitSearchFragmentDirections.actionUnitSearchFragmentToUnitCalcFragment(
             id = id
         )
-        findNavController().navigate(directions) //todo if id==passed id, popbackstack
+        findNavController().navigate(directions)
     }
 
 

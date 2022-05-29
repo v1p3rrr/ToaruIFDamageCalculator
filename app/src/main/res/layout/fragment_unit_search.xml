@@ -16,6 +16,7 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.SearchView
+            app:iconifiedByDefault="false"
             android:id="@+id/unitSearchView"
             android:background="@color/white"
             android:layout_width="match_parent"

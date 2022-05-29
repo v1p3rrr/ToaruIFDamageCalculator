@@ -14,7 +14,7 @@ import kotlin.math.abs
 
 @Singleton
 class UnitRepositoryImpl @Inject constructor(
-    private val api: UnitApiService, db: AppRoomDatabase //todo ??
+    private val api: UnitApiService, db: AppRoomDatabase
 ) : UnitRepository {
 
     private val dao = db.dao()

@@ -26,7 +26,7 @@ class UnitCalcViewModel @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
-    val tempInitBattleUnit = BattleUnit(
+    private val tempInitBattleUnit = BattleUnit(
         -1,
         "Default Character",
         "Default Card",
@@ -54,8 +54,10 @@ class UnitCalcViewModel @Inject constructor(
     fun getUnitById(id: Long) = viewModelScope.launch {
         withContext(ioDispatcher) {
             try {
-                if (unitRepositoryImpl.getUnitById(id) != null)
-                    _unitFlow.value = unitRepositoryImpl.getUnitById(id)!!
+                if (unitRepositoryImpl.getUnitById(id) != null) {
+                    _unitFlow.value = unitRepositoryImpl.getUnitById(id)?:tempInitBattleUnit
+                    calcState = calcState.copy(unit = unitRepositoryImpl.getUnitById(id)?:tempInitBattleUnit)
+                }
             } catch (e: NullPointerException) {
                 Log.e("db error", e.stackTraceToString())
             } catch (e: Exception) {
