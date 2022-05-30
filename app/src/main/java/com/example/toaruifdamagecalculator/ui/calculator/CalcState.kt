@@ -13,6 +13,7 @@ data class CalcState(
     val gwBonusType: GwBonusType = GwBonusType.NONE,
     val breakpoint: Boolean = false,
     val critical: Boolean = false,
+    val spBonus: Boolean = false,
     val atkStat: Int? = 0,
     val skillLevel: Int? = 0,
     val passive1Level: Int? = 0,

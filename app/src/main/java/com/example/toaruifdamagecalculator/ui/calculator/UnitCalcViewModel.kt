@@ -67,79 +67,85 @@ class UnitCalcViewModel @Inject constructor(
         }
     }
 
-    fun onAtkTypeSpinnerChangeEvent(atkType: AttackType) {
+    fun onAtkTypeSpinnerChange(atkType: AttackType) {
         calcState = calcState.copy(atkType = atkType)
         _state.value = calcState
         Calculate(calcState)
     }
 
-    fun onBreakpointCheckBoxChangeEvent(breakpoint: Boolean) {
+    fun onBreakpointCheckBoxChange(breakpoint: Boolean) {
         calcState = calcState.copy(breakpoint = breakpoint)
         _state.value = calcState
         Calculate(calcState)
     }
 
-    fun onCriticalCheckBoxChangeEvent(critical: Boolean) {
+    fun onCriticalCheckBoxChange(critical: Boolean) {
         calcState = calcState.copy(critical = critical)
         _state.value = calcState
         Calculate(calcState)
     }
 
-    fun onAtkStatEditChangeEvent(atkStat: Int?) {
+    fun onSpBonusCheckBoxChange(spBonus: Boolean) {
+        calcState = calcState.copy(spBonus = spBonus)
+        _state.value = calcState
+        Calculate(calcState)
+    }
+
+    fun onAtkStatEditChange(atkStat: Int?) {
         calcState = calcState.copy(atkStat = atkStat)
         _state.value = calcState
         Calculate(calcState)
     }
 
-    fun onColorTypeSpinnerChangeEvent(colorType: ColorType) {
+    fun onColorTypeSpinnerChange(colorType: ColorType) {
         calcState = calcState.copy(colorType = colorType)
         _state.value = calcState
         Calculate(calcState)
     }
 
-    fun onGwBonusTypeSpinnerChangeEvent(gwBonusType: GwBonusType) {
+    fun onGwBonusTypeSpinnerChange(gwBonusType: GwBonusType) {
         calcState = calcState.copy(gwBonusType = gwBonusType)
         _state.value = calcState
         Calculate(calcState)
     }
 
-    fun onSkillLevelEditChangeEvent(skillLevel: Int?) {
+    fun onSkillLevelEditChange(skillLevel: Int?) {
         calcState = calcState.copy(skillLevel = skillLevel)
         _state.value = calcState
         Calculate(calcState)
     }
 
-    fun onPassive1LevelEditChangeEvent(passive1Level: Int?) {
+    fun onPassive1LevelEditChange(passive1Level: Int?) {
         calcState = calcState.copy(passive1Level = passive1Level)
         _state.value = calcState
         Calculate(calcState)
     }
 
-    fun onPassive2LevelEditChangeEvent(passive2Level: Int?) {
+    fun onPassive2LevelEditChange(passive2Level: Int?) {
         calcState = calcState.copy(passive2Level = passive2Level)
         _state.value = calcState
         Calculate(calcState)
     }
 
-    fun onAtkUpEditChangeEvent(atkUp: Int?) {
+    fun onAtkUpSliderChange(atkUp: Int?) {
         calcState = calcState.copy(atkUp = atkUp)
         _state.value = calcState
         Calculate(calcState)
     }
 
-    fun onCritUpEditChangeEvent(critUp: Int?) {
+    fun onCritUpSliderChange(critUp: Int?) {
         calcState = calcState.copy(critUp = critUp)
         _state.value = calcState
         Calculate(calcState)
     }
 
-    fun onDefDownEditChangeEvent(defDown: Int?) {
+    fun onDefDownSliderChange(defDown: Int?) {
         calcState = calcState.copy(defDown = defDown)
         _state.value = calcState
         Calculate(calcState)
     }
 
-    fun onColorResDownEditChangeEvent(colorResDown: Int?) {
+    fun onColorResDownSliderChange(colorResDown: Int?) {
         calcState = calcState.copy(colorResDown = colorResDown)
         _state.value = calcState
         Calculate(calcState)

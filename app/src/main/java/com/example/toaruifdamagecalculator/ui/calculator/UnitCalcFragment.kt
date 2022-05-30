@@ -3,13 +3,11 @@ package com.example.toaruifdamagecalculator.ui.calculator
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.DragEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.SeekBar
 import android.widget.Spinner
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -34,7 +32,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class UnitCalcFragment : Fragment() {
     //todo SharedPreferences? Save last chosen unit (and maybe inputs)
     private val vm: UnitCalcViewModel by viewModels(
         ownerProducer = { requireActivity() }
@@ -100,7 +98,7 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 vm.unitFlow.collectLatest {
                     currentUnit = it
-                    setUnitViews(it)
+                    setupUnitViews(it)
                 }
             }
         }
@@ -135,17 +133,17 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
                             skillLvlEdit.setSelection(skillLvlEdit.length())
                         }
 
-                        //critUpEdit.setText((it.critUp ?: "").toString())
-                        //critUpEdit.setSelection(critUpEdit.length())
+                        atkUpPercentTv.text = it.atkUp.toString()+"%"
+                        atkUpSlider.value = it.atkUp?.toFloat() ?: 0F
 
-                        //atkUpEdit.setText((it.atkUp ?: "").toString())
-                        //atkUpEdit.setSelection(atkUpEdit.length())
+                        critUpPercentTv.text = it.critUp.toString()+"%"
+                        critUpSlider.value = it.critUp?.toFloat() ?: 0F
 
-                        //defDebuffEdit.setText((it.defDown ?: "").toString())
-                        //defDebuffEdit.setSelection(defDebuffEdit.length())
+                        defDownPercentTv.text = it.defDown.toString()+"%"
+                        defDownSlider.value = it.defDown?.toFloat() ?: 0F
 
-                        //colorDebuffEdit.setText((it.colorResDown ?: "").toString())
-                        //colorDebuffEdit.setSelection(colorDebuffEdit.length())
+                        colorResDownPercentTv.text = it.colorResDown.toString()+"%"
+                        colorResDownSlider.value = it.colorResDown?.toFloat() ?: 0F
 
                         passive1Edit.setText((it.passive1Level ?: "").toString())
                         passive1Edit.setSelection(passive1Edit.length())
@@ -155,8 +153,9 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
                         breakpointCb.isChecked = it.breakpoint
                         criticalCb.isChecked = it.critical
-                        resultDamageValueTv.text = it.expectedDamage.toString()
+                        spBonusCb.isChecked = it.spBonus
 
+                        resultDamageValueTv.text = it.expectedDamage.toString()
 
                         var spinnerAdapter = binding.atkTypeSpinner.adapter as ArrayAdapter<String> //todo
                         var itemPos = spinnerAdapter.getPosition(it.atkType.toString())
@@ -181,7 +180,7 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     //setup views according to selected units, views updates according to state occurs in collectStateFlow()
-    private fun setUnitViews(unit: BattleUnit?) {
+    private fun setupUnitViews(unit: BattleUnit?) {
         binding.apply {
             unit?.let {
                 charNameTv.text = "${it.charName} | ${it.cardName}"
@@ -189,24 +188,31 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 when (it.primaryAttack?.lowercase(Locale.ROOT)) {//todo change to non null
                     "mental" -> {
                         this.atkStatTitleTv.text = resources.getString(R.string.MentalAtkStat)
-                        this.skillLvlTitleTv.text = resources.getString(R.string.MentalAtkUp)
-                        this.DefenceDebuffTv.text = resources.getString(R.string.MentalDefDown)
+                        this.atkUpTitleTv.text = resources.getString(R.string.MentalAtkUp)
+                        this.defDownTitleTv.text = resources.getString(R.string.MentalDefDown)
                     }
                     "physical" -> {
                         this.atkStatTitleTv.text = resources.getString(R.string.PhysicalAtkStat)
-                        this.skillLvlTitleTv.text = resources.getString(R.string.PhysicalAtkUp)
-                        this.DefenceDebuffTv.text = resources.getString(R.string.PhysicalDefDown)
+                        this.atkUpTitleTv.text = resources.getString(R.string.PhysicalAtkUp)
+                        this.defDownTitleTv.text = resources.getString(R.string.PhysicalDefDown)
                     }
                 }
                 when (it.color?.lowercase(Locale.ROOT)) {//todo change to non null
-                    "red" -> this.ColorDebuffTv.text = resources.getString(R.string.RedResDown)
-                    "blue" -> this.ColorDebuffTv.text = resources.getString(R.string.BlueResDown)
-                    "green" -> this.ColorDebuffTv.text = resources.getString(R.string.GreenResDown)
-                    "purple" -> this.ColorDebuffTv.text =
-                        resources.getString(R.string.PurpleResDown)
-                    "yellow" -> this.ColorDebuffTv.text =
-                        resources.getString(R.string.YellowResDown)
+                    "red" -> this.colorResDownTitleTv.text = resources.getString(R.string.RedResDown)
+                    "blue" -> this.colorResDownTitleTv.text = resources.getString(R.string.BlueResDown)
+                    "green" -> this.colorResDownTitleTv.text = resources.getString(R.string.GreenResDown)
+                    "purple" -> this.colorResDownTitleTv.text = resources.getString(R.string.PurpleResDown)
+                    "yellow" -> this.colorResDownTitleTv.text = resources.getString(R.string.YellowResDown)
                 }
+
+                when (it.spBonusType?.lowercase(Locale.ROOT)) {
+                    "magic" -> this.spBonusCb.text = resources.getString(R.string.MagicSpBonus)
+                    "science" -> this.spBonusCb.text = resources.getString(R.string.ScienceSpBonus)
+                    "fullhp" -> this.spBonusCb.text = resources.getString(R.string.FullHpSpBonus)
+                    "belowhalfhp" -> this.spBonusCb.text = resources.getString(R.string.BelowHalfHpSpBonus)
+                    else -> this.spBonusCb.visibility = View.INVISIBLE
+                }
+                this.spBonusCb.isChecked = false //todo why spinner state saves sometimes?
 
 
                 // Remove attack type from spinner if skill/sp doesn't do damage
@@ -223,8 +229,9 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         requireContext(),
                         android.R.layout.simple_spinner_item,
                         changedList
-                    )
+                    ).apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
                 } else setupSpinner(R.array.attack_type, binding.atkTypeSpinner)
+                binding.atkTypeSpinner.onItemSelectedListener = MyOnItemSelectedListener()
 
                 picasso.load(it.imageUrl)
                     .apply { if (it.imageUrl.isNullOrEmpty()) placeholder(R.drawable.questionmark_placeholder) }
@@ -250,90 +257,129 @@ class UnitCalcFragment : Fragment(), AdapterView.OnItemSelectedListener {
     //Spinners listeners implementations are onItemSelected/onNothingSelected
     private fun setListeners() {
 
-        class MyTextWatcher(val view: View) : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.run {
-                    when (view) {
-                        atkStatEdit -> vm.onAtkStatEditChangeEvent(s.toString().toIntOrNull())
-                        skillLvlEdit -> vm.onSkillLevelEditChangeEvent(s.toString().toIntOrNull())
-                        passive1Edit -> vm.onPassive1LevelEditChangeEvent(s.toString().toIntOrNull())
-                        passive2Edit -> vm.onPassive2LevelEditChangeEvent(s.toString().toIntOrNull())
-                        //atkUpEdit -> vm.onAtkUpEditChangeEvent(s.toString().toIntOrNull())
-                        //critUpEdit -> vm.onCritUpEditChangeEvent(s.toString().toIntOrNull())
-                        //defDebuffEdit -> vm.onDefDownEditChangeEvent(s.toString().toIntOrNull())
-                        //colorDebuffEdit -> vm.onColorResDownEditChangeEvent(s.toString().toIntOrNull())
-                    }
-
-                }
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
+        binding.atkUpSlider.addOnChangeListener { _, value, _ ->
+            vm.onAtkUpSliderChange(value.toInt())
         }
 
-        binding.defDebuffSlider.addOnChangeListener {}
+        binding.critUpSlider.addOnChangeListener {  _, value, _ ->
+            vm.onCritUpSliderChange(value.toInt())
+        }
+
+        binding.defDownSlider.addOnChangeListener {  _, value, _ ->
+            vm.onDefDownSliderChange(value.toInt())
+        }
+
+        binding.colorResDownSlider.addOnChangeListener {  _, value, _ ->
+            vm.onColorResDownSliderChange(value.toInt())
+        }
 
         binding.apply {
-            atkStatEdit.apply { addTextChangedListener(MyTextWatcher(this)); }
-            skillLvlEdit.apply { addTextChangedListener(MyTextWatcher(this)) }
-            passive1Edit.apply { addTextChangedListener(MyTextWatcher(this)); }
-            passive2Edit.apply { addTextChangedListener(MyTextWatcher(this)); }
-            //atkUpEdit.apply { addTextChangedListener(MyTextWatcher(this)); }
-            //critUpEdit.apply { addTextChangedListener(MyTextWatcher(this)); }
-            //defDebuffEdit.apply { addTextChangedListener(MyTextWatcher(this)); }
-            //colorDebuffEdit.apply { addTextChangedListener(MyTextWatcher(this)); }
+            atkStatEdit.addTextChangedListener(MyTextWatcher(atkStatEdit))
+            skillLvlEdit.addTextChangedListener(MyTextWatcher(skillLvlEdit))
+            passive1Edit.addTextChangedListener(MyTextWatcher(passive1Edit))
+            passive2Edit.addTextChangedListener(MyTextWatcher(passive2Edit))
+
             breakpointCb.setOnCheckedChangeListener { _, isChecked ->
-                vm.onBreakpointCheckBoxChangeEvent(
+                vm.onBreakpointCheckBoxChange(
                     isChecked
                 )
             }
+
             criticalCb.setOnCheckedChangeListener { _, isChecked ->
-                vm.onCriticalCheckBoxChangeEvent(
+                vm.onCriticalCheckBoxChange(
                     isChecked
                 )
             }
-            atkTypeSpinner.onItemSelectedListener = this@UnitCalcFragment
-            colorTypeSpinner.onItemSelectedListener = this@UnitCalcFragment
-            gwBonusTypeSpinner.onItemSelectedListener = this@UnitCalcFragment
+
+            spBonusCb.setOnCheckedChangeListener { _, isChecked ->
+                vm.onSpBonusCheckBoxChange(
+                    isChecked
+                )
+            }
+
+            atkTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+
+            }
+
+            atkTypeSpinner.onItemSelectedListener = MyOnItemSelectedListener()
+            colorTypeSpinner.onItemSelectedListener = MyOnItemSelectedListener()
+            gwBonusTypeSpinner.onItemSelectedListener = MyOnItemSelectedListener()
+
         }
+
     }
 
-    //Spinner Listener
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        binding.apply {
-            when (parent) {
-                atkTypeSpinner -> {
-                    if (parent.getItemAtPosition(position).toString() == "Normal attack") {
-                        skillLvlTitleTv.visibility = View.INVISIBLE
-                        skillLvlEdit.visibility = View.INVISIBLE
-                    } else {
-                        skillLvlTitleTv.visibility = View.VISIBLE
-                        skillLvlEdit.visibility = View.VISIBLE
-                        skillLvlTitleTv.text =
-                            "${parent.getItemAtPosition(position)} level"
-                    }
-                    AttackType.fromString(parent.getItemAtPosition(position).toString())
-                        ?.let { vm.onAtkTypeSpinnerChangeEvent(it) }
+    inner class MyTextWatcher(val view: View) : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            binding.run {
+                when (view) {
+                    atkStatEdit -> vm.onAtkStatEditChange(s.toString().toIntOrNull())
+                    skillLvlEdit -> vm.onSkillLevelEditChange(s.toString().toIntOrNull())
+                    passive1Edit -> vm.onPassive1LevelEditChange(s.toString().toIntOrNull())
+                    passive2Edit -> vm.onPassive2LevelEditChange(s.toString().toIntOrNull())
                 }
-                colorTypeSpinner -> ColorType.fromString(
-                    parent.getItemAtPosition(position).toString()
-                )
-                    ?.let { vm.onColorTypeSpinnerChangeEvent(it) }
-                gwBonusTypeSpinner -> GwBonusType.fromString(
-                    parent.getItemAtPosition(position).toString()
-                )
-                    ?.let { vm.onGwBonusTypeSpinnerChangeEvent(it) }
             }
         }
+
+        override fun afterTextChanged(s: Editable?) {
+        }
     }
 
-    //Spinner Listener
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        binding.skillLvlTitleTv.visibility = View.INVISIBLE
-    }
+    inner class MyOnItemSelectedListener : AdapterView.OnItemSelectedListener{
+        override fun onItemSelected(
+            parent: AdapterView<*>?,
+            view: View?,
+            position: Int,
+            id: Long
+        ) {
+            binding.apply {
+                when (parent) {
+                    atkTypeSpinner -> {
+                        if (parent.getItemAtPosition(position).toString() != resources.getString(R.string.Sp)) {
+                            spBonusCb.visibility = View.INVISIBLE
+                        }
+                        else  {
+                            spBonusCb.visibility = View.VISIBLE
+                        }
+                        if (parent.getItemAtPosition(position).toString() == resources.getString(R.string.NormalAttack)) {
+                            skillLvlTitleTv.visibility = View.INVISIBLE
+                            skillLvlEdit.visibility = View.INVISIBLE
+                        } else {
+                            skillLvlTitleTv.visibility = View.VISIBLE
+                            skillLvlEdit.visibility = View.VISIBLE
+                            skillLvlTitleTv.text = "${parent.getItemAtPosition(position)} level"
+                        }
+                        AttackType.fromString(parent.getItemAtPosition(position).toString())
+                            ?.let { vm.onAtkTypeSpinnerChange(it) }
+                    }
+                    colorTypeSpinner -> ColorType.fromString(
+                        parent.getItemAtPosition(position).toString()
+                    )?.let { vm.onColorTypeSpinnerChange(it) }
 
+                    gwBonusTypeSpinner -> GwBonusType.fromString(
+                        parent.getItemAtPosition(position).toString()
+                    )?.let { vm.onGwBonusTypeSpinnerChange(it) }
+                }
+            }
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+            binding.skillLvlTitleTv.visibility = View.INVISIBLE
+        }
+
+    }
 }

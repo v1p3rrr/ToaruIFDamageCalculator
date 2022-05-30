@@ -1,6 +1,8 @@
 package com.example.toaruifdamagecalculator.domain.use_cases
 
 import com.example.toaruifdamagecalculator.common.AttackType
+import com.example.toaruifdamagecalculator.common.ColorType
+import com.example.toaruifdamagecalculator.common.GwBonusType
 import com.example.toaruifdamagecalculator.data.di.annotations.IoDispatcher
 import com.example.toaruifdamagecalculator.ui.calculator.CalcState
 import kotlinx.coroutines.CoroutineDispatcher
@@ -13,8 +15,6 @@ class Calculate @Inject constructor(
 
     operator fun invoke(calcState: CalcState): Int {
 
-        var result = 0
-
         calcState.unit.passive1Activation
         calcState.unit.passive1Flat
         calcState.unit.passive1Type
@@ -23,13 +23,22 @@ class Calculate @Inject constructor(
         calcState.unit.passive2Flat
         calcState.unit.passive2Type
 
-        result = when (calcState.atkType) {
-            AttackType.NORMAL_ATTACK -> calcNormalHit(calcState).toInt()
-            AttackType.SP -> calcSp(calcState).toInt()
-            AttackType.SKILL -> calcSkill(calcState).toInt()
+        var result : Double = when (calcState.atkType) {
+            AttackType.NORMAL_ATTACK -> calcNormalHit(calcState)
+            AttackType.SP -> calcSp(calcState)
+            AttackType.SKILL -> calcSkill(calcState)
         }
 
-        return result
+        result *= if (calcState.breakpoint) 2 else 1
+        result *= if (calcState.colorType == ColorType.WEAK) 1.5 else (if (calcState.colorType == ColorType.RESIST) 0.6 else 1.0)
+        when (calcState.gwBonusType){
+            GwBonusType.ELEVEN -> result*=4
+            GwBonusType.SIX -> result*=2.5
+            GwBonusType.ONE -> result*=1.5
+            GwBonusType.NONE -> result*=1
+        }
+
+        return result.toInt()
 
     }
 
@@ -39,9 +48,10 @@ class Calculate @Inject constructor(
             1 -> result = (result + (calcState.skillLevel?:1)*2) * 1.25
             2 -> result = (result + (calcState.skillLevel?:1)*4) * 1.5
             3 -> result = (result + (calcState.skillLevel?:1)*6) * 1.75
-            4 -> result = (result + (calcState.skillLevel?:1)*8) * 2
+            4 -> result = (result + (calcState.skillLevel?:1)*8) * 2.0
         }
-        // if calcParams.unit.spBonusType true
+        //calcState.unit.spBonusType special types
+        if (calcState.spBonus) result *= calcState.unit.spBonusMultiplier!! //?:1
         result *= (calcState.unit.spBonusMultiplier ?: 1)
         return result
     }
@@ -52,7 +62,7 @@ class Calculate @Inject constructor(
             1 -> result = (result + (calcState.skillLevel?:1)*2) * 1.25
             2 -> result = (result + (calcState.skillLevel?:1)*4) * 1.5
             3 -> result = (result + (calcState.skillLevel?:1)*6) * 1.75
-            4 -> result = (result + (calcState.skillLevel?:1)*8) * 2
+            4 -> result = (result + (calcState.skillLevel?:1)*8) * 2.0
         }
         // if calcParams.unit.spBonusType true
         result *= (calcState.unit.spBonusMultiplier ?: 1)
@@ -68,7 +78,7 @@ class Calculate @Inject constructor(
 
         if (calcState.critical)
             result *= (1 + ((calcState.critUp?:0).toDouble() / 100)) * 1.5
-        result *= if (calcState.breakpoint) 2 else 1
+
         //buff level (gl hf)
         //passive multiplier (bonus)
         //def down

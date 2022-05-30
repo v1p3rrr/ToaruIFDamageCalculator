@@ -15,10 +15,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/calcNestedConstraintLayout"
@@ -67,11 +67,11 @@
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="12dp"
-                android:gravity="fill_vertical"
+                android:gravity="center_vertical"
                 android:layoutDirection="rtl"
                 android:text="@string/Breakpoint"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@id/atkTypeSpinner"
                 app:layout_constraintStart_toStartOf="@id/atkTypeSpinner"
                 app:layout_constraintTop_toBottomOf="@id/atkTypeSpinner" />
@@ -81,24 +81,24 @@
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="12dp"
-                android:gravity="fill_vertical"
+                android:gravity="center_vertical"
                 android:layoutDirection="rtl"
                 android:text="@string/Critical"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@id/breakpointCb"
                 app:layout_constraintStart_toStartOf="@id/breakpointCb"
                 app:layout_constraintTop_toBottomOf="@id/breakpointCb" />
 
             <TextView
-                android:id="@+id/ColorTv"
+                android:id="@+id/colorTv"
                 android:layout_width="42dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="12dp"
                 android:gravity="fill_vertical"
                 android:text="@string/Color"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@id/criticalCb"
                 app:layout_constraintTop_toBottomOf="@id/criticalCb"
                 app:layout_goneMarginTop="8dp" />
@@ -109,10 +109,10 @@
                 android:layout_width="0dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="18dp"
-                app:layout_constraintBottom_toBottomOf="@+id/ColorTv"
+                app:layout_constraintBottom_toBottomOf="@+id/colorTv"
                 app:layout_constraintEnd_toStartOf="@id/charImg"
-                app:layout_constraintStart_toEndOf="@id/ColorTv"
-                app:layout_constraintTop_toTopOf="@+id/ColorTv"
+                app:layout_constraintStart_toEndOf="@id/colorTv"
+                app:layout_constraintTop_toTopOf="@+id/colorTv"
                 app:layout_goneMarginTop="8dp" />
 
             <TextView
@@ -123,10 +123,10 @@
                 android:gravity="fill_vertical"
                 android:text="@string/GwBonus"
                 android:textColor="@color/white"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/ColorTv"
-                app:layout_constraintStart_toStartOf="@id/ColorTv"
-                app:layout_constraintTop_toBottomOf="@id/ColorTv" />
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/colorTv"
+                app:layout_constraintStart_toStartOf="@id/colorTv"
+                app:layout_constraintTop_toBottomOf="@id/colorTv" />
 
             <Spinner
                 android:id="@+id/gwBonusTypeSpinner"
@@ -139,10 +139,26 @@
                 app:layout_constraintStart_toEndOf="@id/gwBonusTv"
                 app:layout_constraintTop_toTopOf="@+id/gwBonusTv" />
 
+            <CheckBox
+                android:id="@+id/spBonusCb"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:layoutDirection="rtl"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/expectedDamageTitleTv"
+                app:layout_constraintEnd_toEndOf="@+id/atkStatEdit"
+                app:layout_constraintHorizontal_bias="0.4"
+                app:layout_constraintStart_toStartOf="@+id/atkStatEdit"
+                app:layout_constraintTop_toTopOf="@+id/expectedDamageTitleTv"
+                app:layout_constraintVertical_bias="0.19" />
+
             <TextView
-                android:id="@+id/ExpectedDamageTv"
+                android:id="@+id/expectedDamageTitleTv"
                 android:layout_width="140dp"
                 android:layout_height="36dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="12dp"
                 android:gravity="fill_vertical"
                 android:text="@string/ExpectedDamage"
@@ -160,10 +176,10 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/ExpectedDamageTv"
+                app:layout_constraintBottom_toBottomOf="@+id/expectedDamageTitleTv"
                 app:layout_constraintEnd_toEndOf="@+id/charImg"
-                app:layout_constraintStart_toEndOf="@id/ExpectedDamageTv"
-                app:layout_constraintTop_toTopOf="@id/ExpectedDamageTv" />
+                app:layout_constraintStart_toEndOf="@id/expectedDamageTitleTv"
+                app:layout_constraintTop_toTopOf="@id/expectedDamageTitleTv" />
 
 
             <!--    MAIN STATS LAYER    -->
@@ -173,7 +189,7 @@
                 android:id="@+id/atkStatEdit"
                 style="@style/InputField"
                 android:layout_width="110dp"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="52dp"
                 android:maxLength="5"
                 app:layout_constraintStart_toStartOf="@id/atkTypeSpinner"
                 app:layout_constraintTop_toBottomOf="@+id/resultDamageValueTv" />
@@ -189,7 +205,7 @@
                 app:layout_constraintBottom_toTopOf="@id/atkStatEdit"
                 app:layout_constraintEnd_toEndOf="@id/atkStatEdit"
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
-                app:layout_constraintTop_toBottomOf="@+id/resultDamageValueTv" />
+                app:layout_constraintTop_toBottomOf="@+id/spBonusCb" />
 
             <EditText
                 android:id="@+id/skillLvlEdit"
@@ -258,7 +274,7 @@
             <!--   ATK BUFF LAYER    -->
 
             <TextView
-                android:id="@+id/atkUpBuffTv"
+                android:id="@+id/atkUpTitleTv"
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="32dp"
@@ -272,25 +288,25 @@
 
             <com.google.android.material.slider.Slider
                 android:id="@+id/atkUpSlider"
-                android:background="@color/cardview_dark_background"
                 android:layout_width="150dp"
                 android:layout_height="32dp"
+                android:background="@color/cardview_dark_background"
+                android:stepSize="10"
                 android:valueFrom="0"
                 android:valueTo="150"
-                android:stepSize="10"
-                app:thumbColor="@color/white"
-                app:trackColor="@color/light"
-                app:tickColor="@color/light"
-                app:layout_constraintBottom_toBottomOf="@+id/atkUpBuffTv"
-                app:layout_constraintEnd_toStartOf="@+id/AtkTypePercentTitleTv"
+                app:layout_constraintBottom_toBottomOf="@+id/atkUpTitleTv"
+                app:layout_constraintEnd_toStartOf="@+id/atkUpPercentTv"
                 app:layout_constraintStart_toEndOf="@+id/atkTypeSpinner"
-                app:layout_constraintTop_toTopOf="@id/atkUpBuffTv" />
+                app:layout_constraintTop_toTopOf="@id/atkUpTitleTv"
+                app:thumbColor="@color/white"
+                app:tickColor="@color/light"
+                app:trackColor="@color/light" />
 
 
             <TextView
-                android:id="@+id/AtkTypePercentTitleTv"
+                android:id="@+id/atkUpPercentTv"
                 style="@style/InputTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="70dp"
                 android:layout_height="33dp"
                 android:text="@string/percent"
                 android:textSize="26sp"
@@ -301,7 +317,7 @@
             <!--   CRIT DMG LAYER   -->
 
             <TextView
-                android:id="@+id/critDmgBuffTv"
+                android:id="@+id/critUpTitleTv"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="32dp"
@@ -311,29 +327,29 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/critUpSlider"
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
-                app:layout_constraintTop_toBottomOf="@id/atkUpBuffTv" />
+                app:layout_constraintTop_toBottomOf="@id/atkUpTitleTv" />
 
 
             <com.google.android.material.slider.Slider
                 android:id="@+id/critUpSlider"
-                android:background="@color/cardview_dark_background"
                 android:layout_width="150dp"
                 android:layout_height="32dp"
+                android:background="@color/cardview_dark_background"
+                android:stepSize="10"
                 android:valueFrom="0"
                 android:valueTo="150"
-                android:stepSize="10"
-                app:thumbColor="@color/white"
-                app:trackColor="@color/light"
-                app:tickColor="@color/light"
-                app:layout_constraintBottom_toBottomOf="@+id/critDmgBuffTv"
-                app:layout_constraintEnd_toStartOf="@+id/critAtkPercentTitleTv"
+                app:layout_constraintBottom_toBottomOf="@+id/critUpTitleTv"
+                app:layout_constraintEnd_toStartOf="@+id/critUpPercentTv"
                 app:layout_constraintStart_toEndOf="@+id/atkTypeSpinner"
-                app:layout_constraintTop_toTopOf="@id/critDmgBuffTv" />
+                app:layout_constraintTop_toTopOf="@id/critUpTitleTv"
+                app:thumbColor="@color/white"
+                app:tickColor="@color/light"
+                app:trackColor="@color/light" />
 
             <TextView
-                android:id="@+id/critAtkPercentTitleTv"
+                android:id="@+id/critUpPercentTv"
                 style="@style/InputTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="70dp"
                 android:layout_height="33dp"
                 android:text="@string/percent"
                 android:textSize="26sp"
@@ -344,7 +360,7 @@
             <!--   DEF DOWN LAYER   -->
 
             <TextView
-                android:id="@+id/DefenceDebuffTv"
+                android:id="@+id/defDownTitleTv"
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="32dp"
@@ -352,42 +368,42 @@
                 android:text="@string/PhysicalDefDown"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@id/defDebuffSlider"
+                app:layout_constraintEnd_toStartOf="@id/defDownSlider"
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
-                app:layout_constraintTop_toBottomOf="@id/critDmgBuffTv" />
+                app:layout_constraintTop_toBottomOf="@id/critUpTitleTv" />
 
             <com.google.android.material.slider.Slider
-                android:id="@+id/defDebuffSlider"
-                android:background="@color/cardview_dark_background"
+                android:id="@+id/defDownSlider"
                 android:layout_width="150dp"
                 android:layout_height="32dp"
+                android:background="@color/cardview_dark_background"
+                android:stepSize="10"
                 android:valueFrom="0"
                 android:valueTo="150"
-                android:stepSize="10"
-                app:thumbColor="@color/white"
-                app:trackColor="@color/light"
-                app:tickColor="@color/light"
-                app:layout_constraintBottom_toBottomOf="@+id/DefenceDebuffTv"
-                app:layout_constraintEnd_toStartOf="@+id/defDebuffPercentTitleTv"
+                app:layout_constraintBottom_toBottomOf="@+id/defDownTitleTv"
+                app:layout_constraintEnd_toStartOf="@+id/defDownPercentTv"
                 app:layout_constraintStart_toEndOf="@+id/atkTypeSpinner"
-                app:layout_constraintTop_toTopOf="@id/DefenceDebuffTv" />
+                app:layout_constraintTop_toTopOf="@id/defDownTitleTv"
+                app:thumbColor="@color/white"
+                app:tickColor="@color/light"
+                app:trackColor="@color/light" />
 
             <TextView
-                android:id="@+id/defDebuffPercentTitleTv"
+                android:id="@+id/defDownPercentTv"
                 style="@style/InputTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="70dp"
                 android:layout_height="33dp"
                 android:text="@string/percent"
                 android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="@+id/defDebuffSlider"
+                app:layout_constraintBottom_toBottomOf="@+id/defDownSlider"
                 app:layout_constraintEnd_toEndOf="@+id/charNameTv"
-                app:layout_constraintTop_toTopOf="@+id/defDebuffSlider" />
+                app:layout_constraintTop_toTopOf="@+id/defDownSlider" />
 
 
             <!--  COLOR RESISTANCE DOWN LAYER   -->
 
             <TextView
-                android:id="@+id/ColorDebuffTv"
+                android:id="@+id/colorResDownTitleTv"
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="32dp"
@@ -397,36 +413,36 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/colorDebuffSlider"
+                app:layout_constraintEnd_toStartOf="@id/colorResDownSlider"
                 app:layout_constraintStart_toStartOf="@id/atkStatEdit"
-                app:layout_constraintTop_toBottomOf="@id/DefenceDebuffTv" />
+                app:layout_constraintTop_toBottomOf="@id/defDownTitleTv" />
 
             <com.google.android.material.slider.Slider
-                android:id="@+id/colorDebuffSlider"
-                android:background="@color/cardview_dark_background"
+                android:id="@+id/colorResDownSlider"
                 android:layout_width="150dp"
                 android:layout_height="32dp"
+                android:background="@color/cardview_dark_background"
+                android:stepSize="10"
                 android:valueFrom="0"
                 android:valueTo="150"
-                android:stepSize="10"
-                app:thumbColor="@color/white"
-                app:trackColor="@color/light"
-                app:tickColor="@color/light"
-                app:layout_constraintBottom_toBottomOf="@+id/ColorDebuffTv"
-                app:layout_constraintEnd_toStartOf="@+id/colorDebuffPercentTitleTv"
+                app:layout_constraintBottom_toBottomOf="@+id/colorResDownTitleTv"
+                app:layout_constraintEnd_toStartOf="@+id/colorResDownPercentTv"
                 app:layout_constraintStart_toEndOf="@+id/atkTypeSpinner"
-                app:layout_constraintTop_toTopOf="@id/ColorDebuffTv" />
+                app:layout_constraintTop_toTopOf="@id/colorResDownTitleTv"
+                app:thumbColor="@color/white"
+                app:tickColor="@color/light"
+                app:trackColor="@color/light" />
 
             <TextView
-                android:id="@+id/colorDebuffPercentTitleTv"
+                android:id="@+id/colorResDownPercentTv"
                 style="@style/InputTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="70dp"
                 android:layout_height="33dp"
                 android:text="@string/percent"
                 android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="@+id/colorDebuffSlider"
+                app:layout_constraintBottom_toBottomOf="@+id/colorResDownSlider"
                 app:layout_constraintEnd_toEndOf="@+id/charNameTv"
-                app:layout_constraintTop_toTopOf="@+id/colorDebuffSlider" />
+                app:layout_constraintTop_toTopOf="@+id/colorResDownSlider" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
