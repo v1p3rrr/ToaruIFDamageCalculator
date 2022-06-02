@@ -1,4 +1,4 @@
-package com.example.toaruifdamagecalculator.data.di.annotations
+package com.example.toaruifdamagecalculator.di.annotations
 
 import javax.inject.Qualifier
 

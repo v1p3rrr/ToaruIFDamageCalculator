@@ -1,4 +1,4 @@
-package com.example.toaruifdamagecalculator.data.di
+package com.example.toaruifdamagecalculator.di
 
 import android.content.Context
 import com.squareup.picasso.OkHttp3Downloader

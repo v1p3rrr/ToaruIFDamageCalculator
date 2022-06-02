@@ -19,8 +19,10 @@ class UnitRepositoryImpl @Inject constructor(
 
     private val dao = db.dao()
 
-    override suspend fun getAllUnits() = dao.getAllUnits()
+    override suspend fun getAllUnits() = dao.getAllUnits()?.sortedWith( compareBy({it.charName}, {it.cardName}))
 
+    //todo set different response for different exception types
+    // also maybe update last upd date after refreshing manually?
     override suspend fun updateUnitsFromApiToLocal() : Boolean{
         val unitsFromApi: List<BattleUnit> = api.getAllUnits()
         try {
@@ -31,21 +33,24 @@ class UnitRepositoryImpl @Inject constructor(
             e.printStackTrace()
             return false
         }
-
     }
 
     override suspend fun updateUnitsFromApiOnceInFewDays(days: Int) {
         val currentTime = Calendar.getInstance().time
 
-        if (dao.getDate().isNullOrEmpty()) {
-            dao.setDate(DateBackup(currentTime.time))
+        val lastSavedDate = dao.getDate()
+
+        val diffInMillis: Long = if (lastSavedDate.isNullOrEmpty()) {
+            currentTime.time
+        } else {
+            abs(currentTime.time - lastSavedDate[0].timeInMillis)
         }
-        //todo set different response for different exception types
-        val diffInMillis = abs(currentTime.time - (dao.getDate()?.get(0)?.timeInMillis ?: 0))
-        if (TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS) >= days) {
-            if (updateUnitsFromApiToLocal())
-                dao.getDate()?.get(0)?.also { it.timeInMillis = currentTime.time }
-                    ?.let { dao.updateDate(it) }
+
+        if (TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS) > days) {
+            if (updateUnitsFromApiToLocal()) {
+                if (lastSavedDate.isNullOrEmpty()) dao.setDate(DateBackup(currentTime.time))
+                else dao.updateDate(lastSavedDate[0].run { this.timeInMillis = currentTime.time; this })
+            }
         }
     }
 

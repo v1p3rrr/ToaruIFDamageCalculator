@@ -39,29 +39,33 @@ class Calculate @Inject constructor() {
 
     private fun calcSp(calcState: CalcState): Double {
         var result: Double = calcNormalHit(calcState)
-        when (calcState.unit.spAtkMultiplier) {
-            1 -> result = (result + (calcState.skillLevel?:1)*2) * 1.25
-            2 -> result = (result + (calcState.skillLevel?:1)*4) * 1.5
-            3 -> result = (result + (calcState.skillLevel?:1)*6) * 1.75
-            4 -> result = (result + (calcState.skillLevel?:1)*8) * 2.0
+        if (result!=0.0) {
+            when (calcState.unit.spAtkMultiplier) {
+                1 -> result = (result + (calcState.skillLevel ?: 0) * 2) * 1.25
+                2 -> result = (result + (calcState.skillLevel ?: 0) * 4) * 1.5
+                3 -> result = (result + (calcState.skillLevel ?: 0) * 6) * 1.75
+                4 -> result = (result + (calcState.skillLevel ?: 0) * 8) * 2.0
+            }
+            //calcState.unit.spBonusType special types
+            if (calcState.spBonus) result *= calcState.unit.spBonusMultiplier!! //?:1
+            result *= (calcState.unit.spBonusMultiplier ?: 1).toDouble()
         }
-        //calcState.unit.spBonusType special types
-        if (calcState.spBonus) result *= calcState.unit.spBonusMultiplier!! //?:1
-        result *= (calcState.unit.spBonusMultiplier ?: 1)
         return result
     }
 
     private fun calcSkill(calcState: CalcState): Double {
         var result: Double = calcNormalHit(calcState)
-        when (calcState.unit.skillAtkMultiplier) {
-            1 -> result = (result + (calcState.skillLevel?:1)*2) * 1.25
-            2 -> result = (result + (calcState.skillLevel?:1)*4) * 1.5
-            3 -> result = (result + (calcState.skillLevel?:1)*6) * 1.75
-            4 -> result = (result + (calcState.skillLevel?:1)*8) * 2.0
+        if (result!=0.0) {
+            when (calcState.unit.skillAtkMultiplier) {
+                1 -> result = (result + (calcState.skillLevel ?: 0) * 2) * 1.25
+                2 -> result = (result + (calcState.skillLevel ?: 0) * 4) * 1.5
+                3 -> result = (result + (calcState.skillLevel ?: 0) * 6) * 1.75
+                4 -> result = (result + (calcState.skillLevel ?: 0) * 8) * 2.0
+            }
+            // if calcParams.unit.spBonusType true
+            result *= (calcState.unit.spBonusMultiplier ?: 1).toDouble()
         }
-        // if calcParams.unit.spBonusType true
-        result *= (calcState.unit.spBonusMultiplier ?: 1)
-        return result
+            return result
     }
 
     private fun calcNormalHit(calcState: CalcState): Double {

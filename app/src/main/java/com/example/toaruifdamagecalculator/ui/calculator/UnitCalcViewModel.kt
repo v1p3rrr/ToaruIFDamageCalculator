@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.toaruifdamagecalculator.common.AttackType
 import com.example.toaruifdamagecalculator.common.ColorType
 import com.example.toaruifdamagecalculator.common.GwBonusType
-import com.example.toaruifdamagecalculator.data.di.annotations.IoDispatcher
+import com.example.toaruifdamagecalculator.di.annotations.IoDispatcher
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.data.repository.UnitRepositoryImpl
 import com.example.toaruifdamagecalculator.domain.use_cases.Calculate

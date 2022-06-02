@@ -1,8 +1,8 @@
-package com.example.toaruifdamagecalculator.data.di
+package com.example.toaruifdamagecalculator.di
 
-import com.example.toaruifdamagecalculator.data.di.annotations.DefaultDispatcher
-import com.example.toaruifdamagecalculator.data.di.annotations.IoDispatcher
-import com.example.toaruifdamagecalculator.data.di.annotations.MainDispatcher
+import com.example.toaruifdamagecalculator.di.annotations.DefaultDispatcher
+import com.example.toaruifdamagecalculator.di.annotations.IoDispatcher
+import com.example.toaruifdamagecalculator.di.annotations.MainDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

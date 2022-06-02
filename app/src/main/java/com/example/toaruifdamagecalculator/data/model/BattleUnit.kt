@@ -49,11 +49,11 @@ data class BattleUnit (
 
     @ColumnInfo
     @SerializedName("skillBonusMagic")
-    var skillBonusMagic: Int? = 1,
+    var skillBonusMagic: Float? = 1F,
 
     @ColumnInfo
     @SerializedName("skillBonusScience")
-    var skillBonusScience: Int? = 1,
+    var skillBonusScience: Float? = 1F,
 
     @ColumnInfo
     @SerializedName("spAtkMultiplier")
@@ -65,7 +65,7 @@ data class BattleUnit (
 
     @ColumnInfo
     @SerializedName("spBonusMultiplier")
-    var spBonusMultiplier: Int? = 1,
+    var spBonusMultiplier: Float? = 1F,
 
 
     @ColumnInfo

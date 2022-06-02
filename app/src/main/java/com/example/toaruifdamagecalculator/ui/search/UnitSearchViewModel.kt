@@ -3,7 +3,7 @@ package com.example.toaruifdamagecalculator.ui.search
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.toaruifdamagecalculator.data.di.annotations.IoDispatcher
+import com.example.toaruifdamagecalculator.di.annotations.IoDispatcher
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.data.repository.UnitRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,7 +37,7 @@ class UnitSearchViewModel @Inject constructor(
     fun getAllUnits() = viewModelScope.launch {
         withContext(ioDispatcher){
             try {
-                _unitsStateFlow.value = repository.getAllUnits()?: arrayListOf()
+                _unitsStateFlow.value = repository.getAllUnits() ?: arrayListOf()
                 repository.updateUnitsFromApiOnceInFewDays(2)
             } catch (e: Exception) {
                 Log.e("http error", e.stackTraceToString())
@@ -54,7 +54,7 @@ class UnitSearchViewModel @Inject constructor(
 
     fun onRefreshUpdateUnitsFromApiToDb(onRefreshCompleted: () -> Unit) =
         viewModelScope.launch {
-        withContext(Dispatchers.IO){
+        withContext(ioDispatcher){
             try {
                 repository.updateUnitsFromApiToLocal()
                 _unitsStateFlow.value = repository.getAllUnits()?: arrayListOf()
@@ -62,7 +62,9 @@ class UnitSearchViewModel @Inject constructor(
                 Log.e("http error", e.stackTraceToString())
                 _errorSharedFlow.emit("Connection error")
             } finally {
-                onRefreshCompleted()
+                withContext(Dispatchers.Main) {
+                    onRefreshCompleted()
+                }
             }
         }
     }
