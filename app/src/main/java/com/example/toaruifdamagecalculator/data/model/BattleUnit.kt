@@ -27,6 +27,10 @@ data class BattleUnit (
     var imageUrl: String?,
 
     @ColumnInfo
+    @SerializedName("imageSecondUrl")
+    var imageSecondUrl: String? = null,
+
+    @ColumnInfo
     @SerializedName("imageBias")
     var imageBias: String? = null,
 

@@ -27,6 +27,7 @@ object AppModule {
 
     private const val BASE_URL_PC = "http://192.168.1.73:8080"
     private const val BASE_URL_LAPTOP = "http://192.168.137.1:8080"
+    private const val BASE_URL_HEROKU_SERVER = "https://toaru-if-spring-boot.herokuapp.com"
 
     @Singleton
     @Provides
@@ -51,7 +52,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL_PC)
+        .baseUrl(BASE_URL_HEROKU_SERVER)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

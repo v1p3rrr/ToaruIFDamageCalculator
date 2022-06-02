@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.toaruifdamagecalculator.R
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.databinding.FragmentUnitSearchBinding
 import com.example.toaruifdamagecalculator.ui.search.adapter.UnitsAdapter
@@ -22,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
+class UnitSearchFragment : Fragment() {
 
     private val vm: UnitSearchViewModel by viewModels(
         ownerProducer = {
@@ -40,7 +39,7 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentUnitSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -52,8 +51,13 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
         collectFlows()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.unitSearchView.setQuery("", false)
+    }
+
     private fun init() {
-        unitsAdapter = UnitsAdapter(this@UnitSearchFragment)
+        unitsAdapter = UnitsAdapter{ unitId -> unitId.apply { onUnitSelect(unitId) } }
         vm.getAllUnits()
         binding.searchRecyclerView.apply {
             adapter = unitsAdapter
@@ -67,38 +71,32 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 filterUnitsInRecycler(newText)
+                vm.onSearchQueryChange(newText?:"")
                 return true
             }
 
         })
 
         binding.searchSwipeRefreshLayout.setOnRefreshListener {
-            vm.onRefreshUpdateUnitsFromApiToDb(object : OnRefreshCompletedCallback {
-                override fun onRefreshCompleted(){
-                    binding.searchSwipeRefreshLayout.isRefreshing=false
-                }
-            })
+            vm.onRefreshUpdateUnitsFromApiToDb {
+                binding.searchSwipeRefreshLayout.isRefreshing = false
+            }
         }
-
     }
 
     private fun collectFlows() {
         collectUnitsFlow()
         collectErrorFlow()
+        collectState()
     }
 
-    override fun onItemClick(view: View?, arg: Long) {
-        when (view?.id) {
-            R.id.unitName -> {
-                onUnitSelect(arg)
-            }
-        }
-    }
+
 
     private fun onUnitSelect(id: Long) {
         val directions = UnitSearchFragmentDirections.actionUnitSearchFragmentToUnitCalcFragment(
             id = id
         )
+        binding.unitSearchView.setQuery("", false)
         findNavController().navigate(directions)
     }
 
@@ -107,6 +105,7 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 vm.unitsStateFlow.collectLatest {
+                    it.sortedBy { list -> list.charName }
                     unfilteredList = arrayListOf()
                     (unfilteredList as ArrayList<BattleUnit>).addAll(it)
                     unitsAdapter.submitList(unfilteredList)
@@ -124,6 +123,17 @@ class UnitSearchFragment : Fragment(), OnRecyclerViewItemClick<Long> {
                         it,
                         Snackbar.LENGTH_LONG
                     ).show()
+                }
+            }
+        }
+    }
+
+    private fun collectState(){
+        lifecycleScope.launchWhenStarted {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                vm.state.collectLatest {
+                    binding.unitSearchView.setQuery(it, false)
+                    filterUnitsInRecycler(it)
                 }
             }
         }

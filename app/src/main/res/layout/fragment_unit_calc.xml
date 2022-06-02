@@ -92,10 +92,10 @@
 
             <TextView
                 android:id="@+id/colorTv"
-                android:layout_width="42dp"
+                android:layout_width="48dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="12dp"
-                android:gravity="fill_vertical"
+                android:gravity="center_vertical"
                 android:text="@string/Color"
                 android:textColor="@color/white"
                 android:textSize="14sp"
@@ -120,7 +120,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:gravity="fill_vertical"
+                android:gravity="center_vertical"
                 android:text="@string/GwBonus"
                 android:textColor="@color/white"
                 android:textSize="14sp"
@@ -142,6 +142,7 @@
             <CheckBox
                 android:id="@+id/spBonusCb"
                 android:layout_width="0dp"
+                
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
                 android:layoutDirection="rtl"

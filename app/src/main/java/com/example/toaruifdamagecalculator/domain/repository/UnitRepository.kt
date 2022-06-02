@@ -6,7 +6,7 @@ interface UnitRepository {
 
     suspend fun getAllUnits() : List<BattleUnit>?
 
-    suspend fun updateUnitsFromApiToLocal()
+    suspend fun updateUnitsFromApiToLocal() : Boolean
 
     suspend fun updateUnitsFromApiOnceInFewDays(days: Int)
 

@@ -9,9 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.toaruifdamagecalculator.R
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
-import com.example.toaruifdamagecalculator.ui.search.OnRecyclerViewItemClick
 
-class UnitsAdapter(private val clickListener: OnRecyclerViewItemClick<Long>) :
+class UnitsAdapter(private val onItemClick: (id: Long) -> Long) :
     ListAdapter<BattleUnit, UnitsAdapter.MyViewHolder>(DiffCallback()) {
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -27,7 +26,7 @@ class UnitsAdapter(private val clickListener: OnRecyclerViewItemClick<Long>) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.unitNameTv.text = "${getItem(position).charName} | ${getItem(position).cardName}"
         holder.unitNameTv.setOnClickListener {
-            clickListener.onItemClick(it, getItem(position).id)
+            onItemClick(getItem(holder.layoutPosition).id)
         }
     }
 

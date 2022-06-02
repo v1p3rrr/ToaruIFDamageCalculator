@@ -9,10 +9,7 @@ import com.example.toaruifdamagecalculator.data.repository.UnitRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -20,40 +17,52 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UnitSearchViewModel @Inject constructor(
-    private val unitRepositoryImpl: UnitRepositoryImpl,
+    private val repository: UnitRepositoryImpl,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher) : ViewModel() {
-
-    private val _unitsStateFlow = MutableStateFlow<List<BattleUnit>>(ArrayList())
-    val unitsStateFlow = _unitsStateFlow.asStateFlow()
 
     private val _errorSharedFlow = MutableSharedFlow<String>()
     val errorSharedFlow = _errorSharedFlow.asSharedFlow()
 
+    private val _searchState = MutableStateFlow(
+        ""
+    )
+
+    val state = _searchState.asStateFlow()
+
+    private val _unitsStateFlow = MutableStateFlow<List<BattleUnit>>(ArrayList())
+    val unitsStateFlow = _unitsStateFlow.asStateFlow()
+
+
+
     fun getAllUnits() = viewModelScope.launch {
         withContext(ioDispatcher){
             try {
-                _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()?: arrayListOf()
-                unitRepositoryImpl.updateUnitsFromApiOnceInFewDays(0) //todo change on release
+                _unitsStateFlow.value = repository.getAllUnits()?: arrayListOf()
+                repository.updateUnitsFromApiOnceInFewDays(2)
             } catch (e: Exception) {
                 Log.e("http error", e.stackTraceToString())
                 _errorSharedFlow.emit("Connection error")
             } finally {
-                _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()?: arrayListOf()
+                _unitsStateFlow.value = repository.getAllUnits()?: arrayListOf()
             }
         }
     }
 
-    fun onRefreshUpdateUnitsFromApiToDb(onRefreshCompletedCallback: OnRefreshCompletedCallback) =
+    fun onSearchQueryChange(query: String) {
+        _searchState.value = query
+    }
+
+    fun onRefreshUpdateUnitsFromApiToDb(onRefreshCompleted: () -> Unit) =
         viewModelScope.launch {
         withContext(Dispatchers.IO){
             try {
-                unitRepositoryImpl.updateUnitsFromApiToLocal()
-                _unitsStateFlow.value = unitRepositoryImpl.getAllUnits()?: arrayListOf()
+                repository.updateUnitsFromApiToLocal()
+                _unitsStateFlow.value = repository.getAllUnits()?: arrayListOf()
             } catch (e: Exception) {
                 Log.e("http error", e.stackTraceToString())
                 _errorSharedFlow.emit("Connection error")
             } finally {
-                onRefreshCompletedCallback.onRefreshCompleted()
+                onRefreshCompleted()
             }
         }
     }

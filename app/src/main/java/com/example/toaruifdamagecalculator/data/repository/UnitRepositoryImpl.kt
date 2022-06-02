@@ -5,7 +5,6 @@ import com.example.toaruifdamagecalculator.data.database.AppRoomDatabase
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.data.model.DateBackup
 import com.example.toaruifdamagecalculator.domain.repository.UnitRepository
-import java.lang.Exception
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -14,20 +13,23 @@ import kotlin.math.abs
 
 @Singleton
 class UnitRepositoryImpl @Inject constructor(
-    private val api: UnitApiService, db: AppRoomDatabase
+    private val api: UnitApiService,
+    db: AppRoomDatabase
 ) : UnitRepository {
 
     private val dao = db.dao()
 
     override suspend fun getAllUnits() = dao.getAllUnits()
 
-    override suspend fun updateUnitsFromApiToLocal() {
+    override suspend fun updateUnitsFromApiToLocal() : Boolean{
         val unitsFromApi: List<BattleUnit> = api.getAllUnits()
         try {
             dao.clearDb()
             dao.addMultipleUnits(unitsFromApi)
+            return true
         } catch (e: Exception){
             e.printStackTrace()
+            return false
         }
 
     }
@@ -38,13 +40,12 @@ class UnitRepositoryImpl @Inject constructor(
         if (dao.getDate().isNullOrEmpty()) {
             dao.setDate(DateBackup(currentTime.time))
         }
-        //todo fix connection exception
-        // how to learn http response and/or exception types?
+        //todo set different response for different exception types
         val diffInMillis = abs(currentTime.time - (dao.getDate()?.get(0)?.timeInMillis ?: 0))
         if (TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS) >= days) {
-            updateUnitsFromApiToLocal()
-            dao.getDate()?.get(0)?.also { it.timeInMillis = currentTime.time }
-                ?.let { dao.updateDate(it) }
+            if (updateUnitsFromApiToLocal())
+                dao.getDate()?.get(0)?.also { it.timeInMillis = currentTime.time }
+                    ?.let { dao.updateDate(it) }
         }
     }
 

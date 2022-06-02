@@ -22,8 +22,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UnitCalcViewModel @Inject constructor(
-    private val unitRepositoryImpl: UnitRepositoryImpl,
+    private val repository: UnitRepositoryImpl,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    private val calculator : Calculate
 ) : ViewModel() {
 
     private val tempInitBattleUnit = BattleUnit(
@@ -31,19 +32,13 @@ class UnitCalcViewModel @Inject constructor(
         "Default Character",
         "Default Card",
         null,
+        null
     )
-
-    val calculator = Calculate()
-
-    private val _unitFlow = MutableStateFlow(
-        tempInitBattleUnit
-    )
-    val unitFlow = _unitFlow.asStateFlow()
 
     var calcState = CalcState(tempInitBattleUnit)
 
     private val _state = MutableStateFlow(
-        CalcState(tempInitBattleUnit)
+        calcState
     )
     val state = _state.asStateFlow()
 
@@ -51,12 +46,17 @@ class UnitCalcViewModel @Inject constructor(
     val errorSharedFlow = _errorSharedFlow.asSharedFlow()
 
 
+    private var _unitFlow = MutableStateFlow(
+        tempInitBattleUnit
+    )
+    val unitFlow = _unitFlow.asStateFlow()
+
     fun getUnitById(id: Long) = viewModelScope.launch {
         withContext(ioDispatcher) {
             try {
-                if (unitRepositoryImpl.getUnitById(id) != null) {
-                    _unitFlow.value = unitRepositoryImpl.getUnitById(id)?:tempInitBattleUnit
-                    calcState = calcState.copy(unit = unitRepositoryImpl.getUnitById(id)?:tempInitBattleUnit)
+                if (repository.getUnitById(id) != null) {
+                    _unitFlow.value = repository.getUnitById(id)?:tempInitBattleUnit
+                    calcState = calcState.copy(unit = repository.getUnitById(id)?:tempInitBattleUnit)
                 }
             } catch (e: NullPointerException) {
                 Log.e("db error", e.stackTraceToString())

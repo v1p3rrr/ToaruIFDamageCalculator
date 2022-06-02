@@ -33,7 +33,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class UnitCalcFragment : Fragment() {
-    //todo SharedPreferences? Save last chosen unit (and maybe inputs)
+    //todo SharedPreferences? (preferences data store) Save last chosen unit (and maybe inputs)
     private val vm: UnitCalcViewModel by viewModels(
         ownerProducer = { requireActivity() }
     )
@@ -65,7 +65,7 @@ class UnitCalcFragment : Fragment() {
     private fun init() {
 
         binding.charNameTv.setOnClickListener { onUnitSearch() }
-        //binding.calcButton.setOnClickListener { onCalcButtonPressed() }
+        binding.charImg.setOnClickListener{ onImageClick() }
 
         setupSpinner(R.array.attack_type, binding.atkTypeSpinner)
         setupSpinner(R.array.color_status, binding.colorTypeSpinner)
@@ -124,7 +124,6 @@ class UnitCalcFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 vm.state.collectLatest {
                     binding.apply {
-                        //todo battleunit id??
                         atkStatEdit.setText((it.atkStat ?: "").toString())
                         atkStatEdit.setSelection(atkStatEdit.length())
 
@@ -157,7 +156,7 @@ class UnitCalcFragment : Fragment() {
 
                         resultDamageValueTv.text = it.expectedDamage.toString()
 
-                        var spinnerAdapter = binding.atkTypeSpinner.adapter as ArrayAdapter<String> //todo
+                        var spinnerAdapter = binding.atkTypeSpinner.adapter as ArrayAdapter<String>
                         var itemPos = spinnerAdapter.getPosition(it.atkType.toString())
                         binding.atkTypeSpinner.setSelection(itemPos)
 
@@ -177,6 +176,17 @@ class UnitCalcFragment : Fragment() {
     private fun onUnitSearch() {
         val directions = UnitCalcFragmentDirections.actionUnitCalcFragmentToUnitSearchFragment()
         findNavController().navigate(directions)
+    }
+
+    private fun onImageClick() {
+        var imageUrlsArray = arrayOf<String>()
+        if (!currentUnit.imageUrl.isNullOrEmpty() || !currentUnit.imageSecondUrl.isNullOrEmpty()) {
+            currentUnit.imageUrl?.let { imageUrlsArray = imageUrlsArray.plus(it) }
+            currentUnit.imageSecondUrl?.let { imageUrlsArray = imageUrlsArray.plus(it) }
+            val directions =
+                UnitCalcFragmentDirections.actionUnitCalcFragmentToUnitImagesFragment(imageUrls = imageUrlsArray)
+            findNavController().navigate(directions)
+        }
     }
 
     //setup views according to selected units, views updates according to state occurs in collectStateFlow()
@@ -212,7 +222,7 @@ class UnitCalcFragment : Fragment() {
                     "belowhalfhp" -> this.spBonusCb.text = resources.getString(R.string.BelowHalfHpSpBonus)
                     else -> this.spBonusCb.visibility = View.INVISIBLE
                 }
-                this.spBonusCb.isChecked = false //todo why spinner state saves sometimes?
+                this.spBonusCb.isChecked = false
 
 
                 // Remove attack type from spinner if skill/sp doesn't do damage
@@ -349,7 +359,7 @@ class UnitCalcFragment : Fragment() {
             binding.apply {
                 when (parent) {
                     atkTypeSpinner -> {
-                        if (parent.getItemAtPosition(position).toString() != resources.getString(R.string.Sp)) {
+                        if (parent.getItemAtPosition(position).toString() != resources.getString(R.string.Sp) || currentUnit.spBonusType.isNullOrEmpty()) {
                             spBonusCb.visibility = View.INVISIBLE
                         }
                         else  {

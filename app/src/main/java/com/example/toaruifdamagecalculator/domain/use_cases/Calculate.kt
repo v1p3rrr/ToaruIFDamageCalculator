@@ -3,15 +3,10 @@ package com.example.toaruifdamagecalculator.domain.use_cases
 import com.example.toaruifdamagecalculator.common.AttackType
 import com.example.toaruifdamagecalculator.common.ColorType
 import com.example.toaruifdamagecalculator.common.GwBonusType
-import com.example.toaruifdamagecalculator.data.di.annotations.IoDispatcher
 import com.example.toaruifdamagecalculator.ui.calculator.CalcState
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
-class Calculate @Inject constructor(
-    //@IoDispatcher private val ioDispatcher: CoroutineDispatcher,
-) {
-    //todo how to make injects correctly?
+class Calculate @Inject constructor() {
 
     operator fun invoke(calcState: CalcState): Int {
 

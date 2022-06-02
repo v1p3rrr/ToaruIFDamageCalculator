@@ -35,7 +35,7 @@
     <string name="Breakpoint">Breakpoint</string>
     <string name="Critical">Critical</string>
 
-    <string name="Color">Color</string>
+    <string name="Color">Enemy Color</string>
     <string name="Normal">Normal</string>
     <string name="Weak">Weak</string>
     <string name="Resist">Resist</string>

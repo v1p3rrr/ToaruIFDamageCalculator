@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.toaruifdamagecalculator.data.model.BattleUnit
 import com.example.toaruifdamagecalculator.data.model.DateBackup
 
-@Database(entities = [BattleUnit::class, DateBackup::class], version = 4)
+@Database(entities = [BattleUnit::class, DateBackup::class], version = 1)
 abstract class AppRoomDatabase : RoomDatabase() {
 
     abstract fun dao() : Dao

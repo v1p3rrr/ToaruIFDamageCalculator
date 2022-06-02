@@ -14,22 +14,33 @@
             android:id="@+id/action_unitSearchFragment_to_unitCalcFragment"
             app:destination="@id/unitCalcFragment"
             app:popUpTo="@id/unitCalcFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
         android:id="@+id/unitCalcFragment"
         android:name="com.example.toaruifdamagecalculator.ui.calculator.UnitCalcFragment"
         android:label="fragment_unit_calc"
-        tools:layout="@layout/fragment_unit_calc" >
+        tools:layout="@layout/fragment_unit_calc">
         <action
             android:id="@+id/action_unitCalcFragment_to_unitSearchFragment"
             app:destination="@id/unitSearchFragment" />
-
+        <action
+            android:id="@+id/action_unitCalcFragment_to_UnitImagesFragment"
+            app:destination="@id/unitImagesFragment" />
         <argument
             android:name="id"
-            app:argType="long"
-            android:defaultValue="-1L"/>
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/unitImagesFragment"
+        android:name="com.example.toaruifdamagecalculator.ui.character_images.UnitImagesFragment"
+        android:label="UnitImagesFragment">
+        <argument
+            android:name="imageUrls"
+            app:argType="string[]"
+            app:nullable="false" />
     </fragment>
 
 </navigation>
