@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background"
-    tools:context=".ui.search.UnitSearchFragment">
+    tools:context="com.vpr.toaruifdamagecalculator.ui.search.UnitSearchFragment">
 
     <LinearLayout
         android:id="@+id/searchLinearLayout"

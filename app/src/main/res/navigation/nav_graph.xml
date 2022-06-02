@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/unitSearchFragment"
-        android:name="com.example.toaruifdamagecalculator.ui.search.UnitSearchFragment"
+        android:name="com.vpr.toaruifdamagecalculator.ui.search.UnitSearchFragment"
         android:label="fragment_unit_search"
         tools:layout="@layout/fragment_unit_search">
         <action
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/unitCalcFragment"
-        android:name="com.example.toaruifdamagecalculator.ui.calculator.UnitCalcFragment"
+        android:name="com.vpr.toaruifdamagecalculator.ui.calculator.UnitCalcFragment"
         android:label="fragment_unit_calc"
         tools:layout="@layout/fragment_unit_calc">
         <action
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/unitImagesFragment"
-        android:name="com.example.toaruifdamagecalculator.ui.character_images.UnitImagesFragment"
+        android:name="com.vpr.toaruifdamagecalculator.ui.character_images.UnitImagesFragment"
         android:label="UnitImagesFragment">
         <argument
             android:name="imageUrls"
