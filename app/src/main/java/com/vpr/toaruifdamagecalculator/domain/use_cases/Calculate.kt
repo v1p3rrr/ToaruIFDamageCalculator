@@ -48,7 +48,7 @@ class Calculate @Inject constructor() {
             }
             //calcState.unit.spBonusType special types
             if (calcState.spBonus) result *= calcState.unit.spBonusMultiplier!! //?:1
-            result *= (calcState.unit.spBonusMultiplier ?: 1).toDouble()
+            result *= ( if(calcState.unit.spBonusMultiplier!=0F) calcState.unit.spBonusMultiplier?:1 else 1).toDouble()
         }
         return result
     }
@@ -57,13 +57,12 @@ class Calculate @Inject constructor() {
         var result: Double = calcNormalHit(calcState)
         if (result!=0.0) {
             when (calcState.unit.skillAtkMultiplier) {
-                1 -> result = (result + (calcState.skillLevel ?: 0) * 2) * 1.25
-                2 -> result = (result + (calcState.skillLevel ?: 0) * 4) * 1.5
-                3 -> result = (result + (calcState.skillLevel ?: 0) * 6) * 1.75
-                4 -> result = (result + (calcState.skillLevel ?: 0) * 8) * 2.0
+                1 -> result = (result + (calcState.skillLevel ?: 0) * 2) * 0.8
+                2 -> result = (result + (calcState.skillLevel ?: 0) * 4) * 1
+                3 -> result = (result + (calcState.skillLevel ?: 0) * 6) * 1.2
+                //4 -> result = (result + (calcState.skillLevel ?: 0) * 8) * 1 // does not exist atm
             }
-            // if calcParams.unit.spBonusType true
-            result *= (calcState.unit.spBonusMultiplier ?: 1).toDouble()
+            // todo activate checkbox if calcParams.unit.skillBonusMagic/Science>1
         }
             return result
     }

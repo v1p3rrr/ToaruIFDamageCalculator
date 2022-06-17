@@ -36,11 +36,11 @@ data class BattleUnit (
 
     @ColumnInfo
     @SerializedName("color")
-    var color: String? = null,
+    var color: String? = "Unknown",
 
     @ColumnInfo
     @SerializedName("primaryAttack")
-    var primaryAttack: String? = null,
+    var primaryAttack: String? = "Unknown",
 
 
     @ColumnInfo

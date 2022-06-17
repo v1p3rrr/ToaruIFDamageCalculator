@@ -35,7 +35,7 @@ class UnitCalcViewModel @Inject constructor(
         null
     )
 
-    var calcState = CalcState(tempInitBattleUnit)
+    private var calcState = CalcState(tempInitBattleUnit)
 
     private val _state = MutableStateFlow(
         calcState
