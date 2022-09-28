@@ -12,10 +12,24 @@
     <string name="Sp">SP</string>
     <string name="Skill">Skill</string>
 
-    <string-array name="attack_type">
+    <string-array name="attack_type_all">
         <item>Normal attack</item>
         <item>SP</item>
         <item>Skill</item>
+    </string-array>
+
+    <string-array name="attack_type_no_skill">
+        <item>Normal attack</item>
+        <item>SP</item>
+    </string-array>
+
+    <string-array name="attack_type_no_sp">
+        <item>Normal attack</item>
+        <item>Skill</item>
+    </string-array>
+
+    <string-array name="attack_type_normal">
+        <item>Normal attack</item>
     </string-array>
 
     <string name="Red">Red</string>

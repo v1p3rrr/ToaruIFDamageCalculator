@@ -1,5 +1,6 @@
 package com.vpr.toaruifdamagecalculator.domain.use_cases
 
+import com.google.common.truth.Truth.assertThat
 import com.vpr.toaruifdamagecalculator.common.AttackType
 import com.vpr.toaruifdamagecalculator.common.ColorType
 import com.vpr.toaruifdamagecalculator.common.GwBonusType
@@ -74,7 +75,7 @@ class CalculateTest {
     fun `calc state by default returns 0`() {
         val calcState = CalcState(battleUnitMinMultipliers)
         val result = calculator(calcState)
-        assert(result == 0)
+        assertThat(result).isEqualTo(0)
     }
 
     @Test
@@ -85,7 +86,7 @@ class CalculateTest {
             atkStat = 1000
         )
         val result = calculator(calcState)
-        assert(result == 1000)
+        assertThat(result).isEqualTo(1000)
     }
 
     @Test
@@ -97,7 +98,7 @@ class CalculateTest {
             colorType = ColorType.WEAK
         )
         val result = calculator(calcState)
-        assert(result == 1500)
+        assertThat(result).isEqualTo(1500)
     }
 
     @Test
@@ -109,7 +110,7 @@ class CalculateTest {
             colorType = ColorType.RESIST
         )
         val result = calculator(calcState)
-        assert(result == 600)
+        assertThat(result).isEqualTo(600)
     }
 
     @Test
@@ -121,7 +122,7 @@ class CalculateTest {
             gwBonusType = GwBonusType.ELEVEN
         )
         val result = calculator(calcState)
-        assert(result == 4000)
+        assertThat(result).isEqualTo(4000)
     }
 
     @Test
@@ -134,7 +135,7 @@ class CalculateTest {
             colorType = ColorType.WEAK
         )
         val result = calculator(calcState)
-        assert(result == 6000)
+        assertThat(result).isEqualTo(6000)
     }
 
     @Test
@@ -146,7 +147,7 @@ class CalculateTest {
             critical = true
         )
         val result = calculator(calcState)
-        assert(result == 1500)
+        assertThat(result).isEqualTo(1500)
     }
 
     @Test
@@ -158,7 +159,7 @@ class CalculateTest {
             breakpoint = true
         )
         val result = calculator(calcState)
-        assert(result == 2000)
+        assertThat(result).isEqualTo(2000)
     }
 
     @Test
@@ -170,7 +171,7 @@ class CalculateTest {
             atkUp = 50
         )
         val result = calculator(calcState)
-        assert(result == 1500)
+        assertThat(result).isEqualTo(1500)
     }
 
     @Test
@@ -183,7 +184,7 @@ class CalculateTest {
             critUp = 50
         )
         val result = calculator(calcState)
-        assert(result == 2250)
+        assertThat(result).isEqualTo(2250)
     }
 
     @Test
@@ -194,7 +195,7 @@ class CalculateTest {
             atkStat = 1000
         )
         val result = calculator(calcState)
-        assert(result == 1000)
+        assertThat(result).isEqualTo(1000)
     }
 
     @Test
@@ -205,7 +206,7 @@ class CalculateTest {
             atkStat = 1000
         )
         val result = calculator(calcState)
-        assert(result == 800)
+        assertThat(result).isEqualTo(800)
     }
 
     @Test
@@ -217,7 +218,7 @@ class CalculateTest {
             skillLevel = 20
         )
         val result = calculator(calcState)
-        assert(result == 832)
+        assertThat(result).isEqualTo(832)
     }
 
     @Test
@@ -229,7 +230,7 @@ class CalculateTest {
             skillLevel = 20
         )
         val result = calculator(calcState)
-        assert(result == 1080)
+        assertThat(result).isEqualTo(1080)
     }
 
     @Test
@@ -241,7 +242,7 @@ class CalculateTest {
             skillLevel = 20
         )
         val result = calculator(calcState)
-        assert(result == 1344)
+        assertThat(result).isEqualTo(1344)
     }
 
     @Test
@@ -252,7 +253,7 @@ class CalculateTest {
             atkStat = 1000
         )
         val result = calculator(calcState)
-        assert(result == 1250)
+        assertThat(result).isEqualTo(1250)
     }
 
     @Test
@@ -264,7 +265,7 @@ class CalculateTest {
             skillLevel = 20
         )
         val result = calculator(calcState)
-        assert(result == 1300)
+        assertThat(result).isEqualTo(1300)
     }
 
     @Test
@@ -276,7 +277,7 @@ class CalculateTest {
             skillLevel = 20
         )
         val result = calculator(calcState)
-        assert(result == 1620)
+        assertThat(result).isEqualTo(1620)
     }
 
     @Test
@@ -288,7 +289,7 @@ class CalculateTest {
             skillLevel = 20
         )
         val result = calculator(calcState)
-        assert(result == 1960)
+        assertThat(result).isEqualTo(1960)
     }
 
     @Test
@@ -300,7 +301,7 @@ class CalculateTest {
             skillLevel = 20
         )
         val result = calculator(calcState)
-        assert(result == 2320)
+        assertThat(result).isEqualTo(2320)
     }
 
     @Test
@@ -313,7 +314,7 @@ class CalculateTest {
             spBonus = true
         )
         val result = calculator(calcState)
-        assert(result == 3340)
+        assertThat(result).isEqualTo(3340)
     }
 
     @Test
@@ -332,6 +333,6 @@ class CalculateTest {
             critUp = 150
         )
         val result = calculator(calcState)
-        assert(result == 329529)
+        assertThat(result).isEqualTo(329529)
     }
 }

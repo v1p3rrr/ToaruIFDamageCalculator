@@ -67,7 +67,7 @@ class UnitCalcFragment : Fragment() {
         binding.charNameTv.setOnClickListener { onUnitSearch() }
         binding.charImg.setOnClickListener{ onImageClick() }
 
-        setupSpinner(R.array.attack_type, binding.atkTypeSpinner)
+        setupSpinner(R.array.attack_type_all, binding.atkTypeSpinner)
         setupSpinner(R.array.color_status, binding.colorTypeSpinner)
         setupSpinner(R.array.gw_bonus, binding.gwBonusTypeSpinner)
         setListeners()
@@ -226,21 +226,13 @@ class UnitCalcFragment : Fragment() {
 
 
                 // Remove attack type from spinner if skill/sp doesn't do damage
-                if (currentUnit.spAtkMultiplier == null || currentUnit.spAtkMultiplier == 0 ||
-                    currentUnit.skillAtkMultiplier == null || currentUnit.skillAtkMultiplier == 0
-                ) {
-                    val changedList: MutableList<String> =
-                        resources.getStringArray(R.array.attack_type).toMutableList()
-                    if (currentUnit.spAtkMultiplier == null || currentUnit.spAtkMultiplier == 0)
-                        changedList.remove(resources.getString(R.string.Sp))
-                    if (currentUnit.skillAtkMultiplier == null || currentUnit.skillAtkMultiplier == 0)
-                        changedList.remove(resources.getString(R.string.Skill))
-                    binding.atkTypeSpinner.adapter = ArrayAdapter(
-                        requireContext(),
-                        android.R.layout.simple_spinner_item,
-                        changedList
-                    ).apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
-                } else setupSpinner(R.array.attack_type, binding.atkTypeSpinner)
+                if ((currentUnit.spAtkMultiplier == null || currentUnit.spAtkMultiplier == 0)
+                    && (currentUnit.skillAtkMultiplier == null || currentUnit.skillAtkMultiplier == 0))
+                    setupSpinner(R.array.attack_type_normal, binding.atkTypeSpinner)
+                else if (currentUnit.spAtkMultiplier == null || currentUnit.spAtkMultiplier == 0)
+                    setupSpinner(R.array.attack_type_no_sp, binding.atkTypeSpinner)
+                else if (currentUnit.skillAtkMultiplier == null || currentUnit.skillAtkMultiplier == 0)
+                    setupSpinner(R.array.attack_type_no_skill, binding.atkTypeSpinner)
                 binding.atkTypeSpinner.onItemSelectedListener = MyOnItemSelectedListener()
 
                 picasso.load(it.imageUrl)
